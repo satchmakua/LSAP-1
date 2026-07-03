@@ -1,0 +1,225 @@
+# The 30 observable-feature axes (blueprint §6), 5 per field, scored on a 7-point
+# anchored scale — except three forced-choice axes (A3, A5, S5). Anchors are given at
+# 1 / 4 / 7. Score BEHAVIOR, not quality; ignore author identity and genre reputation.
+axes:
+  # ---------------- Language (L) ----------------
+  - id: L1
+    field: L
+    name: Lexical Complexity
+    kind: scalar
+    definition: Rarity, register, and technicality of word choice.
+    anchors: {1: "Plain, common, everyday words.", 4: "Mixed register.", 7: "Rare, latinate, or technical diction."}
+    watch_for: ["Long words != complex ideas", "Do not reward 'beauty'"]
+  - id: L2
+    field: L
+    name: Syntactic Depth
+    kind: scalar
+    definition: Degree of clause embedding and subordination.
+    anchors: {1: "Simple, mostly one-clause sentences.", 4: "Moderate subordination.", 7: "Deeply nested, multi-clause syntax."}
+    watch_for: ["Length is not depth", "A long compound sentence can be syntactically shallow"]
+  - id: L3
+    field: L
+    name: Semantic Density
+    kind: scalar
+    definition: Ideas conveyed per sentence (NOT sentence length).
+    anchors: {1: "One idea, spread out.", 4: "Steady idea flow.", 7: "Many compressed ideas per sentence."}
+    watch_for: ["Do not confuse with syntactic depth", "Count ideas, not clauses"]
+  - id: L4
+    field: L
+    name: Imagery Mode
+    kind: scalar
+    definition: Concrete/sensory vs abstract/conceptual language.
+    anchors: {1: "Wholly concrete, sensory.", 4: "Balanced.", 7: "Wholly abstract, conceptual."}
+    watch_for: ["Theme is not imagery mode"]
+  - id: L5
+    field: L
+    name: Repetition Pattern
+    kind: scalar
+    definition: Deliberate lexical or syntactic repetition.
+    anchors: {1: "No deliberate repetition.", 4: "Occasional motif or echo.", 7: "Pervasive anaphora / refrain."}
+    watch_for: ["Accidental word reuse is not a pattern"]
+
+  # ---------------- Narrative (N) ----------------
+  - id: N1
+    field: N
+    name: Event Density
+    kind: scalar
+    definition: How many discrete state-changing events occur per unit text.
+    anchors: {1: "Near-static; almost no events.", 4: "Steady incident, walking pace.", 7: "Relentless; multiple events per paragraph."}
+    watch_for: ["Density of events, not pace of prose", "A long sentence can hold many events"]
+  - id: N2
+    field: N
+    name: Structural Linearity
+    kind: scalar
+    definition: Linear vs fragmented ordering of events.
+    anchors: {1: "Strictly chronological.", 4: "Minor reordering.", 7: "Heavily fragmented / achronological."}
+    watch_for: ["A single flashback is not high fragmentation"]
+  - id: N3
+    field: N
+    name: Causal Clarity
+    kind: scalar
+    definition: How explicit the cause-and-effect linkage is.
+    anchors: {1: "Every cause made explicit.", 4: "Mostly clear.", 7: "Causation obscure or absent."}
+    watch_for: ["Ambiguity of meaning is not causal obscurity"]
+  - id: N4
+    field: N
+    name: Temporal Behavior
+    kind: scalar
+    definition: Compression, dilation, ellipsis, and loops in narrated time.
+    anchors: {1: "Steady, near real-time.", 4: "Some compression / dilation.", 7: "Extreme dilation, ellipsis, or looping."}
+    watch_for: ["Distinct from linearity (N2): time can flow linearly but be heavily dilated"]
+  - id: N5
+    field: N
+    name: Plot Centrality
+    kind: scalar
+    definition: Emphasis on what happens vs how it is experienced.
+    anchors: {1: "Pure plot; what happens.", 4: "Balanced.", 7: "Pure experience; how it feels."}
+    watch_for: ["Not a quality judgment"]
+
+  # ---------------- Consciousness (C) ----------------
+  - id: C1
+    field: C
+    name: Narrative Distance
+    kind: scalar
+    definition: Psychic distance between narration and the perceiving mind.
+    anchors: {1: "Maximal distance; external, reportorial.", 4: "Mid distance.", 7: "Zero distance; deep immersion."}
+    watch_for: ["First person is not automatically low distance"]
+  - id: C2
+    field: C
+    name: Subject Stability
+    kind: scalar
+    definition: Coherence and persistence of the perceiving self.
+    anchors: {1: "Single stable subject.", 4: "Some shifts.", 7: "Dissolving / unstable subject."}
+    watch_for: ["POV switches between stable selves is Polyphony (C4), not instability"]
+  - id: C3
+    field: C
+    name: Cognitive Transparency
+    kind: scalar
+    definition: Degree of access to characters' thought.
+    anchors: {1: "Opaque; behavior only.", 4: "Some interiority.", 7: "Fully transparent thought-stream."}
+    watch_for: ["Dialogue about feelings is not transparency"]
+  - id: C4
+    field: C
+    name: Polyphony
+    kind: scalar
+    definition: Number of distinct active consciousnesses / voices.
+    anchors: {1: "Single voice.", 4: "A few.", 7: "Many competing voices."}
+    watch_for: ["Many named characters != many active consciousnesses"]
+  - id: C5
+    field: C
+    name: Interior/Exterior Ratio
+    kind: scalar
+    definition: Balance of inner life vs external world.
+    anchors: {1: "All exterior.", 4: "Balanced.", 7: "All interior."}
+    watch_for: ["Distinct from transparency (C3): exterior text can still be deeply immersive"]
+
+  # ---------------- Philosophy (P) ----------------
+  - id: P1
+    field: P
+    name: Ontological Stability
+    kind: scalar
+    definition: Consistency of the world's reality-rules.
+    anchors: {1: "Stable, consistent world.", 4: "Minor slippage.", 7: "Unstable, shifting ontology."}
+    watch_for: ["Fantastical setting != unstable ontology if its rules are consistent"]
+  - id: P2
+    field: P
+    name: Epistemic Certainty
+    kind: scalar
+    definition: Security of knowledge available to narrator/characters.
+    anchors: {1: "Knowledge secure.", 4: "Some doubt.", 7: "Radical uncertainty."}
+    watch_for: ["Distinct from ontological stability (P1)"]
+  - id: P3
+    field: P
+    name: Moral-Structure Clarity
+    kind: scalar
+    definition: Presence of a legible moral order.
+    anchors: {1: "Clear moral order.", 4: "Grey.", 7: "No moral structure."}
+    watch_for: ["Dark subject matter != absent moral structure"]
+  - id: P4
+    field: P
+    name: Meaning Structure
+    kind: scalar
+    definition: Whether meaning is affirmed, ambiguous, or withheld.
+    anchors: {1: "Meaning affirmed / legible.", 4: "Ambiguous.", 7: "Meaning withheld / absent."}
+    watch_for: ["Do not score the theme; score whether meaning is delivered"]
+  - id: P5
+    field: P
+    name: Agency Model
+    kind: scalar
+    definition: Free will vs determinism / constraint.
+    anchors: {1: "Full agency.", 4: "Mixed.", 7: "Pure determinism / constraint."}
+    watch_for: ["A trapped character can still have agency"]
+
+  # ---------------- Affective (A) ----------------
+  - id: A1
+    field: A
+    name: Valence
+    kind: scalar
+    definition: Positive vs negative emotional baseline.
+    anchors: {1: "Strongly negative.", 4: "Neutral.", 7: "Strongly positive."}
+    watch_for: ["Baseline, not the single most intense moment"]
+  - id: A2
+    field: A
+    name: Emotional Volatility
+    kind: scalar
+    definition: Magnitude and frequency of affective swings.
+    anchors: {1: "Flat, stable.", 4: "Moderate swings.", 7: "Violent swings."}
+    watch_for: ["Distinct from intensity (A4): steady-high is not volatile"]
+  - id: A3
+    field: A
+    name: Dominant Affect
+    kind: forced_choice
+    definition: The single most present emotional register (forced choice).
+    choices: [awe, dread, grief, joy, curiosity, horror, alienation, absurdity]
+    watch_for: ["Pick the dominant one even when several are present"]
+  - id: A4
+    field: A
+    name: Intensity Curve
+    kind: scalar
+    definition: Overall magnitude of the emotional arc.
+    anchors: {1: "Flat and low.", 4: "Rising.", 7: "Peak / overwhelming."}
+    watch_for: ["Magnitude, not volatility (A2)"]
+  - id: A5
+    field: A
+    name: Resolution Type
+    kind: forced_choice
+    definition: How the emotional arc closes (forced choice).
+    choices: [cathartic, unresolved, deflationary, collapse]
+    watch_for: ["Score the ending's shape, not its quality"]
+
+  # ---------------- Stylistic (S) ----------------
+  - id: S1
+    field: S
+    name: Rhythm Regularity
+    kind: scalar
+    definition: Metrical / prosodic regularity of the prose.
+    anchors: {1: "Irregular, prose-flat.", 4: "Some cadence.", 7: "Highly regular / incantatory."}
+    watch_for: ["Regularity, not beauty"]
+  - id: S2
+    field: S
+    name: Sentence-Length Variance
+    kind: scalar
+    definition: Spread of sentence lengths across the segment.
+    anchors: {1: "Uniform lengths.", 4: "Moderate variance.", 7: "Extreme variance (very short + very long)."}
+    watch_for: ["Measure spread, not average length"]
+  - id: S3
+    field: S
+    name: Voice Dominance
+    kind: scalar
+    definition: Strength of a distinctive narratorial voice.
+    anchors: {1: "Transparent, neutral.", 4: "Present.", 7: "Overpowering, idiosyncratic voice."}
+    watch_for: ["Distinct from distance (C1)"]
+  - id: S4
+    field: S
+    name: Figurative Density
+    kind: scalar
+    definition: Frequency of metaphor, simile, and other figures.
+    anchors: {1: "Literal.", 4: "Occasional figures.", 7: "Saturated with figures."}
+    watch_for: ["Count figures, not adjectives"]
+  - id: S5
+    field: S
+    name: Aesthetic Register
+    kind: forced_choice
+    definition: The dominant stylistic register (forced choice).
+    choices: [documentary, poetic, surreal, experimental]
+    watch_for: ["Pick one; do not average"]

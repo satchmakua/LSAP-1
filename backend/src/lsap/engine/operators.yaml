@@ -1,0 +1,34 @@
+# The operator basis (L3) — the irreducible transformations of prose (blueprint §8).
+# Each dial C1..C5 drives an operator B1..B5; B6 (Agential Pressure) is engaged by the
+# compiler as a function of the others. Non-commutative: order of application matters.
+operators:
+  - id: B1
+    name: Compression / Expansion
+    dial: c1
+    generates: Compression
+    controls: [semantic density, metaphor stacking, syntactic condensation]
+  - id: B2
+    name: Temporal Structure
+    dial: c2
+    generates: Narrative Structure
+    controls: [causal ordering, linearity vs fragmentation, time dilation]
+  - id: B3
+    name: Consciousness Interiorization
+    dial: c3
+    generates: Consciousness Depth
+    controls: [external event vs internal perception, POV depth]
+  - id: B4
+    name: Epistemic (De)Stabilization
+    dial: c4
+    generates: Epistemic Stability
+    controls: [paradox injection, reality-rule stability]
+  - id: B5
+    name: Affective Amplification
+    dial: c5
+    generates: Affective Intensity
+    controls: [emotional-field dynamics, intensity gradients, tonal shifts]
+  - id: B6
+    name: Agential Pressure
+    dial: derived
+    generates: Agency
+    controls: [agency vs constraint, whether characters can act, resistance vs flow]

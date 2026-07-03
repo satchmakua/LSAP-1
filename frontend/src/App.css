@@ -1,0 +1,76 @@
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  margin: 0 0 1.5rem;
+  opacity: 0.7;
+}
+
+.error {
+  color: #b00020;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.field h2 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.field .count {
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+.field ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.field li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.axis-id {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.55;
+  min-width: 2.2em;
+}
+
+.axis-name {
+  flex: 1;
+}
+
+.tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: rgba(128, 128, 128, 0.16);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
