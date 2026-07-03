@@ -3,7 +3,7 @@
 > One coordinate system for reading prose, one controllable engine for writing it —
 > built as an honest instrument first, a generator second, with a hard wall between them.
 
-**Status:** Design draft · **Language:** Python 3.12 (core) + TypeScript (UI) · **Stack target:** local-first desktop web app (FastAPI + React)
+**Status:** Design draft · **Language:** Python 3.11+ (core) + TypeScript (UI) · **Stack target:** local-first desktop web app (FastAPI + React)
 
 This document is the **engineering** design for LSAP-1. The *theory* — the L0–L7 stack,
 the Epistemic Charter, the discipline substrate — lives in
@@ -110,13 +110,13 @@ Versions verified 2026-07-02.
 
 | Layer | Choice | Why |
 |---|---|---|
-| Core language | **Python 3.12** | The instrument (PCA/reliability stats) and the engine (LLM orchestration, stateful loop) share one language and one repo; best-in-class data-science + LLM ecosystem. |
+| Core language | **Python 3.11+** | The instrument (PCA/reliability stats) and the engine (LLM orchestration, stateful loop) share one language and one repo; best-in-class data-science + LLM ecosystem. |
 | Env / package manager | **uv 0.11.x** | One Rust-fast tool for venv + deps + Python version; 10–100× pip. Right for a fast solo loop. |
 | Backend API | **FastAPI + Uvicorn** | Typed, async, Pydantic-native; exposes rater / projection / engine as endpoints the UI calls, with SSE for streamed generation. |
 | Data models / validation | **Pydantic v2 (≥2.11)** | The rating schema *is* the contract. Pydantic enforces it **and** drives Claude structured output (`messages.parse`) so the 30-axis result can't come back malformed. |
 | LLM | **Claude via `anthropic` SDK** — `claude-opus-4-8` (canonical rater + renderer), `claude-haiku-4-5` (cheap second rater) | Latest capable models. Structured outputs force the axis schema; adaptive thinking for the rater's judgment task; streaming for the engine. |
 | Stats / reduction | **scikit-learn + numpy + pandas** | Standard PCA, correlation matrices, inter-rater agreement (Krippendorff / weighted κ). Notebook-friendly for the reliability run. |
-| Frontend | **React 19 + TypeScript + Vite 8** | Fast HMR; the Rater Studio, Engine Console, and C-Space map are genuinely interactive. (create-vite scaffolds React 18 — upgrade to 19 explicitly.) |
+| Frontend | **React 19 + TypeScript + Vite 8** | Fast HMR; the Rater Studio, Engine Console, and C-Space map are genuinely interactive. (create-vite ships React 19 + Vite 8 directly.) |
 | UI kit | **Tailwind + shadcn/ui** | Clean, legible instrument UI fast, no bespoke design system. |
 | Client state | **Zustand** | Light store for slider state + streamed tokens; no Redux ceremony. |
 | C-space viz | **Recharts** for standard scatter/bars; **SVG + `d3-scale`** for C-space trajectories | Recharts gets the pilot plots fast; trajectory rendering (paths through C-space) drops to hand-rolled SVG for control. |
@@ -141,7 +141,7 @@ reliability analysis, the map, and the firewall all have something precise to st
 
 Axes are **data, not code** (`instrument/axes.yaml`), so tuning the instrument is a data
 change, never a rewrite. A segment is a coherent scene unit, **~1,000–3,000 words**. Each
-scalar axis is a **7-point anchored** scale; two axes are forced-choice.
+scalar axis is a **7-point anchored** scale; three axes (A3, A5, S5) are forced-choice.
 
 ```python
 # instrument/schema.py — the measurement contract (Pydantic v2)
@@ -157,13 +157,13 @@ class AxisDef(BaseModel):          # loaded from instrument/axes.yaml
     name: str                      # "Lexical Complexity"
     kind: Literal["scalar", "forced_choice"]
     anchors: dict[int, str] | None # {1:"...",4:"...",7:"..."} for scalar axes
-    choices: list[str] | None      # forced-choice options (A3, S5)
+    choices: list[str] | None      # forced-choice options (A3, A5, S5)
     definition: str                # what is present, NOT whether it's good
     watch_for: list[str]           # contamination warnings (genre, semantic leakage, ...)
 
 class AxisScore(BaseModel):
     axis_id: str
-    value: conint(ge=1, le=7)      # 7-pt scalar, OR 1-based index into choices
+    value: conint(ge=1, le=8)      # 7-pt scalar, OR 1-based choice index (A3 has 8 options)
     confidence: conint(ge=1, le=5) # 1 guessing .. 5 very high
 
 class Rating(BaseModel):
@@ -179,7 +179,7 @@ The 30 axes (blueprint §6), five per field:
 - **N** Event Density · Structural Linearity · Causal Clarity · Temporal Behavior · Plot Centrality
 - **C** Narrative Distance · Subject Stability · Cognitive Transparency · Polyphony · Interior/Exterior Ratio
 - **P** Ontological Stability · Epistemic Certainty · Moral-Structure Clarity · Meaning Structure · Agency Model
-- **A** Valence · Emotional Volatility · **Dominant Affect** *(forced choice: awe/dread/grief/joy/curiosity/horror/alienation/absurdity)* · Intensity Curve · Resolution Type
+- **A** Valence · Emotional Volatility · **Dominant Affect** *(forced choice: awe/dread/grief/joy/curiosity/horror/alienation/absurdity)* · Intensity Curve · **Resolution Type** *(forced choice: cathartic/unresolved/deflationary/collapse)*
 - **S** Rhythm Regularity · Sentence-Length Variance · Voice Dominance · Figurative Density · **Aesthetic Register** *(forced choice: documentary/poetic/surreal/experimental)*
 
 Anchor example (concrete numbers matter — this is what makes it reproducible):

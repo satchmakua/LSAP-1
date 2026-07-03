@@ -1,0 +1,48 @@
+# --- Base ignores (stack-agnostic) ---
+
+# Secrets / local env — never commit real ones (see .env.example)
+.env
+.env.*
+!.env.example
+*.local
+
+# AI assistant build instructions — kept local, never committed
+CLAUDE.md
+CLAUDE.local.md
+
+# Editor / OS cruft
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Generic build / cache output
+dist/
+build/
+out/
+coverage/
+.cache/
+tmp/
+*.tmp
+
+# --- Stack-specific (appended by /scaffold) ---
+
+# Python (backend)
+__pycache__/
+*.py[cod]
+.venv/
+backend/.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+# NOTE: uv.lock IS committed (reproducible installs) — do not ignore it.
+
+# Node (frontend + root)
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+# NOTE: package-lock.json IS committed — do not ignore it.

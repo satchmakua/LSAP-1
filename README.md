@@ -9,9 +9,37 @@ dialing structural parameters rather than imitating named authors. The two halve
 vocabulary but are architecturally forbidden from feeding each other (the Charter's
 analysis↔generation firewall).
 
-- **Read the theory:** [LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md) — the L0–L7 stack and the Epistemic Charter.
-- **Read the build design:** [DESIGN.md](DESIGN.md) — stack, data contracts, architecture, and the milestone order.
+**Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Stack:** Python 3.12 (FastAPI + Pydantic + scikit-learn, Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite) · local-first, git-diffable files.
+**Status:** **M0 shipped & verified** — the skeleton runs end-to-end (see [PROGRESS.md](PROGRESS.md)). Next milestone: the rater (M1).
 
-**Status:** Design draft — run `/scaffold` to turn this into a running project.
+## Run it
+
+**Prerequisites:** Python 3.11+, [uv](https://docs.astral.sh/uv/) on your PATH, Node ≥ 20.19, npm. For M1+ features, copy `.env.example` to `backend/.env` and add your `ANTHROPIC_API_KEY`.
+
+```bash
+npm run setup   # once — backend `uv sync` + frontend `npm install`
+npm run dev     # backend (:8000) + frontend (:5173, proxies /api → backend)
+npm test        # backend pytest + frontend vitest
+npm run lint    # ruff + oxlint
+npm run build   # frontend production build
+```
+
+Open **http://localhost:5173** for the Rater Studio (currently: the 30 axes grouped by
+field). The API is at **http://localhost:8000** (`/health`, `/api/axes`).
+
+## Docs
+
+- **[DESIGN.md](DESIGN.md)** — the engineering spec: stack, data contracts, architecture, milestones.
+- **[ROADMAP.md](ROADMAP.md)** — the milestone checklist (M0 done; M1–M4 next).
+- **[PROGRESS.md](PROGRESS.md)** — the build log.
+- **[LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md)** — the domain theory (the L0–L7 stack and the Epistemic Charter).
+- **[docs/adr/](docs/adr/)** — architecture decision records, including the [analysis/generation firewall](docs/adr/0002-analysis-generation-firewall.md).
+
+## Layout
+
+```
+backend/   FastAPI + Pydantic — instrument (L1) · coordinates (L2/L3) · engine (L6) · api
+frontend/  React 19 + Vite — Rater Studio · (C-Space Map, Engine Console to come)
+docs/      ADRs and long-form notes
+```
