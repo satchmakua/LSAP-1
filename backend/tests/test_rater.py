@@ -127,3 +127,22 @@ def test_rate_raises_on_missing_structured_output():
             segment_id="s", segment_text="hi", rater="opus",
             axes=AXES, created_at="t", client=client,
         )
+
+
+def test_default_client_requires_a_key(monkeypatch):
+    from lsap.instrument import rater as rmod
+
+    monkeypatch.setattr(rmod.settings, "anthropic_api_key", "")
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    with pytest.raises(RaterError):
+        rmod._default_client()
+
+
+def test_default_client_passes_configured_key_to_sdk(monkeypatch):
+    from lsap.instrument import rater as rmod
+
+    monkeypatch.setattr(rmod.settings, "anthropic_api_key", "sk-ant-test-key")
+    client = rmod._default_client()
+    # The SDK stores the key it was constructed with; confirm ours reached it (rather
+    # than the SDK falling back to an unset process env var).
+    assert client.api_key == "sk-ant-test-key"
