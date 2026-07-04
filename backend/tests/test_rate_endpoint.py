@@ -56,6 +56,27 @@ def test_rate_endpoint_appends_on_rerun(tmp_path, monkeypatch):
     assert len(one["ratings"]) == 2  # same segment id -> ratings accrue
 
 
+def test_rate_endpoint_rejects_id_collision_with_different_text(tmp_path, monkeypatch):
+    """A slug/id reused for DIFFERENT text is rejected (409) so a rating can never be
+    orphaned from the prose it scored."""
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(
+        app_module.rater, "rate",
+        lambda **k: _fake_rating(k["segment_id"], k["rater"]),
+    )
+    # Two case/punctuation-equivalent titles collide on the slug "chapter-one".
+    first = client.post("/api/rate", json={"text": "the first passage", "title": "Chapter One"})
+    assert first.status_code == 200
+    second = client.post(
+        "/api/rate", json={"text": "a totally different passage", "title": "chapter one!!!"}
+    )
+    assert second.status_code == 409
+    # The original segment and its single rating are untouched.
+    one = client.get("/api/segments/chapter-one").json()
+    assert one["text"].strip() == "the first passage"
+    assert len(one["ratings"]) == 1
+
+
 def test_rate_endpoint_rejects_empty_text(tmp_path, monkeypatch):
     monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
     assert client.post("/api/rate", json={"text": "   "}).status_code == 400
