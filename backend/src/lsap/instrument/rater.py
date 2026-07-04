@@ -145,11 +145,14 @@ def build_manual(axes: list[AxisDef]) -> str:
 # The call ---------------------------------------------------------------------------
 
 def _default_client() -> Any:
-    if not (settings.anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY")):
+    key = settings.anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
         raise RaterError("ANTHROPIC_API_KEY is not set. Add it to backend/.env.")
     import anthropic
 
-    return anthropic.Anthropic()
+    # Pass the key explicitly: it may come from backend/.env (loaded into settings) rather
+    # than the process environment, which is all the SDK's zero-arg constructor reads.
+    return anthropic.Anthropic(api_key=key)
 
 
 def rate(
