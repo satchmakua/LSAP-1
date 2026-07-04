@@ -11,7 +11,7 @@ analysis↔generation firewall).
 
 **Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Status:** **M0 shipped & verified** — the skeleton runs end-to-end. Next milestone: the rater (M1).
+**Status:** **M1 (the rater) built & reviewed** — paste a segment and score it on all 30 axes via Claude; awaiting the live rating test (needs `ANTHROPIC_API_KEY`). Next milestone: pilot corpus + reliability (M2).
 
 ## Run it
 
@@ -25,8 +25,9 @@ npm run lint    # ruff + oxlint
 npm run build   # frontend production build
 ```
 
-Open **http://localhost:5173** for the Rater Studio (currently: the 30 axes grouped by
-field). The API is at **http://localhost:8000** (`/health`, `/api/axes`).
+Open **http://localhost:5173** for the Rater Studio: paste a ~1–3k-word passage, pick a
+rater, and score it on all 30 axes. The API is at **http://localhost:8000**
+(`/health`, `/api/axes`, `POST /api/rate`, `/api/segments`).
 
 ## Docs
 

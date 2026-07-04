@@ -72,6 +72,20 @@ def rate_segment(req: RateRequest) -> RateResponse:
     else:
         seg_id = _hash_id(text)
 
+    # Guard the id ↔ text link: a rating must correspond to the exact text it scored.
+    # `save_segment` is write-once, so reusing an id for *different* text (a slug
+    # collision, or an edit-then-re-rate) would orphan the new rating from its prose.
+    # Reject before paying for a rating that would be mis-attributed.
+    existing = storage.load_segment(seg_id)
+    if existing is not None and str(existing.get("text", "")).strip() != text:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                f"segment id '{seg_id}' already stores different text — use a distinct "
+                "title or segment_id (a revised text is a new segment)."
+            ),
+        )
+
     created_at = datetime.now(UTC).isoformat()
     try:
         rating = rater.rate(
