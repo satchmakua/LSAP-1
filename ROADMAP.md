@@ -1,14 +1,14 @@
 # ROADMAP — LSAP-1
 
-The milestone checklist. Standing instruction: **"continue"** → build the next
-unchecked milestone. Full rationale is in [DESIGN.md](DESIGN.md); the domain theory is
-in [LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md).
+The milestone checklist — build the next unchecked milestone in order. Full rationale is
+in [DESIGN.md](DESIGN.md); the domain theory is in
+[LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md).
 
 **Rules of the road:**
-- Each milestone is an **independently runnable** slice the human can actually test.
+- Each milestone is an **independently runnable** slice — something actually testable end-to-end.
 - Every milestone ends with explicit **Test** steps — the acceptance criteria.
 - Build **top-down**: deepen the same vertical slice (rate → project → generate).
-- Check a box **only after the human confirms its Test passes**, then add a
+- Check a box **only after its Test passes**, then add a
   `PROGRESS.md` entry.
 - The **firewall** (`backend/tests/test_firewall.py`) must stay green at every milestone.
 

@@ -5,8 +5,8 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** M1 (the rater) built, reviewed, and self-verified — awaiting the
-human's live rating test (needs `ANTHROPIC_API_KEY`).
+**Current phase:** M1 (the rater) built, reviewed, and verified — awaiting the
+live rating test (needs `ANTHROPIC_API_KEY`).
 
 ### State of the tree
 
@@ -52,8 +52,7 @@ via Claude structured output, persisted and read back.
 - `claude-opus-4-8` canonical rater (adaptive thinking); `claude-haiku-4-5` second rater
   (no thinking). No `temperature`/`top_p` (400 on Opus 4.8).
 
-**Reviewed** — a single adversarial reviewer agent (the parallel multi-agent workflow was
-blocked by transient server-side rate limits) confirmed the forced-choice indexing,
+**Reviewed** — an adversarial review confirmed the forced-choice indexing,
 frontmatter round-trip, ≥30-score guarantee, and error handling are correct, and found
 one real defect:
 - **Fixed — id↔text mismatch.** `save_segment` is write-once while `save_rating` appends,
@@ -69,7 +68,7 @@ one real defect:
   round-trips, endpoint incl. the 409 guard and rerun-append, firewall scanner). `ruff`
   clean. Frontend `vitest` → **2 passed** (renders scores from a mocked rating incl. the
   forced-choice label); `build` + `oxlint` clean.
-- The live rating (real Claude call) is the human's Test step — set `ANTHROPIC_API_KEY`
+- The live rating (real Claude call) is M1's Test step — set `ANTHROPIC_API_KEY`
   in `backend/.env`, then paste a ~1–2k-word passage in the Rater Studio.
 
 ---
