@@ -1,10 +1,11 @@
 # ROADMAP — LSAP-1
 
-The milestone checklist. Full rationale is in [DESIGN.md](DESIGN.md); the domain theory is
-in [LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md).
+The milestone checklist. Full rationale is
+in [DESIGN.md](DESIGN.md); the domain theory is in
+[LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md).
 
 **Rules of the road:**
-- Each milestone is an **independently runnable** slice, testable end-to-end.
+- Each milestone is an **independently runnable** slice — something actually testable end-to-end.
 - Every milestone ends with explicit **Test** steps — the acceptance criteria.
 - Build **top-down**: deepen the same vertical slice (rate → project → generate).
 - Check a box **only after its Test passes**.
