@@ -1,0 +1,121 @@
+[
+  {"id": "min-kitchen", "pair": "p_min",
+   "profile": "Extreme compression and restraint: very short plain declarative sentences, concrete exterior detail only, almost no interiority, flat affectless tone, strictly linear, documentary register.",
+   "situation": "A couple clears up after a dinner that went wrong; almost nothing is said."},
+
+  {"id": "baroque-memory", "pair": null,
+   "profile": "Maximal expansion: very long deeply subordinated sentences, dense abstraction and metaphor, deep interiority, elegiac tone, high figurative density.",
+   "situation": "An aging person, holding a small object, is pulled into a long cascade of involuntary memory."},
+
+  {"id": "frag-party", "pair": "p_frag",
+   "profile": "Fragmented modernist consciousness: time and viewpoint fragment, several minds bleed together, stream of consciousness, high interiority, associative and non-linear.",
+   "situation": "A crowded room at a party, drifting between several people's half-thoughts."},
+
+  {"id": "paradox-library", "pair": "p_paradox",
+   "profile": "Epistemic instability and recursion: cool abstract essayistic voice, reality-rules bend, paradox and infinite regress, very low emotional volatility, controlled.",
+   "situation": "A description of an impossible archive that somehow contains itself."},
+
+  {"id": "trap-office", "pair": null,
+   "profile": "Blocked agency and bureaucratic dread: the protagonist cannot act, rules shift under them, flat procedural surface with rising unease, stable-seeming world on unstable ground.",
+   "situation": "Someone tries to complete a simple official procedure that keeps deferring itself."},
+
+  {"id": "cosmic-shore", "pair": null,
+   "profile": "Mounting cosmic dread: ornate abstract diction, the world's ontology grows unstable, horror rises to overwhelming intensity, ends unresolved.",
+   "situation": "A lone figure on a night shore senses something vast and wrong beneath the water."},
+
+  {"id": "noir-alley", "pair": null,
+   "profile": "Hardboiled exterior: terse wry concrete prose, moral greyness, exterior behavior and dialogue, low interiority, documentary-noir register.",
+   "situation": "A tired investigator meets an unreliable client in a rain-wet alley at night."},
+
+  {"id": "absurd-bureau", "pair": null,
+   "profile": "Comic absurdity: playful escalating logic, an absurd premise treated deadpan, light affect, linear, comic register.",
+   "situation": "A man spends a whole day trying to return an object that no shop admits selling."},
+
+  {"id": "elegy-station", "pair": "p_elegy",
+   "profile": "Restrained grief: quiet poetic interiority, suppressed emotion, unresolved ending, documentary drift with controlled figuration.",
+   "situation": "Someone waits at an emptying train station for a person who will not come."},
+
+  {"id": "thriller-stairwell", "pair": null,
+   "profile": "High event density procedural thriller: fast linear exterior action, short kinetic sentences, rising intensity, plot-driven, minimal interiority.",
+   "situation": "A pursuit downward through the stairwells and service corridors of a tower."},
+
+  {"id": "fable-river", "pair": null,
+   "profile": "Mythic fable: timeless oral register, clear moral structure, archetypal figures, low interiority, simple cadenced sentences.",
+   "situation": "A miller's daughter strikes a bargain with the river to save her village."},
+
+  {"id": "letter-confession", "pair": null,
+   "profile": "Intimate epistolary confession: first-person confessional voice, high interiority, direct address, medium controlled affect.",
+   "situation": "A letter admitting a long-kept secret to an estranged sibling."},
+
+  {"id": "scifi-clinical", "pair": null,
+   "profile": "Clinical documentary futurism: precise technical affectless prose, stable ontology, exterior observation, very low figuration.",
+   "situation": "A technician logs an anomaly during a routine shift on an orbital station."},
+
+  {"id": "dream-house", "pair": null,
+   "profile": "Dream logic: unstable ontology, associative transitions, surreal register, fragmented, low causal clarity.",
+   "situation": "A person moves through a house whose rooms rearrange and recur."},
+
+  {"id": "domestic-dinner", "pair": null,
+   "profile": "Realist tension with subtext: balanced surface, meaning beneath small talk, restrained affect, realist register, steady time.",
+   "situation": "Two estranged relatives keep the conversation to small things over a meal."},
+
+  {"id": "gothic-manor", "pair": null,
+   "profile": "Gothic melodrama: high emotional volatility, ornate overwrought diction, dread and awe, unstable atmosphere.",
+   "situation": "A newcomer explores a decaying manor as a storm rises."},
+
+  {"id": "second-person-city", "pair": null,
+   "profile": "Experimental second person: address the reader as 'you', meta and self-aware, experimental register, present tense.",
+   "situation": "You arrive in an unfamiliar city and are told you have lived there for years."},
+
+  {"id": "war-trench", "pair": null,
+   "profile": "Visceral exterior intensity: concrete sensory event-dense prose, very high intensity, dread, alternating short and long sentences.",
+   "situation": "The minutes before and during an assault from a forward trench."},
+
+  {"id": "pastoral-dawn", "pair": null,
+   "profile": "Lyric pastoral awe: imagery-dense poetic prose, low event density, awe and stillness, long flowing sentences.",
+   "situation": "First light over a valley as mist burns off a river."},
+
+  {"id": "courtroom", "pair": null,
+   "profile": "Forensic argument: high causal clarity, exterior, procedural and precise, low affect, strict logical sequencing.",
+   "situation": "A closing argument reconstructs the disputed sequence of one night."},
+
+  {"id": "child-attic", "pair": null,
+   "profile": "Naive child perspective: simple diction, high cognitive transparency, wonder and unease, concrete, slight misreading of the adult world.",
+   "situation": "A child explores a forbidden attic and misunderstands what they find."},
+
+  {"id": "dissolve-room", "pair": null,
+   "profile": "Dissolving subject: unstable sense of self, fragmented and looping, grief and confusion, high interiority, time slips.",
+   "situation": "An elderly person alone in a familiar room loses the thread of when and who."},
+
+  {"id": "vision-desert", "pair": null,
+   "profile": "Visionary teleology: awe, meaning affirmed, poetic and directional, a movement toward revelation.",
+   "situation": "A wanderer in a desert at dusk experiences something they take for grace."},
+
+  {"id": "catalogue-estate", "pair": null,
+   "profile": "Deadpan catalogue: list/inventory structure, flat affect, documentary, near-zero interiority, accumulation as form.",
+   "situation": "An inventory of the contents of a sold house, room by room."},
+
+  {"id": "paranoia-flat", "pair": null,
+   "profile": "Interior paranoia: paranoid over-reading, unstable epistemics, rising dread, claustrophobic interiority.",
+   "situation": "Alone in an apartment, someone becomes convinced the ordinary signs mean something."},
+
+  {"id": "tender-morning", "pair": null,
+   "profile": "Quiet tenderness: warm gentle prose, joy and tenderness, medium interiority, realist, small domestic grace.",
+   "situation": "Two people share an unhurried early morning; nothing dramatic happens."},
+
+  {"id": "min-laundromat", "pair": "p_min",
+   "profile": "Extreme compression and restraint: very short plain declarative sentences, concrete exterior detail only, almost no interiority, flat affectless tone, strictly linear, documentary register.",
+   "situation": "A stranger folds laundry beside another at a late-night laundromat; a few flat words pass."},
+
+  {"id": "paradox-map", "pair": "p_paradox",
+   "profile": "Epistemic instability and recursion: cool abstract essayistic voice, reality-rules bend, paradox and infinite regress, very low emotional volatility, controlled.",
+   "situation": "A description of a map so detailed that it becomes the territory."},
+
+  {"id": "elegy-orchard", "pair": "p_elegy",
+   "profile": "Restrained grief: quiet poetic interiority, suppressed emotion, unresolved ending, documentary drift with controlled figuration.",
+   "situation": "Someone walks, out of season, an orchard that a lost person planted."},
+
+  {"id": "frag-window", "pair": "p_frag",
+   "profile": "Fragmented modernist consciousness: time and viewpoint fragment, several minds bleed together, stream of consciousness, high interiority, associative and non-linear.",
+   "situation": "At a window at dusk a mind drifts across unfinished thoughts and the other lives glimpsed below."}
+]

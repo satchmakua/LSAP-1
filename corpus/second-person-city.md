@@ -1,0 +1,35 @@
+---
+id: second-person-city
+word_count: 1266
+source: pilot
+profile: 'Experimental second person: address the reader as ''you'', meta and self-aware,
+  experimental register, present tense.'
+situation: You arrive in an unfamiliar city and are told you have lived there for
+  years.
+pair: null
+created_at: '2026-07-11T17:26:28.205491+00:00'
+---
+
+You step off the train and already the mistake has been made, though you don't know it yet, so let's say you don't know it yet, let's agree to that. The platform is wet. Somebody has been mopping, or it rained, or the sentence that produced this platform simply decided it should be wet because wet platforms feel more arrived-at than dry ones. You accept the wetness. You look for the sign that tells you where you are.
+
+There is no sign, or there is a sign but it is in a script you almost recognize, the way you almost recognize a word you have said too many times. The letters lean toward meaning and then decline it. You are here. That is the only fact the station will give you, and it gives it grudgingly, the way a stranger tells you the time.
+
+A woman is waving. She is waving at you, which you establish by the elementary test of turning around and finding no one behind you, only a poster for a product you cannot read peeling from a pillar. So the wave is yours. You have been given a wave. You walk toward it because that is what the wave requests, and because standing still on a wet platform is not a life, and you have, apparently, a life.
+
+"You're late," she says, and kisses your cheek with the automatic accuracy of long practice, kisses the exact cheek that habit has assigned her, and this is the first thing that frightens you, not the strangeness but the ease. "The kettle's been on and off three times. Come on, the car's around the side, they've started charging for the front now, can you believe it, after everything."
+
+After everything. You do not know what everything is, but you nod, because the alternative — to say *I have never seen you, I have never seen this city, I stepped off a train that I cannot recall boarding* — the alternative is a door you are not ready to open, and anyway she has already turned, trusting you to follow, and you follow, because you are, it seems, a person who follows this woman around the side of stations, and who are you to argue with the evidence.
+
+Notice how quickly you have surrendered. This is worth noticing. The brief for your existence, the small print of you, apparently included clauses you never read. *You have lived here for years.* Someone tells you this in the car — not the woman, but the radio, absurdly, a voice reading local news that assumes your fluency in local grief, streets named as though you'd wept on them, a bypass whose opening you must remember, a mayor whose disgrace is old news to you. You have lived here for years. The car knows the way home without being told, and your hand knows to steady itself on the door handle at the third roundabout, where the suspension complains, and you did not decide to know this, the knowing was installed.
+
+Here is the trouble with the second person, and you of all people should appreciate it now, pressed against a car door in a city that claims you: *you* is a costume anyone can wear. When the woman says *you*, she means a *you* with a history, a *you* who left milk out this morning and promised to fix the gate. When the sentence says *you*, it means the one reading, the one who has never left milk out in this particular kitchen because this particular kitchen did not exist until three words ago. Two *yous*, then, wearing the same coat, and the coat fits both, which is the horror, or the comfort. Choose. You are permitted to choose which it is. That is the one freedom the brief left you.
+
+The house is blue. You would not have chosen blue. But there is a version of you, thick in the walls, who did choose blue, who stood in a shop holding two cards of paint and preferred this one, and that version has left fingerprints everywhere, on the light switches, on the spines of books arranged by a system you can feel the logic of without being able to state it. You climb the stairs and your feet know which one creaks and step over it. You did not tell your feet to do this. Your feet have been living here for years.
+
+"You alright?" the woman asks, and there it is, the question that could unmake everything. All you have to do is say no. All you have to do is confess the seam, the place where you were sewn into this afternoon, and she will look at you with a fear that will at least be true, that will at least belong to you, freshly made, yours. But you say, "Just tired." You say it and it works. It is a key that fits. And the fitting is so smooth, so oiled by repetition you never performed, that you understand: the lie is not a lie. Somewhere you *are* tired, tired in the way this house understands tiredness, and the confession would have been the falsehood.
+
+So this is what they mean. This is what the brief meant by *you have lived here for years*. Not that memory will arrive — it won't, don't wait for it, stop touching the walls hoping they'll speak — but that the years arranged themselves in advance and left a slot the exact shape of a life, and you have been lowered into it like a tooth into a socket, and the gum has closed around you, and it holds. You are held. That is what a life is, you begin to suspect: not the accumulation but the fit.
+
+You go to the window. Below, the blue house's small garden, a gate that does not close properly, and you feel the promise to fix it rising in you like an obligation you inherited rather than made. Beyond the gate, the city goes on being a city you have lived in for years, lighting its windows one by one, and each lit window is another person lowered into another slot, told the same thing, believing it or performing belief so exactly that the difference has stopped mattering. You watch a man on the opposite pavement stop, turn around, find no one behind him. You know what he is discovering. You want to call out to him, *me too, I only just got here, I stepped off a train* — but the window is closed and your voice, when you test it in your throat, comes out in the accent of this street, the vowels already worn to the shape of the place, and he would not believe you were new, because you are not new, you have lived here for years, everyone will tell you so.
+
+The kettle clicks off downstairs. You hear the woman call your name, and the name is yours, it turns you around, it works like the lie worked, it fits like the stairs fit, and you go down toward the tea she has made you three times already this evening, and you drink it, and it is exactly how you take it, and you cannot remember ever having told anyone how you take it, and you understand that you never will remember, and that this — the tea, the fit, the blue, the woman, the unfixable gate, the *you* that is and is not yours — this is home now. Welcome. You've been here for years.
