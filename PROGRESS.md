@@ -5,8 +5,9 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** M1 (the rater) complete & verified — a live Opus 4.8 rating passed.
-Next up is M2 (pilot corpus + reliability).
+**Current phase:** M2 (pilot corpus + reliability) complete & verified — a 30-segment
+corpus rated by both models; the Literary-Big-Five structure has real support in the
+data. Next up is M3 (coordinate system v1).
 
 ### State of the tree
 
@@ -15,10 +16,66 @@ Next up is M2 (pilot corpus + reliability).
 | API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]` live |
 | Instrument | `backend/src/lsap/instrument/` | `schema.py` + 30-axis `axes.yaml`; **`rater.py` implemented** (Claude structured output) |
 | Persistence | `backend/src/lsap/storage.py` | JSONL ratings + markdown corpus (git-diffable) |
-| Coordinates | `backend/src/lsap/coordinates/projection.py` | `CVector` real; `ProjectionModel` stubbed (M3) |
+| Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | 30-segment pilot (`source: pilot`) + 60 ratings + reliability report |
+| Coordinates | `backend/src/lsap/coordinates/` | **`reliability.py` implemented** (agreement / correlation / PCA / twins); `projection.py` `CVector` real, `ProjectionModel` stubbed (M3) |
 | Engine | `backend/src/lsap/engine/` | `Dials` + `to_bands` real; `operators.yaml` real; `compile_constraints` stubbed (M4) |
 | Firewall | `backend/tests/test_firewall.py` | enforced & green (hardened: every import form + `storage`) |
 | Frontend | `frontend/src/` | Rater Studio: paste → rate → 30 scored axes + confidence |
+
+---
+
+## M2 — Pilot corpus + reliability · built & verified 2026-07-03 · ✓
+
+Built the honest measurement pass: a contrast-spanning corpus, both raters over all of
+it, and a reliability analysis — and the result is the crystallization moment the
+blueprint predicted (§7).
+
+**Shipped**
+- **Pilot corpus** (`corpus/*.md`, `source: pilot`): 30 original ~1,200-word segments,
+  each written by Claude to a purely *structural* brief (no author imitation — Charter
+  P7) spanning the axis extremes — compressed↔baroque, linear↔fragmented,
+  exterior↔stream-of-consciousness, stable↔paradoxical, flat↔volatile, documentary↔
+  poetic↔surreal↔experimental — with **4 redundant twin-pairs** (same profile, different
+  scene) for consistency testing. Specs in `scripts/corpus_specs.json`.
+- **Runners**: `scripts/generate_corpus.py` (concurrent Opus generation, idempotent) and
+  `scripts/rate_corpus.py` (both raters, concurrent, resumable — skips already-rated).
+- **Reliability** (`coordinates/reliability.py`): per-axis inter-rater agreement (ordinal:
+  within-1 / Spearman / weighted-κ / |Δ|; forced-choice: exact-match / κ) + mean
+  confidence; the scalar-axis correlation matrix (redundancy); PCA (latent factors); and
+  twin-pair consistency. Writes `reliability/report.md` + `metrics.json`. Pure metrics are
+  unit-tested offline.
+
+**Findings (60 live ratings, Opus 4.8 vs Haiku 4.5, n=30)**
+- **26 of 30 axes reliable**; **2 absolute-ambiguous**: L1 Lexical Complexity and L3
+  Semantic Density (within-1 = 0.40, |Δ| ≈ 1.6) — the models *rank* segments together
+  (Spearman ≈ 0.75) but calibrate the 1–7 scale differently. Redesign/anchor candidates.
+- **The Consciousness field collapses**: C1 Narrative Distance ~ C3 Cognitive
+  Transparency ~ C5 Interior/Exterior are one factor (r = 0.93–0.96); the Language
+  compression axes (L1/L2/L3/S4) cluster too. Exactly the blueprint's "30 clean
+  dimensions → ~5 entangled ones."
+- **PCA supports the Big Five**: PC1 explains **44.8%** of variance, ~**6 components cover
+  80%** (8 for 90%). PC1 = interiority/compression, PC2 = meaning/philosophy, PC3 =
+  affect — the hypothesized C-space has real structure, not noise.
+- **Twin consistency**: same-profile twins are **3× closer** than random pairs
+  (mean |Δ| 0.51 vs 1.49) — the instrument gives consistent scores to equivalent inputs.
+- Lowest-confidence axes: P3 Moral-Structure (3.5), A5 Resolution, P5 Agency, P4 Meaning
+  — the Philosophy field is the hardest to score confidently.
+
+**Decisions**
+- **Corpus is Claude-authored original prose, not scraped canon** — copyright-clean, and
+  it lets us *design* the contrast + twin structure the reliability test needs.
+- **Two models as the two "raters"** (Opus vs Haiku) is a reliability proxy; true
+  reliability wants a human rater too (future). Framed honestly.
+- **PCA over the 27 scalar axes only**; forced-choice (A3/A5/S5) analysed by agreement,
+  not one-hot into PCA — with n=30 one-hot (DESIGN §4.2) would be degenerate. M3 locks
+  the projection.
+
+**Verified**
+- `uv run pytest` → **39 passed** (adds 7 reliability-math tests: agreement, correlation,
+  PCA concentration, twins). `ruff` clean.
+- `uv run python -m lsap.coordinates.reliability` over the 60 real ratings → the report
+  above; artifacts at `reliability/report.md` + `metrics.json`.
+- Generation: 30/30 segments, 1,198–1,374 words, 0 failures. Rating: 60/60, 0 flagged.
 
 ---
 

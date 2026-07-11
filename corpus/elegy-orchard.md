@@ -1,0 +1,34 @@
+---
+id: elegy-orchard
+word_count: 1290
+source: pilot
+profile: 'Restrained grief: quiet poetic interiority, suppressed emotion, unresolved
+  ending, documentary drift with controlled figuration.'
+situation: Someone walks, out of season, an orchard that a lost person planted.
+pair: p_elegy
+created_at: '2026-07-11T17:28:02.181350+00:00'
+---
+
+The frost had come early this year, or late, depending on how you counted the season, and I walked into the orchard because the house had grown too full of the smell of coffee I had made and not wanted to drink. The gate was the one he mended twice, the second time worse than the first, so that it now hung at a slight tilt and dragged a shallow arc into the dirt whenever it opened. I opened it. The arc was there, faint, filled with a skin of ice. I stepped over it rather than through it, which made no sense, and I stood a moment inside the fence and let the cold find the places where my coat did not close.
+
+There were forty-two trees. I had never counted them while he lived. I counted them now, walking the rows, because counting is a thing the hands and the mouth can do together when the rest of a person has stopped being useful. Twelve apple, though the varieties I could not name; he had named them all, had a way of saying the names that made them sound like the names of horses or of distant relatives. Pear along the western line, six of them, their branches held up and out as if in the middle of explaining something. Then the others, the ones he planted last, the ones that had not yet decided whether they would live. Some of those had died over the summer without any announcement. I could see them, thinner, blacker, standing among the others without leaves to lose.
+
+It was not the season to be here. There was nothing to pick, nothing to prune, nothing that wanted doing. The ground was hard and rang a little under the heel. The grass between the rows had gone the color of old rope and lay down flat where the wind had been at it. Everything was in the posture of waiting, and I had come out to wait with it, which is perhaps the only honest thing I had done in weeks.
+
+He planted this on ground that people told him would not take fruit. I remember that. I remember the way he said it, that they had told him, as if the telling were itself a kind of soil he had to work against. He had a shovel with a cracked handle wrapped in tape, and he wrapped it again each spring, the tape going gray and then black with his hands on it. The shovel was in the shed. I had not gone into the shed. I had walked past its door several times a day and had not gone in, and I could not have told anyone why, except that some doors, once opened, ask you to take out what is behind them and hold it, and I did not think I could hold the shovel yet.
+
+I put my hand on the trunk of the oldest apple. The bark was cold and rough and did not care. That is the thing about trees, I thought, and then I did not finish the thought, because it was going somewhere sentimental and I had promised myself, in some wordless way, not to go there. The bark did not care. My hand was warmer than the bark and the warmth went out of my hand into the tree and the tree took it the way it takes rain, without gratitude, without refusal.
+
+Someone would have to prune these in the late winter. I knew the word for the season of pruning was near but I did not know how to do it. He had tried to show me once. He held the loppers and made a cut and said, you take out what crosses, what rubs, what grows back toward the center. You open the middle so the light can get down in. I had nodded and not listened, because there had seemed to be an endless number of winters in which I could learn this, and now there was one winter, this one, and no one to hold the loppers and say the words while I watched his breath come out white and go up past the branches.
+
+A crow went over. I heard it before I saw it, that dry two-note complaint, and then it was above the pear line and gone. The sound stayed longer than the bird. I have noticed this about the orchard, that its sounds outlast their causes, that a thing will fall or call or crack and the silence afterward will hold the shape of it for a while, like water closing slowly.
+
+I walked to the last row, to the young trees, the ones from his final spring. He had knelt to plant them. I had watched from the window with a cup in my hands and had thought, without alarm, that he was slow to stand, that he pressed a hand to the small of his back and looked at the sky as though checking it for weather. I had thought nothing. That is the part I return to and cannot forgive, though forgiveness is not quite the word, since no one is asking it of me and there is no one to give it to. I had thought nothing, and he had planted the trees, and some of the trees had lived.
+
+One of them had a single leaf on it still, low down, brown, curled, holding on past all reason. I did not touch it. It seemed important not to be the one who made it fall. It would fall on its own, in its own hour, in some wind I would not be present for, and that felt correct, that felt like the arrangement the world preferred, things ending when I was not looking, the way he had.
+
+The light was going. It goes early now and it goes sideways, coming in low and gold under the branches so that for a few minutes the whole orchard is lit from beneath, every trunk with its long blue shadow lying east, and I stood in that light and let it be on me and did not feel warmed by it, only seen. The trees threw their shadows across me and across each other and the shadows crossed and rubbed and grew back toward the center, all the things he said to take out, and no one to take them out.
+
+I could hear, from the house, the phone begin to ring. It rang the number of times it rings before the machine takes it, and then it stopped, and the message would be someone kind, someone asking how I was managing, and I would not call them back tonight, and they would understand, or say they did. I stayed where I was. The gold went out of the light the way it always does, all at once at the end, as if a hand had been withdrawn.
+
+I would come back tomorrow, I told myself, though I was not sure I meant it. There was the shed to open eventually, and the loppers to find, and the long study of what crosses and what rubs. There was the counting, which I could do again, which perhaps I would do every day until I knew the number without counting, forty-two, some of them dead, most of them living, all of them his and now, in the way these things pass without ceremony, mine. I walked back along the row. The gate dragged its arc. I stepped over it again. Behind me the trees stood in the dark holding their shapes, waiting for a season that would come whether I learned it or not.
