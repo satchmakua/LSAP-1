@@ -5,8 +5,8 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** M1 (the rater) built, reviewed, and verified — awaiting the
-live rating test (needs `ANTHROPIC_API_KEY`).
+**Current phase:** M1 (the rater) complete & verified — a live Opus 4.8 rating passed.
+Next up is M2 (pilot corpus + reliability).
 
 ### State of the tree
 
@@ -22,19 +22,19 @@ live rating test (needs `ANTHROPIC_API_KEY`).
 
 ---
 
-## M1 — The rater · built 2026-07-03 · awaiting live test
+## M1 — The rater · built & verified 2026-07-03 · ✓
 
 Implemented the L1 instrument end-to-end: a prose segment → a validated 30-axis `Rating`
-via Claude structured output, persisted and read back.
+via Claude structured output, persisted and read back — and verified with a real call.
 
 **Shipped**
-- **Rater** (`instrument/rater.py`): builds a *dynamic* Pydantic output model — one
-  required field per axis, `value` a `Literal` int-enum (1–7) for scalar axes and a
-  `Literal` string-enum for forced-choice — so structured-output constrained decoding
-  guarantees all 30 axes are present and in range. The manual (golden rules + every
-  axis's anchors/choices/watch-fors) is the cached system prompt; adaptive thinking is
-  gated to Opus-class models (Haiku 4.5 supports neither adaptive thinking nor effort).
-  `to_rating` stores forced-choice values as the 1-based index into `choices`.
+- **Rater** (`instrument/rater.py`): forces a Claude structured output shaped as a
+  `scores` list of `{axis_id, value, confidence}`, where `axis_id` is a `Literal` enum of
+  the 30 ids and `value` is a plain integer (1–7 for scalar axes; the 1-based option
+  number for forced-choice — the manual numbers the choices). `to_rating` checks all 30
+  are present and clamps to range. The manual (golden rules + every axis's anchors /
+  choices / watch-fors) is the cached system prompt; adaptive thinking is gated to
+  Opus-class models (Haiku 4.5 supports neither adaptive thinking nor effort).
 - **Persistence** (`storage.py`): append-only `ratings/<id>.jsonl` (raters/runs accrue)
   + write-once `corpus/<id>.md` with YAML frontmatter. Repo-root default, `LSAP_DATA_DIR`
   override for tests.
@@ -45,12 +45,21 @@ via Claude structured output, persisted and read back.
   hint) and a `ScoresView` that renders the 30 scores grouped by field with a value bar,
   forced-choice label, confidence dots, and a flagged banner.
 
-**Decisions & the current API, verified against live docs + the installed SDK**
-- `client.messages.parse(output_format=<model>, system=, thinking=)` on **anthropic
-  0.116.0** — confirmed via `inspect.signature`; the dynamic schema passes the SDK's
-  `transform_schema` (A3 → 8-value string enum, L1 → int enum 1–7, all 30 required).
-- `claude-opus-4-8` canonical rater (adaptive thinking); `claude-haiku-4-5` second rater
-  (no thinking). No `temperature`/`top_p` (400 on Opus 4.8).
+**Decisions & the current API, verified against a real call**
+- **Output schema is a flat `scores` list — learned the hard way.** The first shape (a
+  30-property object with per-axis `{value, confidence}`) returned `400 "compiled grammar
+  is too large"` from strict structured outputs — and still did after dropping the
+  int-enums to plain ints. An object with 30 required properties blows up the
+  constrained-decoding grammar. A single list of one small element type (`axis_id` a
+  30-member enum + two plain ints) stays well under the cap; `to_rating` restores the
+  completeness guarantee. Guarded by a schema-shape unit test.
+- **Key-wiring fix.** `_default_client` now passes the resolved key to
+  `anthropic.Anthropic(api_key=…)`, and `config` reads `backend/.env` by absolute path. A
+  key placed in `.env` loads into settings, *not* the process env the SDK's zero-arg
+  constructor reads — so the documented `.env` flow was previously silently broken.
+- `client.messages.parse(output_format=<model>, system=…, thinking=…)` on **anthropic
+  0.116.0**. `claude-opus-4-8` canonical rater (adaptive thinking); `claude-haiku-4-5`
+  second rater (no thinking). No `temperature`/`top_p` (400 on Opus 4.8).
 
 **Reviewed** — an adversarial review confirmed the forced-choice indexing,
 frontmatter round-trip, ≥30-score guarantee, and error handling are correct, and found
@@ -64,12 +73,16 @@ one real defect:
   import form; added scanner unit tests.
 
 **Verified**
-- `uv run pytest` → **28 passed** (rater schema/conversion/thinking-gating, storage
-  round-trips, endpoint incl. the 409 guard and rerun-append, firewall scanner). `ruff`
-  clean. Frontend `vitest` → **2 passed** (renders scores from a mocked rating incl. the
-  forced-choice label); `build` + `oxlint` clean.
-- The live rating (real Claude call) is M1's Test step — set `ANTHROPIC_API_KEY`
-  in `backend/.env`, then paste a ~1–2k-word passage in the Rater Studio.
+- `uv run pytest` → **32 passed** (rater schema-shape / conversion / clamp / completeness
+  / thinking-gating / key-wiring, storage round-trips, endpoint incl. the 409 guard and
+  rerun-append, firewall scanner). `ruff` clean. Frontend `vitest` → **2 passed**;
+  `build` + `oxlint` clean.
+- **Live rating ✓ (real Opus 4.8 call).** An original 1,135-word interior scene scored to
+  a coherent, defensible 30-axis reading — A3 → *grief*, A5 → *unresolved*, S5 → *poetic*;
+  N5 experience-over-plot 6, N1 event-density 2, C4 polyphony 1, C5 interior 6, P2
+  epistemic-uncertainty 5, S2 length-variance 5 — persisted to
+  `ratings/return-to-the-flat.jsonl` (a re-run appended a 2nd rating) and
+  `corpus/return-to-the-flat.md`.
 
 ---
 

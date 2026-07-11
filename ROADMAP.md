@@ -27,13 +27,16 @@ in [DESIGN.md](DESIGN.md); the domain theory is in
 
 ## Phase 1 — The instrument (L1)
 
-- [ ] **M1 — Instrument, one segment end-to-end.** Implement `instrument/rater.py`
-  (Claude structured output → validated `Rating`), persist to `ratings/*.jsonl`, add a
-  `POST /api/rate` endpoint, and a Rater Studio "Rate" panel showing the 30 scores with
-  per-axis confidence and the `flagged` state.
+- [x] **M1 — Instrument, one segment end-to-end.** `instrument/rater.py` (Claude
+  structured output → validated `Rating`), persistence to `ratings/*.jsonl` +
+  `corpus/*.md`, `POST /api/rate`, and the Rater Studio "Rate" panel (30 scores with
+  per-axis confidence and the `flagged` state).
   **Test:** paste a ~1–2k-word passage → click Rate → 30 scores + confidence render;
   the rating is written to `ratings/<segment>.jsonl`; re-running yields a comparable
-  rating.
+  rating. **✓ verified 2026-07-03** — a live Opus 4.8 rating of an original 1,135-word
+  scene produced a coherent, defensible 30-axis reading (grief / unresolved / poetic;
+  single-voice deep interiority; near-static event density), persisted, and appended a
+  second rating on re-run.
 
 - [ ] **M2 — Pilot corpus + reliability.** Assemble the 30-segment corpus under
   `corpus/` (with deliberate redundant pairs); run both raters (`claude-opus-4-8` +

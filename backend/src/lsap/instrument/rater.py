@@ -1,11 +1,13 @@
 """The L1 rater — turns a prose segment into a validated `Rating` via Claude structured
 output under the frozen manual (DESIGN.md §4.1, §6.1).
 
-The output schema is built dynamically from the axis registry: one required field per
-axis, each a `{value, confidence}` object where `value` is a `Literal` int-enum (1–7)
-for scalar axes or a `Literal` string-enum for forced-choice axes. Structured outputs
-guarantee (a) every axis is present (required fields) and (b) every value is in range
-(enum constrained decoding) — so a malformed rating cannot come back.
+The output schema is a `scores` list of `{axis_id, value, confidence}` objects, where
+`axis_id` is a `Literal` enum of the 30 axis ids. A flat list (rather than an object with
+30 required properties, or per-axis int-enums) keeps the strict-output grammar under
+Anthropic's size cap — both of those shapes trip "compiled grammar is too large". `value`
+is a plain integer: the 1–7 anchored score for scalar axes, or the 1-based option number
+for forced-choice axes (the manual numbers the choices). `to_rating` checks that all 30
+axes are present and clamps values, so a malformed rating cannot come back.
 
 Interpretation space: this module must NEVER be imported by `lsap.engine`
 (enforced by `tests/test_firewall.py`).
@@ -61,22 +63,17 @@ def _supports_adaptive_thinking(model: str) -> bool:
 # Dynamic output schema --------------------------------------------------------------
 
 def build_rater_output_model(axes: list[AxisDef]) -> type[BaseModel]:
-    """A Pydantic model with one required field per axis id, each `{value, confidence}`."""
-    fields: dict[str, Any] = {}
-    for a in axes:
-        if a.kind == "forced_choice":
-            if not a.choices:
-                raise ValueError(f"forced-choice axis {a.id} has no choices")
-            value_type: Any = Literal[tuple(a.choices)]  # string enum
-        else:
-            value_type = Literal[1, 2, 3, 4, 5, 6, 7]  # int enum
-        axis_model = create_model(
-            f"Score_{a.id}",
-            value=(value_type, ...),
-            confidence=(Literal[1, 2, 3, 4, 5], ...),
-        )
-        fields[a.id] = (axis_model, ...)
-    return create_model("RaterOutput", **fields)
+    """A `{scores: list[{axis_id, value, confidence}]}` model. `axis_id` is a Literal enum
+    of the 30 ids; a flat list keeps the strict-output grammar under Anthropic's size cap
+    (an object with 30 required properties, or per-axis int-enums, exceeds it)."""
+    axis_ids = tuple(a.id for a in axes)
+    scored_axis = create_model(
+        "ScoredAxis",
+        axis_id=(Literal[axis_ids], ...),  # enum over the 30 ids — one small enum, not 30
+        value=(int, ...),
+        confidence=(int, ...),
+    )
+    return create_model("RaterOutput", scores=(list[scored_axis], ...))
 
 
 def to_rating(
@@ -87,17 +84,21 @@ def to_rating(
     rater_id: str,
     created_at: str,
 ) -> Rating:
-    """Convert the structured output into the canonical `Rating` (forced-choice values
-    stored as the 1-based index into `choices`)."""
+    """Convert the structured output into the canonical `Rating`. Checks that every axis
+    is present and clamps values; forced-choice values are the 1-based index into `choices`."""
+    by_id = {s.axis_id: s for s in output.scores}
     scores: list[AxisScore] = []
     for a in axes:
-        sub = getattr(output, a.id)
+        sub = by_id.get(a.id)
+        if sub is None:
+            raise RaterError(f"rating is missing axis {a.id}")
         if a.kind == "forced_choice":
             assert a.choices is not None
-            value = a.choices.index(sub.value) + 1
+            value = min(len(a.choices), max(1, int(sub.value)))  # 1-based option index
         else:
-            value = int(sub.value)
-        scores.append(AxisScore(axis_id=a.id, value=value, confidence=int(sub.confidence)))
+            value = min(7, max(1, int(sub.value)))  # clamp to the 1–7 anchored scale
+        confidence = min(5, max(1, int(sub.confidence)))  # clamp to 1–5
+        scores.append(AxisScore(axis_id=a.id, value=value, confidence=confidence))
     return Rating(
         segment_id=segment_id,
         rater_id=rater_id,
@@ -120,9 +121,11 @@ Golden rules:
   POV, time, and emotion boundaries); (3) score the axes; (4) score your confidence per
   axis, from 1 (guessing) to 5 (very high).
 
-For every one of the 30 axes return {value, confidence}:
-- Scalar axes: value is an integer 1–7 on the anchored scale (anchors given at 1/4/7).
-- Forced-choice axes: value is exactly one of the listed options.
+Return a `scores` list with exactly one entry per axis — all 30 — each with
+{axis_id, value, confidence}:
+- axis_id: the axis's id, e.g. "L1" or "A3".
+- value: for a scalar axis, an integer 1–7 on the anchored scale (anchors given at 1/4/7);
+  for a forced-choice axis, the NUMBER (1-based) of your chosen option from its list.
 - confidence: an integer 1–5.
 """
 
@@ -133,7 +136,8 @@ def build_manual(axes: list[AxisDef]) -> str:
         head = f"\n[{a.id}] {a.name} — {a.definition}"
         lines.append(head)
         if a.kind == "forced_choice" and a.choices:
-            lines.append(f"  choices: {', '.join(a.choices)}")
+            numbered = "; ".join(f"{i + 1}={c}" for i, c in enumerate(a.choices))
+            lines.append(f"  choices (return the number): {numbered}")
         elif a.anchors:
             anchors = "; ".join(f"{k}={v}" for k, v in sorted(a.anchors.items()))
             lines.append(f"  scale: {anchors}")

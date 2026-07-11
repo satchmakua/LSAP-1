@@ -11,7 +11,7 @@ analysis↔generation firewall).
 
 **Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Status:** **M1 (the rater) built & reviewed** — paste a segment and score it on all 30 axes via Claude; awaiting the live rating test (needs `ANTHROPIC_API_KEY`). See [PROGRESS.md](PROGRESS.md). Next milestone: pilot corpus + reliability (M2).
+**Status:** **M1 (the rater) complete & verified** — paste a segment and score it on all 30 axes via Claude; a live Opus 4.8 rating passed. See [PROGRESS.md](PROGRESS.md). Next milestone: pilot corpus + reliability (M2).
 
 ## Run it
 
