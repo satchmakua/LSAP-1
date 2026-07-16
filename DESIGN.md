@@ -7,7 +7,7 @@
 
 This document is the **engineering** design for LSAP-1. The *theory* — the L0–L7 stack,
 the Epistemic Charter, the discipline substrate — lives in
-[LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md) and is the source of
+[LSAP_Foundational_Blueprint.md](docs/LSAP_Foundational_Blueprint.md) and is the source of
 truth for *why* the system decomposes the way it does. This doc decides *how to build
 it*: the stack, the exact data contracts, the module boundaries, and a runnable
 milestone order. Where the two disagree, the blueprint wins on theory and this doc wins
@@ -440,7 +440,7 @@ classifier · L7 multi-agent simulation · the Work-Description combinator (D3).
 
 ## 10. References
 
-- **[LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md)** — the canonical
+- **[LSAP_Foundational_Blueprint.md](docs/LSAP_Foundational_Blueprint.md)** — the canonical
   theory (L0–L7 stack, Epistemic Charter, glossary). This design implements Phases 1–4 of
   its roadmap.
 - **Prior art / the niche** (verified 2026-07-02): existing computational tools — **Stylo**

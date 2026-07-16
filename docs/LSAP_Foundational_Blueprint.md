@@ -402,11 +402,11 @@ A buildable shape you can hand to Claude Code. It matches the phase-gated, miles
 ```
 lsap/
 ├── README.md                     # elevator pitch + link to this blueprint
-├── LSAP_Foundational_Blueprint.md# this file — the canonical spec (L0–L7 + charter)
 ├── ROADMAP.md                    # Part VI, as living phase gates + exit criteria
 ├── DECISIONS.md                  # every canonical choice + why (axis names, firewall…)
 ├── ARCHITECTURE.md               # the stack as an engineering diagram
 ├── docs/
+│   ├── LSAP_Foundational_Blueprint.md # this file — the canonical spec (L0–L7 + charter)
 │   ├── charter.md                # §3 extracted — the load-bearing constraints
 │   ├── craft-primer.md           # L0 grammar/craft curriculum (pedagogy sub-module)
 │   ├── glossary.md               # §16 — single source of truth for terms

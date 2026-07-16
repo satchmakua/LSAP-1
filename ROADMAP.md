@@ -2,7 +2,7 @@
 
 The milestone checklist — build the next unchecked milestone in order. Full rationale is
 in [DESIGN.md](DESIGN.md); the domain theory is in
-[LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md).
+[LSAP_Foundational_Blueprint.md](docs/LSAP_Foundational_Blueprint.md).
 
 **Rules of the road:**
 - Each milestone is an **independently runnable** slice — something actually testable end-to-end.

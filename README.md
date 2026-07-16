@@ -34,7 +34,7 @@ rater, and score it on all 30 axes. The API is at **http://localhost:8000**
 - **[DESIGN.md](DESIGN.md)** — the engineering spec: stack, data contracts, architecture, milestones.
 - **[ROADMAP.md](ROADMAP.md)** — the milestone checklist (M0 done; M1–M4 next).
 - **[PROGRESS.md](PROGRESS.md)** — the build log.
-- **[LSAP_Foundational_Blueprint.md](LSAP_Foundational_Blueprint.md)** — the domain theory (the L0–L7 stack and the Epistemic Charter).
+- **[LSAP_Foundational_Blueprint.md](docs/LSAP_Foundational_Blueprint.md)** — the domain theory (the L0–L7 stack and the Epistemic Charter).
 - **[docs/adr/](docs/adr/)** — architecture decision records, including the [analysis/generation firewall](docs/adr/0002-analysis-generation-firewall.md).
 
 ## Layout
