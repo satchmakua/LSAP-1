@@ -402,11 +402,11 @@ A buildable shape: a phase-gated, milestone-driven repository with explicit exit
 ```
 lsap/
 ├── README.md                     # elevator pitch + link to this blueprint
-├── LSAP_Foundational_Blueprint.md# this file — the canonical spec (L0–L7 + charter)
 ├── ROADMAP.md                    # Part VI, as living phase gates + exit criteria
 ├── DECISIONS.md                  # every canonical choice + why (axis names, firewall…)
 ├── ARCHITECTURE.md               # the stack as an engineering diagram
 ├── docs/
+│   ├── LSAP_Foundational_Blueprint.md # this file — the canonical spec (L0–L7 + charter)
 │   ├── charter.md                # §3 extracted — the load-bearing constraints
 │   ├── craft-primer.md           # L0 grammar/craft curriculum (pedagogy sub-module)
 │   ├── glossary.md               # §16 — single source of truth for terms
