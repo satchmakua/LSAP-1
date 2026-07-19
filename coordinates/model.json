@@ -1,0 +1,929 @@
+{
+  "version": 1,
+  "axis_ids": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5",
+    "N1",
+    "N2",
+    "N3",
+    "N4",
+    "N5",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "A1",
+    "A2",
+    "A4",
+    "S1",
+    "S2",
+    "S3",
+    "S4"
+  ],
+  "mean": [
+    4.116666666666666,
+    4.85,
+    5.066666666666666,
+    3.65,
+    5.416666666666667,
+    3.3,
+    2.7,
+    3.0166666666666666,
+    4.083333333333333,
+    5.483333333333333,
+    5.133333333333334,
+    2.55,
+    5.033333333333333,
+    2.0833333333333335,
+    4.9,
+    2.4166666666666665,
+    3.8833333333333333,
+    3.5166666666666666,
+    3.75,
+    4.533333333333333,
+    3.15,
+    3.2666666666666666,
+    4.666666666666667,
+    4.266666666666667,
+    5.233333333333333,
+    5.766666666666667,
+    4.733333333333333
+  ],
+  "scale": [
+    1.1667857082124757,
+    1.4326548781894402,
+    1.18133634311129,
+    1.3238202294873727,
+    0.8668269082630562,
+    1.46401275039985,
+    1.5842979517754858,
+    1.1216307572260826,
+    1.5496415356103772,
+    1.5993922456844523,
+    1.5271614918607075,
+    1.65,
+    1.8526257642120338,
+    0.9753916592266351,
+    1.6299284237863536,
+    1.8889297381203873,
+    1.778029496068299,
+    0.7797791710193057,
+    1.3949313005783952,
+    1.2970050972229148,
+    1.3671747023210556,
+    1.0225241100118645,
+    1.2202003478482084,
+    0.7930251502246879,
+    1.054619467970425,
+    0.9893881386437221,
+    1.8336363385966754
+  ],
+  "components": [
+    [
+      0.17366804546863598,
+      0.23501869011756057,
+      0.18725644636884808,
+      0.21585006454639855,
+      0.1491401055730854,
+      -0.11409702964803643,
+      0.2089698782499202,
+      0.2171922521393871,
+      0.2406137273387052,
+      0.21215786433279307,
+      0.22855127949596793,
+      0.22865230135934708,
+      0.24212081090280857,
+      0.051279130164296347,
+      0.24956001174040293,
+      0.17413813107432177,
+      0.212435621290993,
+      0.09675771875337522,
+      0.07054187613604225,
+      0.2397890987201713,
+      -0.08770841928969403,
+      0.15807237031869556,
+      0.1719976891028811,
+      0.044437195427529684,
+      0.2179588968762488,
+      0.23003843829858497,
+      0.25286479962189784
+    ],
+    [
+      -0.09333608505657257,
+      -0.16491776190280563,
+      -0.03147214313649242,
+      -0.013791729720481536,
+      0.116019387607745,
+      0.07297279801646828,
+      0.09678204404431026,
+      0.2503095467412372,
+      -0.029770246478806054,
+      -0.07935449648914941,
+      -0.12154448589732518,
+      0.21544009984712792,
+      -0.10948888505114888,
+      0.12561998201627766,
+      -0.14580382990126003,
+      0.22775067636876795,
+      0.28798390733074436,
+      0.39637174509863565,
+      0.4891630516742516,
+      0.06568362287387008,
+      -0.22206641056106807,
+      -0.10443675613122948,
+      -0.2886643430447525,
+      -0.09491924797718716,
+      -0.14123948779534526,
+      -0.07519388599188913,
+      -0.20256921212520854
+    ],
+    [
+      -0.3363383803003168,
+      -0.1864171456056122,
+      -0.3385474370021214,
+      -0.22604521624990992,
+      -0.2902733065277711,
+      0.24813312862701695,
+      -0.04655173662237361,
+      0.12318760603004544,
+      -0.09546690161733677,
+      0.12359340134673832,
+      0.29420054639536286,
+      0.0179595707173103,
+      0.2401242929385176,
+      -0.028444151053355394,
+      0.15666112465903914,
+      -0.138900190762656,
+      -0.01733156499647383,
+      0.01732551497386069,
+      0.09525078559879177,
+      0.04860449303410422,
+      -0.22371907672381405,
+      0.3593779898218345,
+      0.16184356844484496,
+      -0.30074949486879166,
+      0.034970488163045946,
+      0.01981886869367092,
+      0.013236597727473296
+    ],
+    [
+      -0.28668647616199056,
+      -0.13107606432973995,
+      -0.28584107686332905,
+      -0.1236691974922285,
+      0.20345598717374438,
+      -0.2374390739007355,
+      0.035573931947191946,
+      0.08857360791357294,
+      0.07016651917866669,
+      0.39319592685680893,
+      0.12731600697191253,
+      -0.00031739411875278406,
+      0.08435028165616511,
+      0.1993148532516724,
+      0.09082516022611328,
+      -0.096974896092525,
+      -0.1484432362492817,
+      -0.14961850726983553,
+      0.12839216691760955,
+      0.11316158910758746,
+      0.2491003034251625,
+      -0.19340673003445663,
+      -0.2301836308131432,
+      0.36143392612139696,
+      -0.26099342062591546,
+      0.16749988743389155,
+      0.05963771699745904
+    ],
+    [
+      0.003321781764924252,
+      -0.05571641202523266,
+      -0.1194599550954853,
+      -0.1586281139514447,
+      0.33710882079719146,
+      0.4094005188739533,
+      -0.12457063044472101,
+      0.08742923883202709,
+      0.011304455930828475,
+      -0.07428400916213491,
+      -0.07222808969238788,
+      0.20398170894466433,
+      -0.14133793784206933,
+      -0.2287972541781229,
+      -0.17982848858477554,
+      0.19697508041059303,
+      0.03667408013223508,
+      -0.16200535791289827,
+      -0.042993750352750076,
+      0.17226192160077983,
+      0.01475710172365144,
+      0.27635924593372463,
+      0.3132171753935213,
+      0.4588029447512431,
+      -0.1036714204331113,
+      -0.04440129449191629,
+      -0.008653807345957023
+    ]
+  ],
+  "explained_variance_ratio": [
+    0.4484,
+    0.1152,
+    0.105,
+    0.0699,
+    0.0555
+  ],
+  "residual": 0.206,
+  "score_min": [
+    -6.939030157246366,
+    -4.395180262839521,
+    -3.6336468634609917,
+    -3.3142447779678674,
+    -1.983598283731896
+  ],
+  "score_max": [
+    4.8965166924863865,
+    2.9294578975043977,
+    3.776817800231529,
+    3.615551748228635,
+    2.1488254283561283
+  ],
+  "factors": [
+    {
+      "id": "C1",
+      "label": "Figurative Density \u00b7 Interior/Exterior Ratio \u00b7 Cognitive Transparency",
+      "explained_variance": 0.4484,
+      "top_axes": [
+        [
+          "S4",
+          0.253
+        ],
+        [
+          "C5",
+          0.25
+        ],
+        [
+          "C3",
+          0.242
+        ]
+      ]
+    },
+    {
+      "id": "C2",
+      "label": "Meaning Structure \u00b7 Moral-Structure Clarity \u00b7 Intensity Curve",
+      "explained_variance": 0.1152,
+      "top_axes": [
+        [
+          "P4",
+          0.489
+        ],
+        [
+          "P3",
+          0.396
+        ],
+        [
+          "A4",
+          -0.289
+        ]
+      ]
+    },
+    {
+      "id": "C3",
+      "label": "Emotional Volatility \u00b7 Semantic Density \u00b7 Lexical Complexity",
+      "explained_variance": 0.105,
+      "top_axes": [
+        [
+          "A2",
+          0.359
+        ],
+        [
+          "L3",
+          -0.339
+        ],
+        [
+          "L1",
+          -0.336
+        ]
+      ]
+    },
+    {
+      "id": "C4",
+      "label": "Plot Centrality \u00b7 Rhythm Regularity \u00b7 Lexical Complexity",
+      "explained_variance": 0.0699,
+      "top_axes": [
+        [
+          "N5",
+          0.393
+        ],
+        [
+          "S1",
+          0.361
+        ],
+        [
+          "L1",
+          -0.287
+        ]
+      ]
+    },
+    {
+      "id": "C5",
+      "label": "Rhythm Regularity \u00b7 Event Density \u00b7 Repetition Pattern",
+      "explained_variance": 0.0555,
+      "top_axes": [
+        [
+          "S1",
+          0.459
+        ],
+        [
+          "N1",
+          0.409
+        ],
+        [
+          "L5",
+          0.337
+        ]
+      ]
+    }
+  ],
+  "points": [
+    {
+      "segment_id": "absurd-bureau",
+      "profile": "Comic absurdity: playful escalating logic, an absurd premise treated deadpan, light affect, linear, comic register.",
+      "pair": null,
+      "coords": [
+        0.4844,
+        0.8004,
+        0.4806,
+        0.4864,
+        0.1988
+      ],
+      "scores": [
+        -1.205714,
+        1.467125,
+        -0.072113,
+        0.0566,
+        -1.162112
+      ]
+    },
+    {
+      "segment_id": "baroque-memory",
+      "profile": "Maximal expansion: very long deeply subordinated sentences, dense abstraction and metaphor, deep interiority, elegiac tone, high figurative density.",
+      "pair": null,
+      "coords": [
+        0.8665,
+        0.4234,
+        0.4331,
+        0.4621,
+        0.2728
+      ],
+      "scores": [
+        3.316618,
+        -1.293657,
+        -0.424413,
+        -0.111852,
+        -0.856246
+      ]
+    },
+    {
+      "segment_id": "catalogue-estate",
+      "profile": "Deadpan catalogue: list/inventory structure, flat affect, documentary, near-zero interiority, accumulation as form.",
+      "pair": null,
+      "coords": [
+        0.2009,
+        0.9542,
+        0.1804,
+        0.4889,
+        0.5015
+      ],
+      "scores": [
+        -4.560699,
+        2.59402,
+        -2.296969,
+        0.073751,
+        0.088686
+      ]
+    },
+    {
+      "segment_id": "child-attic",
+      "profile": "Naive child perspective: simple diction, high cognitive transparency, wonder and unease, concrete, slight misreading of the adult world.",
+      "pair": null,
+      "coords": [
+        0.4284,
+        0.5102,
+        1.0,
+        0.495,
+        0.3015
+      ],
+      "scores": [
+        -1.868952,
+        -0.65804,
+        3.776818,
+        0.115878,
+        -0.737704
+      ]
+    },
+    {
+      "segment_id": "cosmic-shore",
+      "profile": "Mounting cosmic dread: ornate abstract diction, the world's ontology grows unstable, horror rises to overwhelming intensity, ends unresolved.",
+      "pair": null,
+      "coords": [
+        0.946,
+        0.6531,
+        0.5129,
+        0.3208,
+        0.9098
+      ],
+      "scores": [
+        4.256933,
+        0.388856,
+        0.166972,
+        -1.091349,
+        1.776105
+      ]
+    },
+    {
+      "segment_id": "courtroom",
+      "profile": "Forensic argument: high causal clarity, exterior, procedural and precise, low affect, strict logical sequencing.",
+      "pair": null,
+      "coords": [
+        0.265,
+        0.343,
+        0.0596,
+        0.1653,
+        0.5155
+      ],
+      "scores": [
+        -3.80293,
+        -1.883194,
+        -3.191712,
+        -2.168925,
+        0.146513
+      ]
+    },
+    {
+      "segment_id": "dissolve-room",
+      "profile": "Dissolving subject: unstable sense of self, fragmented and looping, grief and confusion, high interiority, time slips.",
+      "pair": null,
+      "coords": [
+        1.0,
+        0.772,
+        0.6823,
+        0.4766,
+        0.6384
+      ],
+      "scores": [
+        4.896517,
+        1.259697,
+        1.422567,
+        -0.011759,
+        0.654521
+      ]
+    },
+    {
+      "segment_id": "domestic-dinner",
+      "profile": "Realist tension with subtext: balanced surface, meaning beneath small talk, restrained affect, realist register, steady time.",
+      "pair": null,
+      "coords": [
+        0.4801,
+        0.6538,
+        0.5925,
+        0.503,
+        0.0
+      ],
+      "scores": [
+        -1.256306,
+        0.393388,
+        0.756715,
+        0.17115,
+        -1.983598
+      ]
+    },
+    {
+      "segment_id": "dream-house",
+      "profile": "Dream logic: unstable ontology, associative transitions, surreal register, fragmented, low causal clarity.",
+      "pair": null,
+      "coords": [
+        0.9888,
+        0.9843,
+        0.4909,
+        0.5398,
+        0.8353
+      ],
+      "scores": [
+        4.764381,
+        2.814474,
+        0.003894,
+        0.426483,
+        1.468303
+      ]
+    },
+    {
+      "segment_id": "elegy-orchard",
+      "profile": "Restrained grief: quiet poetic interiority, suppressed emotion, unresolved ending, documentary drift with controlled figuration.",
+      "pair": "p_elegy",
+      "coords": [
+        0.6296,
+        0.5177,
+        0.5854,
+        0.5102,
+        0.2126
+      ],
+      "scores": [
+        0.513201,
+        -0.603398,
+        0.704269,
+        0.22143,
+        -1.105091
+      ]
+    },
+    {
+      "segment_id": "elegy-station",
+      "profile": "Restrained grief: quiet poetic interiority, suppressed emotion, unresolved ending, documentary drift with controlled figuration.",
+      "pair": "p_elegy",
+      "coords": [
+        0.7028,
+        0.5068,
+        0.5285,
+        0.5731,
+        0.14
+      ],
+      "scores": [
+        1.378834,
+        -0.682926,
+        0.282759,
+        0.657378,
+        -1.404973
+      ]
+    },
+    {
+      "segment_id": "fable-river",
+      "profile": "Mythic fable: timeless oral register, clear moral structure, archetypal figures, low interiority, simple cadenced sentences.",
+      "pair": null,
+      "coords": [
+        0.336,
+        0.3112,
+        0.3899,
+        0.527,
+        0.9879
+      ],
+      "scores": [
+        -2.962547,
+        -2.115391,
+        -0.74395,
+        0.337418,
+        2.099019
+      ]
+    },
+    {
+      "segment_id": "frag-party",
+      "profile": "Fragmented modernist consciousness: time and viewpoint fragment, several minds bleed together, stream of consciousness, high interiority, associative and non-linear.",
+      "pair": "p_frag",
+      "coords": [
+        0.8627,
+        0.6786,
+        0.4619,
+        0.6529,
+        0.1469
+      ],
+      "scores": [
+        3.27092,
+        0.575268,
+        -0.210606,
+        1.21049,
+        -1.376523
+      ]
+    },
+    {
+      "segment_id": "frag-window",
+      "profile": "Fragmented modernist consciousness: time and viewpoint fragment, several minds bleed together, stream of consciousness, high interiority, associative and non-linear.",
+      "pair": "p_frag",
+      "coords": [
+        0.9339,
+        0.7159,
+        0.4341,
+        0.6727,
+        0.3203
+      ],
+      "scores": [
+        4.114736,
+        0.848659,
+        -0.417123,
+        1.34717,
+        -0.659862
+      ]
+    },
+    {
+      "segment_id": "gothic-manor",
+      "profile": "Gothic melodrama: high emotional volatility, ornate overwrought diction, dread and awe, unstable atmosphere.",
+      "pair": null,
+      "coords": [
+        0.7784,
+        0.4518,
+        0.5669,
+        0.2989,
+        0.8784
+      ],
+      "scores": [
+        2.273451,
+        -1.085828,
+        0.567153,
+        -1.243053,
+        1.64612
+      ]
+    },
+    {
+      "segment_id": "letter-confession",
+      "profile": "Intimate epistolary confession: first-person confessional voice, high interiority, direct address, medium controlled affect.",
+      "pair": null,
+      "coords": [
+        0.6608,
+        0.2869,
+        0.5444,
+        0.4174,
+        0.2415
+      ],
+      "scores": [
+        0.882076,
+        -2.293961,
+        0.400555,
+        -0.421627,
+        -0.985747
+      ]
+    },
+    {
+      "segment_id": "min-kitchen",
+      "profile": "Extreme compression and restraint: very short plain declarative sentences, concrete exterior detail only, almost no interiority, flat affectless tone, strictly linear, documentary register.",
+      "pair": "p_min",
+      "coords": [
+        0.1137,
+        1.0,
+        0.646,
+        0.7976,
+        0.8141
+      ],
+      "scores": [
+        -5.593739,
+        2.929458,
+        1.153874,
+        2.213184,
+        1.380541
+      ]
+    },
+    {
+      "segment_id": "min-laundromat",
+      "profile": "Extreme compression and restraint: very short plain declarative sentences, concrete exterior detail only, almost no interiority, flat affectless tone, strictly linear, documentary register.",
+      "pair": "p_min",
+      "coords": [
+        0.0,
+        0.7238,
+        0.543,
+        1.0,
+        0.7504
+      ],
+      "scores": [
+        -6.93903,
+        0.906594,
+        0.390293,
+        3.615552,
+        1.11734
+      ]
+    },
+    {
+      "segment_id": "noir-alley",
+      "profile": "Hardboiled exterior: terse wry concrete prose, moral greyness, exterior behavior and dialogue, low interiority, documentary-noir register.",
+      "pair": null,
+      "coords": [
+        0.4537,
+        0.5687,
+        0.7062,
+        0.3867,
+        0.0591
+      ],
+      "scores": [
+        -1.569811,
+        -0.229498,
+        1.599497,
+        -0.634156,
+        -1.739475
+      ]
+    },
+    {
+      "segment_id": "paradox-library",
+      "profile": "Epistemic instability and recursion: cool abstract essayistic voice, reality-rules bend, paradox and infinite regress, very low emotional volatility, controlled.",
+      "pair": "p_paradox",
+      "coords": [
+        0.8874,
+        0.87,
+        0.1939,
+        0.456,
+        0.4245
+      ],
+      "scores": [
+        3.563465,
+        1.977492,
+        -2.196656,
+        -0.15449,
+        -0.229582
+      ]
+    },
+    {
+      "segment_id": "paradox-map",
+      "profile": "Epistemic instability and recursion: cool abstract essayistic voice, reality-rules bend, paradox and infinite regress, very low emotional volatility, controlled.",
+      "pair": "p_paradox",
+      "coords": [
+        0.7233,
+        0.7501,
+        0.0,
+        0.3631,
+        0.1677
+      ],
+      "scores": [
+        1.621059,
+        1.09939,
+        -3.633647,
+        -0.79795,
+        -1.290694
+      ]
+    },
+    {
+      "segment_id": "paranoia-flat",
+      "profile": "Interior paranoia: paranoid over-reading, unstable epistemics, rising dread, claustrophobic interiority.",
+      "pair": null,
+      "coords": [
+        0.8908,
+        0.6955,
+        0.7696,
+        0.3992,
+        0.5615
+      ],
+      "scores": [
+        3.603731,
+        0.69874,
+        2.069473,
+        -0.54772,
+        0.336684
+      ]
+    },
+    {
+      "segment_id": "pastoral-dawn",
+      "profile": "Lyric pastoral awe: imagery-dense poetic prose, low event density, awe and stillness, long flowing sentences.",
+      "pair": null,
+      "coords": [
+        0.5391,
+        0.1833,
+        0.207,
+        0.7207,
+        0.7834
+      ],
+      "scores": [
+        -0.557937,
+        -3.052438,
+        -2.099618,
+        1.68014,
+        1.253607
+      ]
+    },
+    {
+      "segment_id": "scifi-clinical",
+      "profile": "Clinical documentary futurism: precise technical affectless prose, stable ontology, exterior observation, very low figuration.",
+      "pair": null,
+      "coords": [
+        0.0943,
+        0.8741,
+        0.179,
+        0.0901,
+        0.466
+      ],
+      "scores": [
+        -5.822771,
+        2.007306,
+        -2.307065,
+        -2.689666,
+        -0.057941
+      ]
+    },
+    {
+      "segment_id": "second-person-city",
+      "profile": "Experimental second person: address the reader as 'you', meta and self-aware, experimental register, present tense.",
+      "pair": null,
+      "coords": [
+        0.9249,
+        0.7356,
+        0.5039,
+        0.4401,
+        0.5954
+      ],
+      "scores": [
+        4.008136,
+        0.992738,
+        0.100754,
+        -0.264229,
+        0.476668
+      ]
+    },
+    {
+      "segment_id": "tender-morning",
+      "profile": "Quiet tenderness: warm gentle prose, joy and tenderness, medium interiority, realist, small domestic grace.",
+      "pair": null,
+      "coords": [
+        0.3502,
+        0.2778,
+        0.5302,
+        0.6819,
+        0.0123
+      ],
+      "scores": [
+        -2.794069,
+        -2.360515,
+        0.295117,
+        1.41122,
+        -1.932834
+      ]
+    },
+    {
+      "segment_id": "thriller-stairwell",
+      "profile": "High event density procedural thriller: fast linear exterior action, short kinetic sentences, rising intensity, plot-driven, minimal interiority.",
+      "pair": null,
+      "coords": [
+        0.1356,
+        0.532,
+        0.9134,
+        0.0,
+        0.5133
+      ],
+      "scores": [
+        -5.334611,
+        -0.498694,
+        3.135225,
+        -3.314245,
+        0.137771
+      ]
+    },
+    {
+      "segment_id": "trap-office",
+      "profile": "Blocked agency and bureaucratic dread: the protagonist cannot act, rules shift under them, flat procedural surface with rising unease, stable-seeming world on unstable ground.",
+      "pair": null,
+      "coords": [
+        0.5592,
+        0.7369,
+        0.5438,
+        0.4671,
+        0.4506
+      ],
+      "scores": [
+        -0.320165,
+        1.002127,
+        0.396377,
+        -0.077226,
+        -0.121591
+      ]
+    },
+    {
+      "segment_id": "vision-desert",
+      "profile": "Visionary teleology: awe, meaning affirmed, poetic and directional, a movement toward revelation.",
+      "pair": null,
+      "coords": [
+        0.7601,
+        0.0,
+        0.3143,
+        0.6357,
+        0.701
+      ],
+      "scores": [
+        2.057067,
+        -4.39518,
+        -1.304697,
+        1.090986,
+        0.913269
+      ]
+    },
+    {
+      "segment_id": "war-trench",
+      "profile": "Visceral exterior intensity: concrete sensory event-dense prose, very high intensity, dread, alternating short and long sentences.",
+      "pair": null,
+      "coords": [
+        0.592,
+        0.4905,
+        0.7165,
+        0.3194,
+        1.0
+      ],
+      "scores": [
+        0.068156,
+        -0.80261,
+        1.676259,
+        -1.100583,
+        2.148825
+      ]
+    }
+  ],
+  "n_segments": 30
+}

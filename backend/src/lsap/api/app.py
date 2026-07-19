@@ -14,6 +14,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from lsap import storage
+from lsap.coordinates import projection
+from lsap.coordinates.projection import ProjectionModel
 from lsap.instrument import rater
 from lsap.instrument.rater import RaterError
 from lsap.instrument.schema import AxisDef, Rating, load_axes
@@ -115,3 +117,51 @@ def get_segment(segment_id: str) -> dict:
         raise HTTPException(status_code=404, detail="segment not found")
     seg["ratings"] = [r.model_dump() for r in storage.load_ratings(segment_id)]
     return seg
+
+
+# --- M3: the coordinate system -------------------------------------------------------
+
+
+def _projection() -> ProjectionModel:
+    model = ProjectionModel.load()
+    if model is None:
+        raise HTTPException(
+            status_code=409,
+            detail="no fitted projection — run `scripts/fit_projection.py` first",
+        )
+    return model
+
+
+@app.get("/api/cspace")
+def cspace() -> dict:
+    """The fitted C-space map: factors (derived label + variance) and the corpus points."""
+    m = _projection()
+    return {
+        "factors": m.factors,
+        "residual": m.residual,
+        "n_segments": m.d["n_segments"],
+        "points": [
+            {
+                "segment_id": p["segment_id"],
+                "profile": p.get("profile"),
+                "pair": p.get("pair"),
+                "coords": p["coords"],
+            }
+            for p in m.points
+        ],
+    }
+
+
+@app.get("/api/segments/{segment_id}/projection")
+def segment_projection(segment_id: str, k: int = 5) -> dict:
+    """Project a rated segment into C-space and return its nearest corpus neighbours."""
+    m = _projection()
+    values = projection.consensus_for_segment(segment_id, m.axis_ids)
+    if values is None:
+        raise HTTPException(status_code=404, detail="segment has no ratings to project")
+    nearest = m.neighbors(m.raw_scores(values), k=k, exclude=segment_id)
+    return {
+        "segment_id": segment_id,
+        "vector": m.project(values).model_dump(),
+        "neighbors": [n.model_dump() for n in nearest],
+    }

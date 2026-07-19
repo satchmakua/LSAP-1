@@ -1,6 +1,16 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { fetchAxes, rateSegment, type AxisDef, type Rating } from './api'
+import {
+  fetchAxes,
+  fetchCSpace,
+  fetchProjection,
+  rateSegment,
+  type AxisDef,
+  type CSpace,
+  type Rating,
+  type SegmentProjection,
+} from './api'
 import { ScoresView } from './components/ScoresView'
+import { CSpaceMap } from './components/CSpaceMap'
 import './App.css'
 
 const RATERS = [
@@ -17,11 +27,20 @@ export default function App() {
   const [rating, setRating] = useState<Rating | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [cspace, setCspace] = useState<CSpace | null>(null)
+  const [proj, setProj] = useState<SegmentProjection | null>(null)
 
   useEffect(() => {
     fetchAxes()
       .then(setAxes)
       .catch((e: unknown) => setAxesError(String(e)))
+  }, [])
+
+  useEffect(() => {
+    // 409 until a projection has been fitted (scripts/fit_projection.py) — map stays hidden.
+    fetchCSpace()
+      .then(setCspace)
+      .catch(() => setCspace(null))
   }, [])
 
   const words = text.trim() ? text.trim().split(/\s+/).length : 0
@@ -34,6 +53,11 @@ export default function App() {
     try {
       const res = await rateSegment({ text, title: title || undefined, rater })
       setRating(res.rating)
+      try {
+        setProj(await fetchProjection(res.segment_id))
+      } catch {
+        setProj(null) // no fitted projection yet
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err))
     } finally {
@@ -90,6 +114,13 @@ export default function App() {
         </p>
       )}
       {rating && axes && <ScoresView axes={axes} rating={rating} />}
+      {cspace && (
+        <CSpaceMap
+          cspace={cspace}
+          highlight={proj ? { segment_id: proj.segment_id, coords: proj.vector.coords } : null}
+          neighbors={proj?.neighbors}
+        />
+      )}
     </main>
   )
 }
