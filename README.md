@@ -11,7 +11,13 @@ analysis↔generation firewall).
 
 **Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Status:** **M3 (coordinate system v1) complete & verified** — rate a segment on 30 anchored axes, then watch it land in a fitted C-space next to its nearest kin. The projection over the 30-segment pilot corpus locks 5 factors (79.4% explained, C6 residual 20.6%); a new minimalist passage projects nearest the corpus's minimalist twins. See [PROGRESS.md](PROGRESS.md), `reliability/report.md`, `coordinates/model.json`. Next milestone: the generative engine MVP (M4).
+**Status: the v1 slice (M0–M4) is complete and verified.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
+
+- **Instrument:** 30 anchored axes, Claude-rated under a frozen manual. Inter-rater agreement on a 30-segment pilot: 26/30 axes reliable.
+- **Coordinates:** 5 locked factors, **79.4% explained, C6 residual 20.6%**; 7/8 redundant twin-pairs are mutual nearest neighbours.
+- **Engine:** operators → rules → a stateful WS/PL/MF/EF/LR loop. Moving compression 0.05 → 0.95 took mean sentence length **6.3 → 140.5 words** and moved **4/4** predicted instrument axes up (Syntactic Depth 1→7).
+
+See [PROGRESS.md](PROGRESS.md), `reliability/report.md`, `coordinates/model.json`.
 
 ## Run it
 
@@ -25,18 +31,26 @@ npm run lint    # ruff + oxlint
 npm run build   # frontend production build
 ```
 
-Open **http://localhost:5173**: paste a ~1–3k-word passage, pick a rater, and score it on
-all 30 axes — then see it placed in the **C-Space Map** beside its nearest neighbours.
+Open **http://localhost:5173** — two tabs:
+
+- **Instrument** — paste a ~1–3k-word passage, pick a rater, score it on all 30 axes, and
+  see it placed in the **C-Space Map** beside its nearest neighbours.
+- **Engine** — dial the five operators (or pick a preset), give a situation, and generate;
+  each paragraph shows its scene phase, language register, emotional energy and memory
+  field. "Re-rate this output" sends the prose back through the instrument — one-way.
+
 The API is at **http://localhost:8000** (`/health`, `/api/axes`, `POST /api/rate`,
-`/api/segments`, `/api/cspace`, `/api/segments/{id}/projection`).
+`/api/segments`, `/api/cspace`, `/api/segments/{id}/projection`, `/api/presets`,
+`POST /api/generate`).
 
 Operational runners (from `backend/`, needing `ANTHROPIC_API_KEY`):
 
 ```bash
-uv run python scripts/generate_corpus.py     # write the pilot corpus (idempotent)
-uv run python scripts/rate_corpus.py         # rate it with both raters (resumable)
+uv run python scripts/generate_corpus.py       # write the pilot corpus (idempotent)
+uv run python scripts/rate_corpus.py           # rate it with both raters (resumable)
 uv run python -m lsap.coordinates.reliability  # agreement / correlation / PCA report
-uv run python scripts/fit_projection.py      # fit + persist coordinates/model.json
+uv run python scripts/fit_projection.py        # fit + persist coordinates/model.json
+uv run python scripts/engine_ab.py --dial c1   # A/B a dial, then re-rate both runs
 ```
 
 ## Docs

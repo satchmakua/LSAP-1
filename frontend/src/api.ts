@@ -119,3 +119,69 @@ export async function fetchProjection(segmentId: string, k = 5): Promise<Segment
   if (!res.ok) throw new Error(await detail(res))
   return (await res.json()) as SegmentProjection
 }
+
+/* --- M4: the generative engine --- */
+
+export interface EngineDials {
+  c1: number
+  c2: number
+  c3: number
+  c4: number
+  c5: number
+  style_seed?: string | null
+}
+
+export interface EnginePreset {
+  id: string
+  name: string
+  description: string
+  dials: EngineDials
+}
+
+export interface EngineParagraph {
+  index: number
+  phase: string
+  language_register: string
+  emotional_energy: number
+  text: string
+  objects_seen: string[]
+  memory_note: string | null
+}
+
+export interface ConstraintSpec {
+  bands: Record<string, string>
+  rules: Record<string, string[]>
+  agential_pressure: string
+  perception: string
+  registers: string[]
+  phases: string[]
+  style_seed: string | null
+}
+
+export interface GenerationRun {
+  dials: EngineDials
+  spec: ConstraintSpec
+  situation: string
+  world: { facts: string[]; objects: string[] }
+  paragraphs: EngineParagraph[]
+}
+
+export async function fetchPresets(): Promise<EnginePreset[]> {
+  const res = await fetch('/api/presets')
+  if (!res.ok) throw new Error(await detail(res))
+  return (await res.json()) as EnginePreset[]
+}
+
+export async function generateProse(body: {
+  dials: EngineDials
+  situation: string
+  paragraphs: number
+}): Promise<GenerationRun> {
+  const res = await fetch('/api/generate', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) throw new Error(await detail(res))
+  return (await res.json()) as GenerationRun
+}

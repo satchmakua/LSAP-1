@@ -5,23 +5,70 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** M3 (coordinate system v1) complete & verified — the projection is
-fitted and persisted, and a new segment projects to sensible neighbours in the running
-app. Next up is M4 (the generative engine MVP) — the last milestone of the v1 slice.
+**Current phase:** **The v1 slice (M0–M4) is complete and verified.** You can rate a
+segment on 30 anchored axes, watch it land in a fitted C-space beside its kin, and dial
+the operators to generate measurably different prose — with the analysis/generation
+firewall intact throughout. Next work is v2+ (L4 tensor · L5 archetypes · L7 multi-agent
+· the D3 combinator), or deepening the pilot corpus toward real reliability.
 
 ### State of the tree
 
 | Area | Where | Status |
 |---|---|---|
-| API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]`, **`/api/cspace`, `/api/segments/{id}/projection`** live |
+| API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]`, `/api/cspace`, `/api/segments/{id}/projection`, **`GET /api/presets`, `POST /api/generate`** |
 | Instrument | `backend/src/lsap/instrument/` | `schema.py` + 30-axis `axes.yaml`; **`rater.py` implemented** (Claude structured output) |
 | Persistence | `backend/src/lsap/storage.py` | JSONL ratings + markdown corpus (git-diffable) |
 | Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | 30-segment pilot (`source: pilot`) + 60 ratings + reliability report |
 | Coordinates | `backend/src/lsap/coordinates/` | **`reliability.py` + `projection.py` implemented** (agreement / correlation / PCA / twins; fitted + persisted projection, neighbours) |
 | Fitted model | `coordinates/model.json` | 5 locked factors over 30 segments, 79.4% explained, C6 residual 20.6% |
-| Engine | `backend/src/lsap/engine/` | `Dials` + `to_bands` real; `operators.yaml` real; `compile_constraints` stubbed (M4) |
+| Engine | `backend/src/lsap/engine/` | **fully implemented** — `compiler.py` (rule tables, derived B6), `runtime.py` (state machine + WS/PL/MF/EF/LR loop), `presets.yaml`, `operators.yaml` |
 | Firewall | `backend/tests/test_firewall.py` | enforced & green (hardened: every import form + `storage`) |
-| Frontend | `frontend/src/` | Rater Studio (paste → rate → 30 scored axes) + **C-Space Map** (scatter, factor axes, neighbours) |
+| Frontend | `frontend/src/` | Tabbed: Rater Studio (rate → 30 axes) + C-Space Map (scatter, neighbours) · **Engine Console** (5 sliders, presets, per-paragraph state panel, re-rate) |
+
+---
+
+## M4 — Generative Engine MVP · built & verified 2026-07-03 · ✓
+
+The milestone the whole architecture exists to protect. The engine writes from operators
+and rules only — it has never seen the coordinate space fitted in M3 — and moving one
+slider moves the instrument's own measurements in the predicted direction.
+
+**Shipped**
+- **`engine/compiler.py`** — the pivot. Each dial band maps to a table of *instructions*
+  ("Nested clauses are allowed.", "Stack metaphors.", "Report only what a camera would
+  record.") rather than adjectives. Plus **B6 agential pressure derived, not dialled**
+  (`(c4 + (1 - c2)) / 2` — instability against blocked time is what makes a trap), a
+  perception filter (realist / noir / sebald / expressionist / modernist), and a language-
+  register palette guaranteed ≥2 so rotation always has somewhere to go.
+- **`engine/runtime.py`** — the deterministic state machine + rendering loop. Phase walks
+  establishment → drift → pressure → breakdown → residue; emotional energy follows the
+  phase curve scaled by c5; the register rotates every paragraph; the memory field makes
+  objects recur (stable dials) or contradict the world (c4 ≥ med). Claude renders one
+  paragraph per step — the loop, not a single prompt, is what makes it a simulator.
+- **`engine/presets.yaml`** (house / minimal / baroque / hallucinatory / thriller / trap),
+  `GET /api/presets`, `POST /api/generate`, and the **Engine Console** (5 sliders with live
+  bands, preset picker, per-paragraph state panel, world-state disclosure, re-rate button).
+- **`scripts/engine_ab.py`** — A/B one dial and re-rate both runs. The sanctioned one-way
+  crossing lives in a *script*, never in `engine/`.
+
+**Verified**
+- `uv run pytest` → **67 passed** (13 engine + 4 engine-endpoint added); `ruff` clean.
+  Frontend `vitest` → **6 passed**; `build` + `oxlint` clean. **The firewall test stayed
+  green** — `lsap.engine` imports only `lsap.config` and the SDK.
+- **Live A/B on c1** (`--dial c1 --paragraphs 4`), same situation both runs:
+  mean sentence length **6.3 → 140.5 words**. A: *"The man stood inside the doorway. He had
+  not been here for months."* B: *"The brass key turned in a lock that gave with the
+  reluctance of a throat clearing itself of some old, unsaid thing…"*
+- **Re-rating moved 4/4 expected axes up**: L2 Syntactic Depth **1→7**, S4 Figurative
+  Density 2→6, L3 Semantic Density 2→5, L1 Lexical Complexity 1→4.
+- State advanced per paragraph: phases `[establishment, drift, pressure, residue]`,
+  registers alternating every step, energy `[0.5, 1.4, 2.7, 3.1]`.
+
+**Notes**
+- Generation is a loop of small calls (one seeding + one per paragraph), so no single call
+  needs streaming; `max_tokens` stays well inside the non-streaming envelope.
+- `Paragraph.language_register` is deliberately not named `register` — that shadows
+  `BaseModel.register` and pydantic warns.
 
 ---
 

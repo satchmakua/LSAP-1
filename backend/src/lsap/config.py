@@ -17,8 +17,9 @@ class Settings(BaseSettings):
 
     # Claude models (see the claude-api skill for current IDs).
     anthropic_api_key: str = ""  # reads ANTHROPIC_API_KEY (env or backend/.env)
-    rater_model: str = "claude-opus-4-8"       # canonical rater / renderer
+    rater_model: str = "claude-opus-4-8"       # canonical rater
     second_rater_model: str = "claude-haiku-4-5"  # cheap convergence rater
+    renderer_model: str = "claude-opus-4-8"    # the engine's rendering layer (M4)
 
 
 settings = Settings()

@@ -65,13 +65,18 @@ in [DESIGN.md](DESIGN.md); the domain theory is in
 
 ## Phase 3 — The engine (L6)
 
-- [ ] **M4 — Generative Engine MVP.** Flesh out `engine/compiler.py` (band-normalizer +
-  constraint compiler), the story state machine, and runtime cognition
-  (WS/PL/MF/EF/LR); stream generation; add presets; build the Engine Console with five
-  sliders, a live state panel, and the one-way "re-rate output" crossing.
+- [x] **M4 — Generative Engine MVP.** `engine/compiler.py` (bands → rule tables per
+  operator, derived B6 agential pressure, perception filter, register palette);
+  `engine/runtime.py` (the deterministic state machine + WS/PL/MF/EF/LR rendering loop);
+  `presets.yaml`; `POST /api/generate` + `GET /api/presets`; the Engine Console with five
+  sliders, a per-paragraph state panel, and the one-way "re-rate output" crossing.
   **Test:** move one slider low→high and Generate twice → the prose is legibly
   different across both runs; the state panel updates per paragraph; "re-rate output"
   shows the instrument scores shifting in the intended direction.
+  **✓ verified 2026-07-03** (`scripts/engine_ab.py --dial c1`) — mean sentence length
+  **6.3 → 140.5 words**; re-rating moved **4/4** expected axes up (L2 Syntactic Depth
+  1→7, S4 Figurative 2→6, L3 Density 2→5, L1 Lexical 1→4); phases/registers/energy
+  advance per paragraph. The firewall test stayed green throughout.
 
 ---
 

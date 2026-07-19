@@ -273,3 +273,100 @@ header h1 {
   opacity: 0.7;
   margin-left: 0.5rem;
 }
+
+/* --- tabs --- */
+
+.tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.tabs button {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  background: transparent;
+  color: inherit;
+}
+
+.tabs button.active {
+  background: #2b6cb0;
+  border-color: #2b6cb0;
+  color: #fff;
+}
+
+/* --- engine console --- */
+
+.dials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.5rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
+.dial {
+  display: grid;
+  grid-template-columns: 1fr;
+  font-size: 0.8rem;
+}
+
+.dial-label {
+  opacity: 0.8;
+}
+
+.dial input[type='range'] {
+  width: 100%;
+}
+
+.dial-band {
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+
+.run {
+  margin-top: 1.25rem;
+}
+
+.world {
+  margin: 0.5rem 0 1rem;
+  font-size: 0.85rem;
+}
+
+.para {
+  border-left: 3px solid rgba(43, 108, 176, 0.35);
+  padding-left: 0.85rem;
+  margin: 1rem 0;
+}
+
+.para-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.35rem;
+}
+
+.chip {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: rgba(43, 108, 176, 0.14);
+  color: #2b6cb0;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+}
+
+.memory {
+  font-size: 0.8rem;
+  color: #b7791f;
+  margin: 0 0 0.35rem;
+}
+
+.prose {
+  margin: 0;
+  line-height: 1.6;
+}
