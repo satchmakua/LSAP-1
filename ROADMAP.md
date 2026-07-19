@@ -80,9 +80,132 @@ in [DESIGN.md](DESIGN.md); the domain theory is in
 
 ---
 
+## Phase 4 — v1 hardening (do these before any v2 layer)
+
+_The pilot data says the foundation needs work before more layers go on top. These three
+are the follow-ups the numbers themselves argue for._
+
+> **Prerequisite for all three — fix rating selection first (inside M5).**
+> `reliability.load_rater_matrices` and `projection.consensus_for_segment` both take the
+> **first** rating per (rater, segment), and `storage.save_rating` appends. So any re-rate
+> is written to disk and then *silently ignored*: a re-rating milestone would report
+> unchanged numbers and look like the change did nothing. Switch both loaders to
+> **newest-wins per (rater, segment, axes_version)**, with a test that appends a second
+> rating and asserts the newer value is the one used.
+
+- [ ] **M5 — Re-anchor L1 & L3.** M2 found these two absolute-ambiguous: within-1
+  agreement **0.40**, |Δ| ≈ 1.6 — yet Spearman ≈ 0.75. The raters *rank* segments
+  together but use the 1–7 scale differently, so the fault is the anchors, not the axis.
+  Rewrite both in `axes.yaml` with countable referents and worked exemplars at 1/4/7
+  (L1: diction rarity with example words; L3: propositions-per-sentence with a worked
+  count). **Add an `axes_version` to `Rating`** (defaulted, so the 60 stored ratings still
+  parse) and stamp it, so pre- and post-change ratings can never be silently pooled.
+  - **Only re-anchor axes with this signature.** High Spearman + low within-1 means the
+    raters *rank together but calibrate differently* — a fault in the anchors. Where
+    raters genuinely disagree about what is present, that is **data (Charter P2)** and
+    must not be "fixed".
+  - **Stop rule:** at most two anchor revisions. If within-1 hasn't reached 0.65 after
+    two, stop and write the axis up as a candidate for splitting or retirement. Do not
+    keep tuning until two models agree — that inverts P2.
+  **Test:** re-rate the corpus with both raters and re-run reliability → L1 and L3
+  within-1 agreement ≥ **0.65**, with no other axis falling more than 0.1 below its
+  current value; the report shows before/after side by side and states which
+  `axes_version` each column came from.
+
+- [ ] **M6 — Grow the pilot corpus past n=30.** With 27 scalar features, n=30 makes the
+  PCA provisional. Extend `scripts/corpus_specs.json` toward **n ≈ 100** — more profiles,
+  more twin-pairs. Regenerate, re-rate (both scripts are resumable), re-fit.
+  - **Do not choose new segments by their position in the fitted C-space.** Picking gaps
+    out of `coordinates/model.json` and then re-fitting on the result is circular, and
+    treats the frame as true (**Charter P1**). Design coverage in the **brief space**
+    (structural profiles), then *report* the resulting C-space coverage as an outcome.
+  - **The corpus is entirely model-generated**, so a finding may be a property of the
+    generator rather than of prose. Add ≥15 segments **not written by the engine's model
+    family** — public-domain literary prose and/or the human's own writing — and report
+    whether their factor structure differs.
+  **Test:** reliability + projection re-run at the larger n. Report whether PC1 holds near
+  45% and whether the same axes load on it. Add a **split-half stability check** — fit on
+  two random halves, correlate the loadings, report the number. Report the **C6 residual**
+  and whether it moved (P5 — never let the model quietly claim completeness). Say plainly
+  whether the structure held; "it didn't" is a passing result if it's honest.
+
+- [ ] **M7 — Add a human rater.** Reliability today is two models agreeing. Add a manual
+  scoring mode to the Rater Studio (anchors + watch-fors visible per axis, confidence
+  required), stored as `rater_id: "human:<name>"`.
+  - **Scope includes generalizing `build_report`.** It currently hard-codes two raters
+    (`a_mat, b_mat = values[raters[0]], values[raters[1]]`), so a third is silently
+    dropped — `human:sh` sorts to index 2 and never appears. Report **per-pair** agreement
+    per axis, and handle **ragged coverage** (the human rates 8 of n) with
+    pairwise-complete comparison rather than a dense matrix.
+  **Test:** hand-score ≥ 8 corpus segments; the reliability report gains human↔model
+  columns, and a 3-rater fixture test asserts three pairwise columns. Name the axes where
+  human and model diverge most — that divergence is **data, not error** (Charter P2), and
+  is not to be "corrected".
+
+## Phase 5 — v2 layers (blueprint L4–L7 + D3)
+
+> **Checkpoint — confirm with the human before starting Phase 5.** The plan is approved in
+> principle; the check is on cost and sequencing at the time. Phase 5 is research, and
+> Phase 4 alone runs to a few hundred paid calls.
+>
+> **A standing rule for every Test below: pre-register the criterion before the run.**
+> These milestones produce output and then judge it, so a test written afterwards can
+> always be satisfied. State the statistic, threshold or blind protocol first.
+
+- [ ] **M8 — L4 Interpretation Tensor.** Reader models as small parameter sets
+  (compression bias, ambiguity tolerance, emotional amplification, structure preference)
+  → `T(x)[r, i]`, yielding consensus / disagreement / entropy per segment.
+  - **The Test must not install a ground truth.** "A human agrees these are the genuinely
+    ambiguous ones" would reinstate exactly the objective correctness the Charter denies
+    (P1/P2). Entropy here is variance under synthetic reader priors — nothing more.
+  **Test:** the API returns per-segment consensus / disagreement / entropy, and two
+  **pre-registered** comparisons are reported with numbers, whichever way they fall:
+  (a) entropy vs. the already-measured Opus↔Haiku disagreement on the same segments;
+  (b) entropy for segments briefed to be ambiguous vs. briefed to be flat.
+
+- [ ] **M9 — D3 Work-Description combinator.** Orthogonal to the stack and cheap: cross
+  genre × tone × theme × structure × philosophy × emotional signature × stylistic
+  signature × setting-aesthetic. A chosen combination feeds the engine as a situation +
+  dial preset.
+  **Test:** write the rubric first. Produce 10 combinations and score them **blind**
+  (mixed with randomly shuffled controls, judge unaware which is which); report the split
+  rather than a self-assessment. One combination goes to the Engine Console and produces
+  prose whose re-rating matches the axes the brief predicted.
+
+- [ ] **M10a — Works and trajectories.** *(prerequisite M10 assumes but nothing provides)*
+  Segments are currently independent: frontmatter has no `work_id` or ordinal, and M3
+  shipped the scatter only — the trajectory line in DESIGN §7 was never built. Add
+  `work_id` + `position` to segment frontmatter, a way to group segments into a work, and
+  trajectory rendering in the C-Space Map.
+  **Test:** a work of ≥5 ordered segments renders as a path through C-space.
+
+- [ ] **M10b — L5 Archetype / phase-transition overlay.** Threshold-triggered named regime
+  shifts along a trajectory through C-space (the "Tower event"). **Charter P6 is the whole
+  risk:** the overlay *summarizes* measured state, it never *explains* it.
+  - **Pre-register the thresholds and the axes they apply to before looking at the
+    corpus.** Thresholds fitted after the fact are precisely the symbolic overfitting this
+    milestone exists to avoid.
+  **Test:** a work shows ≥1 named transition, and the report shows the measured C-space
+  movement that crossed the pre-registered threshold. If you cannot show the numbers
+  behind the name, the name does not ship.
+
+- [ ] **M11 — L7 Multi-agent simulation.** Shared world state; agents as
+  **operator-configurations, never named authors** (Charter P7); a conflict resolver whose
+  explicit objective is *preserving* antagonism rather than resolving it.
+  - **The instrument may report on the output; it must never tune the engine.** Iterating
+    the engine against a measured score closes the P4 loop through a human, which
+    `test_firewall.py` cannot detect. Fix the metric before the run and don't optimize
+    against it.
+  **Test:** pre-register the statistic (e.g. cross-paragraph variance on the axes the
+  competing agents are configured to drive) plus a single-agent control; report both.
+  Research, not a feature checkbox: a negative result, honestly reported, passes.
+
+---
+
 **North star:** paste a scene → watch it become 30 numbers and a point in C-space;
 push a slider → watch the prose change character. Instrument honest, engine
 controllable, wall intact.
 
-_v2+ (out of this slice): L4 interpretation tensor · L5 archetype/phase-transition
-classifier · L7 multi-agent simulation · the Work-Description combinator (D3)._
+**A note on cost.** The runners under `backend/scripts/` make real, paid API calls. M6 is
+roughly 300 of them. They are resumable by design — check with the human before kicking
+off a large run.

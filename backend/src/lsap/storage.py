@@ -63,6 +63,21 @@ def load_ratings(segment_id: str) -> list[Rating]:
     return out
 
 
+def latest_ratings(segment_id: str, *, axes_version: int | None = None) -> dict[str, Rating]:
+    """The effective rating per rater: newest-wins per (rater, axes_version).
+
+    The file is append-only, so file order is chronological — the last rating a rater
+    wrote supersedes its earlier ones. Ratings from different `axes_version` cohorts are
+    never pooled (a re-anchored axis changes what a score means): pass `axes_version` to
+    select a cohort, or None for the newest version present in this segment's file."""
+    ratings = load_ratings(segment_id)
+    if not ratings:
+        return {}
+    if axes_version is None:
+        axes_version = max(r.axes_version for r in ratings)
+    return {r.rater_id: r for r in ratings if r.axes_version == axes_version}
+
+
 # ---- corpus (markdown + YAML frontmatter) -------------------------------------------
 
 def save_segment(segment_id: str, text: str, *, source: str, created_at: str) -> Path:

@@ -17,7 +17,7 @@ import anthropic
 from lsap import storage
 from lsap.config import settings
 from lsap.instrument import rater
-from lsap.instrument.schema import load_axes
+from lsap.instrument.schema import load_axes, load_axes_version
 
 RATERS = ["claude-opus-4-8", "claude-haiku-4-5"]
 
@@ -36,24 +36,32 @@ def main() -> None:
     args = ap.parse_args()
 
     axes = load_axes()
+    version = load_axes_version()
     client = _client()
     segs = [s for s in storage.list_segments() if s.get("source") == "pilot"]
     if not segs:
         raise SystemExit("no pilot segments found — run generate_corpus.py first")
 
+    # "Already rated" means rated under the CURRENT axes_version — bumping the version
+    # (an anchor revision) naturally queues a full re-rate, still resumable.
     tasks: list[tuple[str, str]] = []
     for s in segs:
-        rated = {r.rater_id for r in storage.load_ratings(s["id"])}
+        rated = {
+            r.rater_id for r in storage.load_ratings(s["id"]) if r.axes_version == version
+        }
         for model in RATERS:
             if args.force or model not in rated:
                 tasks.append((s["id"], model))
     if not tasks:
-        print("all pilot segments already rated by both raters; use --force to re-rate")
+        print(
+            f"all pilot segments already rated by both raters under axes_version "
+            f"{version}; use --force to re-rate"
+        )
         return
 
     print(
         f"rating {len(tasks)} (segment,rater) tasks over {len(segs)} segments "
-        f"({args.workers} workers)…",
+        f"under axes_version {version} ({args.workers} workers)…",
         flush=True,
     )
 

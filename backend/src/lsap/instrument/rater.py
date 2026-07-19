@@ -22,7 +22,7 @@ from pydantic import BaseModel, create_model
 
 from lsap.config import settings
 
-from .schema import AxisDef, AxisScore, Rating, compute_flagged
+from .schema import AxisDef, AxisScore, Rating, compute_flagged, load_axes_version
 
 # Aliases and capability tables ------------------------------------------------------
 
@@ -83,6 +83,7 @@ def to_rating(
     segment_id: str,
     rater_id: str,
     created_at: str,
+    axes_version: int,
 ) -> Rating:
     """Convert the structured output into the canonical `Rating`. Checks that every axis
     is present and clamps values; forced-choice values are the 1-based index into `choices`."""
@@ -102,6 +103,7 @@ def to_rating(
     return Rating(
         segment_id=segment_id,
         rater_id=rater_id,
+        axes_version=axes_version,
         scores=scores,
         flagged=compute_flagged(scores),
         created_at=created_at,
@@ -167,10 +169,15 @@ def rate(
     axes: list[AxisDef],
     created_at: str,
     client: Any | None = None,
+    axes_version: int | None = None,
 ) -> Rating:
-    """Score `segment_text` on all 30 axes with model `rater` (alias or full id)."""
+    """Score `segment_text` on all 30 axes with model `rater` (alias or full id).
+    The rating is stamped with `axes_version` (default: the registry's current one), so
+    ratings scored under different anchors can never be silently pooled."""
     if not segment_text.strip():
         raise RaterError("segment text is empty")
+    if axes_version is None:
+        axes_version = load_axes_version()
 
     model = resolve_model(rater)
     client = client or _default_client()
@@ -213,5 +220,6 @@ def rate(
         raise RaterError(f"rater returned no structured output (stop_reason={stop})")
 
     return to_rating(
-        output, axes=axes, segment_id=segment_id, rater_id=model, created_at=created_at
+        output, axes=axes, segment_id=segment_id, rater_id=model, created_at=created_at,
+        axes_version=axes_version,
     )

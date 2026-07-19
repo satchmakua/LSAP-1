@@ -1,14 +1,19 @@
 import numpy as np
 
+from lsap import storage
 from lsap.coordinates.reliability import (
     _pearson,
+    compare_reports,
     correlation_matrix,
     forced_choice_agreement,
+    format_comparison,
+    load_rater_matrices,
     redundant_pairs,
     run_pca,
     scalar_axis_agreement,
     twin_consistency,
 )
+from lsap.instrument.schema import AxisDef, AxisScore, Rating
 
 
 def test_scalar_agreement_identical_and_monotonic_offset():
@@ -67,3 +72,78 @@ def test_twin_consistency_zero_for_identical_twins():
 
 def test_pearson_constant_column_is_zero_not_nan():
     assert _pearson(np.array([1, 1, 1]), np.array([1, 2, 3])) == 0.0
+
+
+# ---- storage-backed selection (the M5 defect fix) -----------------------------------
+
+TWO_AXES = [
+    AxisDef(id="L1", field="L", name="Lexical Complexity", kind="scalar",
+            definition="d", anchors={1: "a", 4: "b", 7: "c"}),
+    AxisDef(id="L3", field="L", name="Semantic Density", kind="scalar",
+            definition="d", anchors={1: "a", 4: "b", 7: "c"}),
+]
+
+
+def _save(seg: str, rater: str, values: tuple[int, int], *, axes_version: int = 1) -> None:
+    storage.save_rating(
+        Rating(
+            segment_id=seg, rater_id=rater, axes_version=axes_version,
+            scores=[
+                AxisScore(axis_id="L1", value=values[0], confidence=5),
+                AxisScore(axis_id="L3", value=values[1], confidence=5),
+            ],
+            flagged=False, created_at="2026-07-19T00:00:00Z",
+        )
+    )
+
+
+def _pilot(seg: str) -> None:
+    storage.save_segment(seg, "some text", source="pilot", created_at="t")
+
+
+def test_load_rater_matrices_uses_the_newer_appended_rating(tmp_path, monkeypatch):
+    """The M5 defect: first-wins silently ignored every re-rate. Newest must win."""
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    for seg in ("p1", "p2"):
+        _pilot(seg)
+        _save(seg, "claude-opus-4-8", (4, 4))
+        _save(seg, "claude-haiku-4-5", (5, 5))
+    _save("p1", "claude-opus-4-8", (2, 6))  # the re-rate
+
+    seg_ids, values, _conf, _meta = load_rater_matrices(TWO_AXES, axes_version=1)
+    assert seg_ids == ["p1", "p2"]
+    opus = values["claude-opus-4-8"]
+    assert opus[0].tolist() == [2, 6]  # newer rating, not the first one
+    assert opus[1].tolist() == [4, 4]
+
+
+def test_load_rater_matrices_selects_one_axes_version_cohort(tmp_path, monkeypatch):
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    for seg in ("p1", "p2"):
+        _pilot(seg)
+        _save(seg, "claude-opus-4-8", (4, 4), axes_version=1)
+    _save("p1", "claude-opus-4-8", (7, 7), axes_version=2)
+
+    _ids, v1, _c1, _m1 = load_rater_matrices(TWO_AXES, axes_version=1)
+    assert v1["claude-opus-4-8"][0].tolist() == [4, 4]  # v2 never pollutes the v1 cohort
+    _ids, v2, _c2, _m2 = load_rater_matrices(TWO_AXES, axes_version=2)
+    assert v2["claude-opus-4-8"][0].tolist() == [7, 7]
+    assert np.isnan(v2["claude-opus-4-8"][1]).all()  # p2 unrated under v2 stays NaN
+
+
+def test_compare_reports_flags_regressions_and_labels_versions():
+    def _rep(version: int, l1: float, n1: float) -> dict:
+        return {
+            "axes_version": version,
+            "axis_agreement": {
+                "L1": {"name": "Lexical Complexity", "kind": "scalar", "within1_rate": l1},
+                "N1": {"name": "Event Density", "kind": "scalar", "within1_rate": n1},
+            },
+        }
+
+    cmp = compare_reports(_rep(1, 0.40, 0.90), _rep(2, 0.73, 0.70))
+    assert cmp["axes"]["L1"]["delta"] == 0.33
+    assert cmp["regressions"] == ["N1"]  # 0.90 -> 0.70 is a > 0.10 drop
+    text = format_comparison(cmp)
+    assert "axes_version 1 vs 2" in text
+    assert "regressions (> 0.10 drop): N1" in text

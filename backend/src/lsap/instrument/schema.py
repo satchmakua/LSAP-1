@@ -45,6 +45,7 @@ class Rating(BaseModel):
 
     segment_id: str
     rater_id: str  # "claude-opus-4-8" | "claude-haiku-4-5" | "human:sh"
+    axes_version: int = 1  # anchor revision this was scored under (default: the M1 anchors)
     scores: list[AxisScore]  # 30, in fixed field order L -> N -> C -> P -> A -> S
     flagged: bool = False  # True if confidence <= 2 on > 40% of axes
     created_at: str  # ISO 8601, injected by the caller (no wall-clock in pure code)
@@ -53,6 +54,13 @@ class Rating(BaseModel):
 def load_axes(path: Path = AXES_PATH) -> list[AxisDef]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     return [AxisDef(**a) for a in data["axes"]]
+
+
+def load_axes_version(path: Path = AXES_PATH) -> int:
+    """The registry's anchor revision — bumped whenever anchors are rewritten, so ratings
+    scored under different anchors can never be silently pooled."""
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    return int(data.get("version", 1))
 
 
 def compute_flagged(scores: list[AxisScore]) -> bool:
