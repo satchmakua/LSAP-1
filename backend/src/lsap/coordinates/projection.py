@@ -26,7 +26,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 from lsap import storage
-from lsap.instrument.schema import AxisDef, load_axes
+from lsap.instrument.schema import AxisDef, load_axes, load_axes_version
 
 N_FACTORS = 5
 
@@ -52,14 +52,16 @@ def default_model_path() -> Path:
 # ---- consensus helpers --------------------------------------------------------------
 
 
-def consensus_for_segment(segment_id: str, axis_ids: list[str]) -> dict[str, float] | None:
-    """Mean value per axis across raters (first rating per rater). None if unrated."""
-    seen: dict[str, dict[str, int]] = {}
-    for r in storage.load_ratings(segment_id):
-        if r.rater_id not in seen:
-            seen[r.rater_id] = {s.axis_id: s.value for s in r.scores}
-    if not seen:
+def consensus_for_segment(
+    segment_id: str, axis_ids: list[str], *, axes_version: int | None = None
+) -> dict[str, float] | None:
+    """Mean value per axis across raters — **newest** rating per rater, within one
+    `axes_version` cohort (None = the segment's newest; cohorts are never pooled).
+    None if unrated under that version."""
+    latest = storage.latest_ratings(segment_id, axes_version=axes_version)
+    if not latest:
         return None
+    seen = {rid: {s.axis_id: s.value for s in r.scores} for rid, r in latest.items()}
     out: dict[str, float] = {}
     for a in axis_ids:
         vals = [d[a] for d in seen.values() if a in d]
@@ -229,10 +231,16 @@ def scalar_axes(axes: list[AxisDef]) -> list[AxisDef]:
 
 
 def fit_from_storage(
-    axes: list[AxisDef] | None = None, *, source: str = "pilot"
+    axes: list[AxisDef] | None = None, *, source: str = "pilot",
+    axes_version: int | None = None,
 ) -> ProjectionModel:
-    """Fit over every rated segment whose frontmatter `source` matches (the pilot corpus)."""
+    """Fit over every rated segment whose frontmatter `source` matches (the pilot corpus).
+    All consensus values come from ONE `axes_version` cohort (default: the registry's
+    current version) — a frame fitted across anchor revisions would pool incomparable
+    scores. The version is recorded in the model for provenance."""
     axes = axes or load_axes()
+    if axes_version is None:
+        axes_version = load_axes_version()
     sc = scalar_axes(axes)
     axis_ids = [a.id for a in sc]
     axis_names = {a.id: a.name for a in sc}
@@ -241,19 +249,26 @@ def fit_from_storage(
     rows: list[list[float]] = []
     kept: list[dict] = []
     for s in sorted(segs, key=lambda d: d["id"]):
-        vals = consensus_for_segment(s["id"], axis_ids)
+        vals = consensus_for_segment(s["id"], axis_ids, axes_version=axes_version)
         if vals is None:
             continue
         seg = storage.load_segment(s["id"]) or {}
         rows.append([vals[a] for a in axis_ids])
         kept.append({"id": s["id"], "profile": seg.get("profile"), "pair": seg.get("pair")})
     if len(rows) < 2:
-        raise ValueError(f"need >=2 rated '{source}' segments to fit (found {len(rows)})")
-    return ProjectionModel.fit(np.array(rows), axis_ids, axis_names, kept)
+        raise ValueError(
+            f"need >=2 rated '{source}' segments to fit (found {len(rows)} "
+            f"under axes_version {axes_version})"
+        )
+    model = ProjectionModel.fit(np.array(rows), axis_ids, axis_names, kept)
+    model.d["axes_version"] = axes_version
+    return model
 
 
 def project_segment(model: ProjectionModel, segment_id: str) -> CVector | None:
-    vals = consensus_for_segment(segment_id, model.axis_ids)
+    vals = consensus_for_segment(
+        segment_id, model.axis_ids, axes_version=model.d.get("axes_version")
+    )
     if vals is None:
         return None
     return model.project(vals)

@@ -10,7 +10,7 @@ from lsap.instrument.rater import (
     resolve_model,
     to_rating,
 )
-from lsap.instrument.schema import load_axes
+from lsap.instrument.schema import load_axes, load_axes_version
 
 AXES = load_axes()
 
@@ -73,7 +73,9 @@ def test_to_rating_maps_forced_choice_index_and_scalar_value():
     out = _fake_output(AXES)
     a3 = next(s for s in out.scores if s.axis_id == "A3")
     a3.value, a3.confidence = 3, 3  # model returns the 1-based option number, stored as-is
-    rating = to_rating(out, axes=AXES, segment_id="s", rater_id="m", created_at="t")
+    rating = to_rating(
+        out, axes=AXES, segment_id="s", rater_id="m", created_at="t", axes_version=1
+    )
     by = {s.axis_id: s for s in rating.scores}
     assert by["A3"].value == 3 and by["A3"].confidence == 3
     assert by["L1"].value == 4  # scalar passes through
@@ -86,7 +88,9 @@ def test_to_rating_clamps_out_of_range_values():
             s.value, s.confidence = 9, 0
         if s.axis_id == "N1":
             s.value, s.confidence = 0, 7
-    rating = to_rating(out, axes=AXES, segment_id="s", rater_id="m", created_at="t")
+    rating = to_rating(
+        out, axes=AXES, segment_id="s", rater_id="m", created_at="t", axes_version=1
+    )
     by = {s.axis_id: s for s in rating.scores}
     assert by["L1"].value == 7 and by["L1"].confidence == 1
     assert by["N1"].value == 1 and by["N1"].confidence == 5
@@ -96,7 +100,9 @@ def test_to_rating_raises_on_missing_axis():
     out = _fake_output(AXES)
     out.scores = [s for s in out.scores if s.axis_id != "S5"]  # drop one axis
     with pytest.raises(RaterError):
-        to_rating(out, axes=AXES, segment_id="s", rater_id="m", created_at="t")
+        to_rating(
+            out, axes=AXES, segment_id="s", rater_id="m", created_at="t", axes_version=1
+        )
 
 
 def test_rate_produces_complete_rating_and_sends_thinking_for_opus():
@@ -113,6 +119,8 @@ def test_rate_produces_complete_rating_and_sends_thinking_for_opus():
     assert {s.axis_id for s in rating.scores} == {a.id for a in AXES}
     assert rating.rater_id == "claude-opus-4-8"
     assert rating.flagged is False  # all confidence 5
+    # Stamped with the registry's current anchor revision by default.
+    assert rating.axes_version == load_axes_version()
 
     call = client.messages.calls[0]
     assert call["thinking"] == {"type": "adaptive"}

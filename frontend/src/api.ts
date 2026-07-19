@@ -20,6 +20,7 @@ export interface AxisScore {
 export interface Rating {
   segment_id: string
   rater_id: string
+  axes_version: number
   scores: AxisScore[]
   flagged: boolean
   created_at: string

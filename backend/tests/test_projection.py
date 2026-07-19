@@ -1,7 +1,9 @@
 import numpy as np
 import pytest
 
-from lsap.coordinates.projection import CVector, ProjectionModel
+from lsap import storage
+from lsap.coordinates.projection import CVector, ProjectionModel, consensus_for_segment
+from lsap.instrument.schema import AxisScore, Rating
 
 AXES = ["L1", "L2", "N1", "C3"]
 NAMES = {"L1": "Lexical Complexity", "L2": "Syntactic Depth", "N1": "Event Density",
@@ -93,3 +95,36 @@ def test_load_returns_none_when_absent(tmp_path):
 def test_fit_requires_two_segments():
     with pytest.raises(ValueError):
         ProjectionModel.fit(MATRIX[:1], AXES, NAMES, SEGMENTS[:1])
+
+
+# ---- consensus selection (the M5 defect fix) ----------------------------------------
+
+
+def _save(seg: str, rater: str, value: int, *, axes_version: int = 1) -> None:
+    storage.save_rating(
+        Rating(
+            segment_id=seg, rater_id=rater, axes_version=axes_version,
+            scores=[AxisScore(axis_id="L1", value=value, confidence=5)],
+            flagged=False, created_at="2026-07-19T00:00:00Z",
+        )
+    )
+
+
+def test_consensus_uses_the_newer_appended_rating(tmp_path, monkeypatch):
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    _save("s", "claude-opus-4-8", 4)
+    _save("s", "claude-haiku-4-5", 6)
+    _save("s", "claude-opus-4-8", 2)  # the re-rate; first-wins would average 4 and 6
+    assert consensus_for_segment("s", ["L1"]) == {"L1": 4.0}  # mean(2, 6)
+
+
+def test_consensus_never_pools_axes_versions(tmp_path, monkeypatch):
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    _save("s", "claude-opus-4-8", 4, axes_version=1)
+    _save("s", "claude-haiku-4-5", 6, axes_version=1)
+    _save("s", "claude-opus-4-8", 1, axes_version=2)
+    # Default: the newest cohort only — not 1 averaged with a stale v1 haiku 6.
+    assert consensus_for_segment("s", ["L1"]) == {"L1": 1.0}
+    # Explicit cohorts stay separately addressable.
+    assert consensus_for_segment("s", ["L1"], axes_version=1) == {"L1": 5.0}
+    assert consensus_for_segment("s", ["L1"], axes_version=3) is None

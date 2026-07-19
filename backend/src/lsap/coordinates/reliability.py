@@ -25,7 +25,7 @@ from sklearn.metrics import cohen_kappa_score
 from sklearn.preprocessing import StandardScaler
 
 from lsap import storage
-from lsap.instrument.schema import AxisDef, load_axes
+from lsap.instrument.schema import AxisDef, load_axes, load_axes_version
 
 # ---- pure metrics (unit-tested offline) --------------------------------------------
 
@@ -137,14 +137,19 @@ def twin_consistency(m: np.ndarray, seg_ids: list[str], pairs: dict[str, str]) -
 
 
 def load_rater_matrices(
-    axes: list[AxisDef], *, source: str = "pilot"
+    axes: list[AxisDef], *, source: str = "pilot", axes_version: int | None = None
 ) -> tuple[list[str], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, dict]]:
     """Load value + confidence matrices per rater over the pilot segments.
 
     Returns (segment_ids, values_by_rater, confidence_by_rater, meta_by_segment), where
     each matrix is segments×axes aligned to `segment_ids` and the axis order. Only segments
-    whose frontmatter `source` matches (the pilot marker) are included; the first rating per
-    (rater, segment) is used."""
+    whose frontmatter `source` matches (the pilot marker) are included. Selection is
+    **newest-wins** per (rater, segment) — first-wins would silently ignore every
+    re-rating — within ONE `axes_version` cohort (default: the registry's current
+    version); re-anchored cohorts are never pooled. Segments unrated under that version
+    stay NaN."""
+    if axes_version is None:
+        axes_version = load_axes_version()
     axis_ids = [a.id for a in axes]
     segs = [s for s in storage.list_segments() if s.get("source") == source]
     seg_ids = sorted(s["id"] for s in segs)
@@ -154,11 +159,9 @@ def load_rater_matrices(
     for sid in seg_ids:
         seg = storage.load_segment(sid) or {}
         meta[sid] = {"profile": seg.get("profile"), "pair": seg.get("pair")}
-        for r in storage.load_ratings(sid):
-            if sid in vals.get(r.rater_id, {}):
-                continue  # first rating per (rater, segment)
-            vals.setdefault(r.rater_id, {})[sid] = {sc.axis_id: sc.value for sc in r.scores}
-            confs.setdefault(r.rater_id, {})[sid] = {sc.axis_id: sc.confidence for sc in r.scores}
+        for rid, r in storage.latest_ratings(sid, axes_version=axes_version).items():
+            vals.setdefault(rid, {})[sid] = {sc.axis_id: sc.value for sc in r.scores}
+            confs.setdefault(rid, {})[sid] = {sc.axis_id: sc.confidence for sc in r.scores}
 
     def _matrix(store: dict[str, dict[str, dict[str, int]]], rater: str) -> np.ndarray:
         m = np.full((len(seg_ids), len(axis_ids)), np.nan)
@@ -178,8 +181,14 @@ def load_rater_matrices(
 # ---- report ------------------------------------------------------------------------
 
 
-def build_report(axes: list[AxisDef], *, source: str = "pilot") -> dict:
-    seg_ids, values, confidence, meta = load_rater_matrices(axes, source=source)
+def build_report(
+    axes: list[AxisDef], *, source: str = "pilot", axes_version: int | None = None
+) -> dict:
+    if axes_version is None:
+        axes_version = load_axes_version()
+    seg_ids, values, confidence, meta = load_rater_matrices(
+        axes, source=source, axes_version=axes_version
+    )
     raters = sorted(values)
     axis_ids = [a.id for a in axes]
     kind = {a.id: a.kind for a in axes}
@@ -188,6 +197,7 @@ def build_report(axes: list[AxisDef], *, source: str = "pilot") -> dict:
 
     report: dict = {
         "n_segments": len(seg_ids),
+        "axes_version": axes_version,
         "raters": raters,
         "segment_ids": seg_ids,
     }
@@ -195,34 +205,77 @@ def build_report(axes: list[AxisDef], *, source: str = "pilot") -> dict:
         report["error"] = "need >=2 raters and >=2 segments"
         return report
 
-    a_mat, b_mat = values[raters[0]], values[raters[1]]
     col = {aid: j for j, aid in enumerate(axis_ids)}
+    pairs = [
+        (raters[i], raters[j])
+        for i in range(len(raters))
+        for j in range(i + 1, len(raters))
+    ]
+    report["rater_pairs"] = [f"{r1} vs {r2}" for r1, r2 in pairs]
 
-    # per-axis agreement + mean confidence
+    def _pairwise(aid: str, r1: str, r2: str) -> dict | None:
+        """Agreement over the segments BOTH raters scored (pairwise-complete), so a rater
+        who covered only part of the corpus — a human scoring 8 of n — still counts."""
+        j = col[aid]
+        a, b = values[r1][:, j], values[r2][:, j]
+        both = ~np.isnan(a) & ~np.isnan(b)
+        if int(both.sum()) < 2:
+            return None
+        fn = forced_choice_agreement if kind[aid] == "forced_choice" else scalar_axis_agreement
+        m = fn(a[both], b[both])
+        m["n"] = int(both.sum())
+        return m
+
+    # per-axis agreement, one entry per rater pair + a headline mean across pairs
     agree: dict[str, dict] = {}
     for aid in axis_ids:
-        j = col[aid]
-        a, b = a_mat[:, j], b_mat[:, j]
-        if kind[aid] == "forced_choice":
-            m = forced_choice_agreement(a, b)
-        else:
-            m = scalar_axis_agreement(a, b)
-        conf = np.concatenate([confidence[r][:, j] for r in raters])
-        m["mean_confidence"] = round(float(np.nanmean(conf)), 2)
-        m["name"] = names[aid]
-        m["kind"] = kind[aid]
-        agree[aid] = m
+        per_pair: dict[str, dict] = {}
+        for r1, r2 in pairs:
+            m = _pairwise(aid, r1, r2)
+            if m is not None:
+                per_pair[f"{r1} vs {r2}"] = m
+        conf_all = np.concatenate([confidence[r][:, col[aid]] for r in raters])
+        conf_ok = conf_all[~np.isnan(conf_all)]
+        entry: dict = {
+            "name": names[aid],
+            "kind": kind[aid],
+            "mean_confidence": round(float(conf_ok.mean()), 2) if conf_ok.size else float("nan"),
+            "pairs": per_pair,
+        }
+        # Headline metrics = mean across pairs, so the verdict and the printed report stay
+        # one-dimensional while the per-pair detail is preserved underneath.
+        metric_keys = {k for m in per_pair.values() for k in m if k != "n"}
+        for key in metric_keys:
+            vals_ = [
+                m[key] for m in per_pair.values()
+                if key in m and np.isfinite(m[key])
+            ]
+            if vals_:
+                entry[key] = round(float(np.mean(vals_)), 4)
+        agree[aid] = entry
     report["axis_agreement"] = agree
 
-    # consensus over scalar axes → correlation + PCA
+    # consensus over scalar axes (mean across ALL raters) → correlation + PCA
     scal_cols = [col[a] for a in scalar_ids]
-    consensus = np.nanmean([a_mat[:, scal_cols], b_mat[:, scal_cols]], axis=0)
-    corr = correlation_matrix(consensus)
-    report["redundant_pairs"] = redundant_pairs(corr, scalar_ids, threshold=0.8)
-    report["pca"] = run_pca(consensus, scalar_ids)
-    report["twin_consistency"] = twin_consistency(
-        consensus, seg_ids, {sid: meta[sid].get("pair") for sid in seg_ids}
-    )
+    stack = np.stack([values[r][:, scal_cols] for r in raters])  # (raters, segments, axes)
+    # Keep only segments where every scalar axis has at least one rater; ragged coverage
+    # would otherwise produce all-NaN means.
+    complete = (~np.isnan(stack).all(axis=0)).all(axis=1)
+    n_complete = int(complete.sum())
+    report["n_segments_in_pca"] = n_complete
+    if n_complete >= 2:
+        consensus = np.nanmean(stack[:, complete, :], axis=0)
+        kept = [s for s, k in zip(seg_ids, complete, strict=True) if k]
+        corr = correlation_matrix(consensus)
+        report["redundant_pairs"] = redundant_pairs(corr, scalar_ids, threshold=0.8)
+        report["pca"] = run_pca(consensus, scalar_ids)
+        report["twin_consistency"] = twin_consistency(
+            consensus, kept, {sid: meta[sid].get("pair") for sid in kept}
+        )
+    else:
+        report["redundant_pairs"] = []
+        report["pca"] = None
+        report["twin_consistency"] = None
 
     # verdicts
     reliable, ambiguous = [], []
@@ -244,24 +297,35 @@ def format_report(report: dict) -> str:
     if report.get("error"):
         return f"Reliability: {report['error']} (segments={report.get('n_segments')})."
     lines = [
-        "# LSAP-1 — M2 reliability report",
+        "# LSAP-1 — reliability report",
         "",
-        f"segments: {report['n_segments']}   raters: {', '.join(report['raters'])}",
+        f"segments: {report['n_segments']}   raters: {', '.join(report['raters'])}"
+        f"   axes_version: {report.get('axes_version', 1)}",
+        f"rater pairs: {', '.join(report.get('rater_pairs', [])) or '—'}"
+        f"   segments in PCA: {report.get('n_segments_in_pca', '—')}",
         "",
-        "## Per-axis inter-rater agreement (scalar: within-1 rate; forced-choice: exact-match)",
+        "## Per-axis agreement, averaged across rater pairs"
+        " (scalar: within-1 rate; forced-choice: exact-match)",
     ]
+    nan = float("nan")
+    multi = len(report.get("rater_pairs", [])) > 1
     for aid, m in report["axis_agreement"].items():
         if m["kind"] == "forced_choice":
             lines.append(
-                f"  {aid:3} {m['name']:26} exact={m['exact_match_rate']:.2f} "
-                f"kappa={m['cohen_kappa']:+.2f} conf={m['mean_confidence']}"
+                f"  {aid:3} {m['name']:26} exact={m.get('exact_match_rate', nan):.2f} "
+                f"kappa={m.get('cohen_kappa', nan):+.2f} conf={m['mean_confidence']}"
             )
         else:
             lines.append(
-                f"  {aid:3} {m['name']:26} within1={m['within1_rate']:.2f} "
-                f"spearman={m['spearman']:+.2f} wkappa={m['weighted_kappa']:+.2f} "
-                f"|d|={m['mean_abs_diff']:.2f} conf={m['mean_confidence']}"
+                f"  {aid:3} {m['name']:26} within1={m.get('within1_rate', nan):.2f} "
+                f"spearman={m.get('spearman', nan):+.2f} "
+                f"wkappa={m.get('weighted_kappa', nan):+.2f} "
+                f"|d|={m.get('mean_abs_diff', nan):.2f} conf={m['mean_confidence']}"
             )
+        if multi:  # show each pair once there is more than one (e.g. a human rater)
+            for label, pm in m.get("pairs", {}).items():
+                primary = pm.get("within1_rate", pm.get("exact_match_rate", nan))
+                lines.append(f"        {label}: {primary:.2f} (n={pm['n']})")
     v = report["verdict"]
     lines += [
         "",
@@ -272,23 +336,85 @@ def format_report(report: dict) -> str:
     ]
     lines += [f"  {x} ~ {y}  r={r:+.2f}" for x, y, r in report["redundant_pairs"]] or ["  none"]
     p = report["pca"]
-    lines += [
-        "",
-        "## PCA over scalar axes",
-        f"  explained variance (top): {p['explained_variance_ratio'][:8]}",
-        f"  cumulative (top): {p['cumulative'][:8]}",
-        f"  components for 80% / 90%: {p['n_for_80pct']} / {p['n_for_90pct']}",
-        "  top-loading axes per component:",
-    ]
-    for i, comp in enumerate(p["top_axes_per_component"], 1):
-        lines.append(f"    PC{i}: " + ", ".join(f"{a}({w:+.2f})" for a, w in comp))
+    if p is not None:
+        lines += [
+            "",
+            "## PCA over scalar axes",
+            f"  explained variance (top): {p['explained_variance_ratio'][:8]}",
+            f"  cumulative (top): {p['cumulative'][:8]}",
+            f"  components for 80% / 90%: {p['n_for_80pct']} / {p['n_for_90pct']}",
+            "  top-loading axes per component:",
+        ]
+        for i, comp in enumerate(p["top_axes_per_component"], 1):
+            lines.append(f"    PC{i}: " + ", ".join(f"{a}({w:+.2f})" for a, w in comp))
     t = report["twin_consistency"]
-    lines += [
+    if t is not None:
+        lines += [
+            "",
+            "## Twin-pair consistency (mean |d| over scalar axes)",
+            f"  twin pairs: {t['n_twin_pairs']}   twin mean: {t['mean_twin_distance']}   "
+            f"all-pairs mean: {t['mean_all_pairs_distance']}",
+        ]
+    return "\n".join(lines)
+
+
+# ---- before/after (anchor revisions) ------------------------------------------------
+
+
+def available_versions(*, source: str = "pilot") -> list[int]:
+    """Distinct `axes_version` cohorts present across the source segments' ratings."""
+    versions: set[int] = set()
+    for s in storage.list_segments():
+        if s.get("source") != source:
+            continue
+        for r in storage.load_ratings(s["id"]):
+            versions.add(r.axes_version)
+    return sorted(versions)
+
+
+def compare_reports(before: dict, after: dict) -> dict:
+    """Per-axis primary agreement (within-1 / exact-match) side by side across two
+    axes_version cohorts. A drop > 0.10 on any axis is flagged — the M5 gate."""
+    axes_cmp: dict[str, dict] = {}
+    regressions: list[str] = []
+    for aid, m_new in after.get("axis_agreement", {}).items():
+        m_old = before.get("axis_agreement", {}).get(aid, {})
+        key = "exact_match_rate" if m_new["kind"] == "forced_choice" else "within1_rate"
+        old, new = m_old.get(key), m_new.get(key)
+        delta = round(new - old, 4) if old is not None and new is not None else None
+        axes_cmp[aid] = {
+            "name": m_new["name"],
+            "kind": m_new["kind"],
+            "before": old,
+            "after": new,
+            "delta": delta,
+        }
+        if delta is not None and delta < -0.10:
+            regressions.append(aid)
+    return {
+        "before_axes_version": before.get("axes_version"),
+        "after_axes_version": after.get("axes_version"),
+        "axes": axes_cmp,
+        "regressions": regressions,
+    }
+
+
+def format_comparison(cmp: dict) -> str:
+    v_old, v_new = cmp["before_axes_version"], cmp["after_axes_version"]
+    lines = [
         "",
-        "## Twin-pair consistency (mean |d| over scalar axes)",
-        f"  twin pairs: {t['n_twin_pairs']}   twin mean: {t['mean_twin_distance']}   "
-        f"all-pairs mean: {t['mean_all_pairs_distance']}",
+        f"## Before/after re-anchoring — axes_version {v_old} vs {v_new}",
+        "   (per-axis primary agreement: within-1 for scalar, exact-match for forced-choice)",
+        f"   {'axis':30}  v{v_old}     v{v_new}     delta",
     ]
+    for aid, c in cmp["axes"].items():
+        old = "  —  " if c["before"] is None else f"{c['before']:.2f}"
+        new = "  —  " if c["after"] is None else f"{c['after']:.2f}"
+        delta = "  —  " if c["delta"] is None else f"{c['delta']:+.2f}"
+        mark = "  <-- re-anchored" if aid in ("L1", "L3") else ""
+        lines.append(f"   {aid:3} {c['name']:26}  {old}   {new}   {delta}{mark}")
+    reg = ", ".join(cmp["regressions"]) or "none"
+    lines.append(f"   regressions (> 0.10 drop): {reg}")
     return "\n".join(lines)
 
 
@@ -298,8 +424,17 @@ def main() -> None:
     except Exception:  # noqa: BLE001
         pass
     axes = load_axes()
-    report = build_report(axes)
+    current = load_axes_version()
+    report = build_report(axes, axes_version=current)
     text = format_report(report)
+    # When an older anchor cohort exists, show before/after side by side, each column
+    # labelled with the axes_version it came from (the M5 acceptance view).
+    prior = [v for v in available_versions() if v < current]
+    if prior and not report.get("error"):
+        before = build_report(axes, axes_version=prior[-1])
+        if not before.get("error"):
+            report["before_after"] = compare_reports(before, report)
+            text += "\n" + format_comparison(report["before_after"])
     out_dir = storage.data_dir() / "reliability"
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "report.md").write_text(text + "\n", encoding="utf-8")

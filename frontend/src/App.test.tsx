@@ -20,6 +20,7 @@ const RATE_RESPONSE: RateResponse = {
   rating: {
     segment_id: 's',
     rater_id: 'claude-opus-4-8',
+    axes_version: 1,
     flagged: false,
     created_at: 't',
     scores: [

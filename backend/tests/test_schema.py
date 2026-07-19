@@ -1,6 +1,12 @@
 from collections import Counter
 
-from lsap.instrument.schema import AxisScore, Rating, compute_flagged, load_axes
+from lsap.instrument.schema import (
+    AxisScore,
+    Rating,
+    compute_flagged,
+    load_axes,
+    load_axes_version,
+)
 
 
 def test_load_axes_has_30_across_six_fields():
@@ -41,3 +47,19 @@ def test_rating_validates_and_flag_rule():
     )
     assert r.flagged is False
     assert len(r.scores) == 30
+    assert r.axes_version == 1  # defaulted — pre-M5 stored ratings parse as the v1 cohort
+
+
+def test_stored_rating_without_axes_version_parses_as_v1():
+    # A literal pre-M5 JSONL line: no axes_version field anywhere.
+    line = (
+        '{"segment_id": "s", "rater_id": "claude-opus-4-8", "scores": '
+        '[{"axis_id": "L1", "value": 3, "confidence": 4}], '
+        '"flagged": false, "created_at": "2026-07-03T00:00:00Z"}'
+    )
+    assert Rating.model_validate_json(line).axes_version == 1
+
+
+def test_axes_registry_carries_a_version():
+    # M5 re-anchored L1/L3, so the registry must be past its initial revision.
+    assert load_axes_version() >= 2

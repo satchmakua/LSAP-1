@@ -160,7 +160,11 @@ def cspace() -> dict:
 def segment_projection(segment_id: str, k: int = 5) -> dict:
     """Project a rated segment into C-space and return its nearest corpus neighbours."""
     m = _projection()
-    values = projection.consensus_for_segment(segment_id, m.axis_ids)
+    # Consensus from the cohort the frame was fitted on (older models carry no version
+    # and fall back to the segment's newest) — never pooled across anchor revisions.
+    values = projection.consensus_for_segment(
+        segment_id, m.axis_ids, axes_version=m.d.get("axes_version")
+    )
     if values is None:
         raise HTTPException(status_code=404, detail="segment has no ratings to project")
     nearest = m.neighbors(m.raw_scores(values), k=k, exclude=segment_id)
