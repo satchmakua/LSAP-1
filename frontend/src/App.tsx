@@ -11,6 +11,7 @@ import {
 } from './api'
 import { ScoresView } from './components/ScoresView'
 import { CSpaceMap } from './components/CSpaceMap'
+import { EngineConsole } from './components/EngineConsole'
 import './App.css'
 
 const RATERS = [
@@ -29,6 +30,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null)
   const [cspace, setCspace] = useState<CSpace | null>(null)
   const [proj, setProj] = useState<SegmentProjection | null>(null)
+  const [tab, setTab] = useState<'instrument' | 'engine'>('instrument')
 
   useEffect(() => {
     fetchAxes()
@@ -68,8 +70,23 @@ export default function App() {
   return (
     <main className="app">
       <header>
-        <h1>LSAP-1 · Rater Studio</h1>
-        <p className="subtitle">Score a prose segment on the 30 observable-feature axes.</p>
+        <h1>LSAP-1 · {tab === 'instrument' ? 'Rater Studio' : 'Engine Console'}</h1>
+        <nav className="tabs">
+          <button
+            type="button"
+            className={tab === 'instrument' ? 'active' : ''}
+            onClick={() => setTab('instrument')}
+          >
+            Instrument
+          </button>
+          <button
+            type="button"
+            className={tab === 'engine' ? 'active' : ''}
+            onClick={() => setTab('engine')}
+          >
+            Engine
+          </button>
+        </nav>
       </header>
 
       {axesError && (
@@ -78,6 +95,11 @@ export default function App() {
         </p>
       )}
 
+      {tab === 'engine' && <EngineConsole axes={axes} />}
+
+      {tab === 'instrument' && (
+        <>
+      <p className="subtitle">Score a prose segment on the 30 observable-feature axes.</p>
       <form className="rate-form" onSubmit={onRate}>
         <textarea
           value={text}
@@ -120,6 +142,8 @@ export default function App() {
           highlight={proj ? { segment_id: proj.segment_id, coords: proj.vector.coords } : null}
           neighbors={proj?.neighbors}
         />
+      )}
+        </>
       )}
     </main>
   )

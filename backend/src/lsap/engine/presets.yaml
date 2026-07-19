@@ -1,0 +1,32 @@
+# Dial-a-preset configurations (Charter P9: sensible defaults so the tool never
+# paralyzes the writer). Each is a starting point, not a cage — every dial stays live.
+presets:
+  - id: house
+    name: House style — restrained realism
+    description: Realist surface, documentary drift, controlled perceptual misalignment.
+    dials: {c1: 0.55, c2: 0.35, c3: 0.70, c4: 0.45, c5: 0.35}
+
+  - id: minimal
+    name: Minimalist
+    description: Short declaratives, exterior only, flat affect, strictly linear.
+    dials: {c1: 0.10, c2: 0.10, c3: 0.10, c4: 0.05, c5: 0.10}
+
+  - id: baroque
+    name: Baroque interior
+    description: Long subordinated periods, deep interiority, dense figuration.
+    dials: {c1: 0.95, c2: 0.50, c3: 0.90, c4: 0.30, c5: 0.60}
+
+  - id: hallucinatory
+    name: Metaphysical hallucination
+    description: High compression against a world whose rules will not hold.
+    dials: {c1: 0.85, c2: 0.70, c3: 0.75, c4: 0.90, c5: 0.60}
+
+  - id: thriller
+    name: Procedural thriller
+    description: Fast, linear, exterior, rising intensity.
+    dials: {c1: 0.15, c2: 0.10, c3: 0.20, c4: 0.10, c5: 0.85}
+
+  - id: trap
+    name: The trap — blocked agency
+    description: Unstable rules plus blocked time; agential pressure (B6) runs extreme.
+    dials: {c1: 0.40, c2: 0.05, c3: 0.50, c4: 0.85, c5: 0.40}

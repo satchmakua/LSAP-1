@@ -16,6 +16,10 @@ from pydantic import BaseModel
 from lsap import storage
 from lsap.coordinates import projection
 from lsap.coordinates.projection import ProjectionModel
+from lsap.engine import runtime as engine_runtime
+from lsap.engine.compiler import Dials
+from lsap.engine.presets import load_presets
+from lsap.engine.runtime import EngineError, GenerationRun
 from lsap.instrument import rater
 from lsap.instrument.rater import RaterError
 from lsap.instrument.schema import AxisDef, Rating, load_axes
@@ -165,3 +169,32 @@ def segment_projection(segment_id: str, k: int = 5) -> dict:
         "vector": m.project(values).model_dump(),
         "neighbors": [n.model_dump() for n in nearest],
     }
+
+
+# --- M4: the generative engine -------------------------------------------------------
+# The API is the ONLY place the two halves meet, and even here they never call each
+# other: the engine generates from operators + rules; re-rating its output is a separate,
+# one-way trip back through /api/rate (Charter P4).
+
+
+class GenerateRequest(BaseModel):
+    dials: Dials
+    situation: str
+    paragraphs: int = 5
+
+
+@app.get("/api/presets")
+def presets() -> list[dict]:
+    return [p.model_dump() for p in load_presets()]
+
+
+@app.post("/api/generate")
+def generate(req: GenerateRequest) -> GenerationRun:
+    if not 1 <= req.paragraphs <= 8:
+        raise HTTPException(status_code=400, detail="paragraphs must be between 1 and 8")
+    try:
+        return engine_runtime.generate(
+            dials=req.dials, situation=req.situation, paragraphs=req.paragraphs
+        )
+    except EngineError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
