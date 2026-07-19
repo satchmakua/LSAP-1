@@ -11,7 +11,7 @@ analysis↔generation firewall).
 
 **Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Status:** **M2 (pilot corpus + reliability) complete & verified** — a 30-segment corpus rated by both models; the reliability run shows the Literary-Big-Five structure has real support (PC1 ≈ 45% of variance, ~6 factors cover 80%). See [PROGRESS.md](PROGRESS.md) and `reliability/report.md`. Next milestone: coordinate system v1 (M3).
+**Status:** **M3 (coordinate system v1) complete & verified** — rate a segment on 30 anchored axes, then watch it land in a fitted C-space next to its nearest kin. The projection over the 30-segment pilot corpus locks 5 factors (79.4% explained, C6 residual 20.6%); a new minimalist passage projects nearest the corpus's minimalist twins. See [PROGRESS.md](PROGRESS.md), `reliability/report.md`, `coordinates/model.json`. Next milestone: the generative engine MVP (M4).
 
 ## Run it
 
@@ -25,9 +25,19 @@ npm run lint    # ruff + oxlint
 npm run build   # frontend production build
 ```
 
-Open **http://localhost:5173** for the Rater Studio: paste a ~1–3k-word passage, pick a
-rater, and score it on all 30 axes. The API is at **http://localhost:8000**
-(`/health`, `/api/axes`, `POST /api/rate`, `/api/segments`).
+Open **http://localhost:5173**: paste a ~1–3k-word passage, pick a rater, and score it on
+all 30 axes — then see it placed in the **C-Space Map** beside its nearest neighbours.
+The API is at **http://localhost:8000** (`/health`, `/api/axes`, `POST /api/rate`,
+`/api/segments`, `/api/cspace`, `/api/segments/{id}/projection`).
+
+Operational runners (from `backend/`, needing `ANTHROPIC_API_KEY`):
+
+```bash
+uv run python scripts/generate_corpus.py     # write the pilot corpus (idempotent)
+uv run python scripts/rate_corpus.py         # rate it with both raters (resumable)
+uv run python -m lsap.coordinates.reliability  # agreement / correlation / PCA report
+uv run python scripts/fit_projection.py      # fit + persist coordinates/model.json
+```
 
 ## Docs
 

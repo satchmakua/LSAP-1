@@ -72,3 +72,50 @@ export async function rateSegment(body: {
   if (!res.ok) throw new Error(await detail(res))
   return (await res.json()) as RateResponse
 }
+
+/* --- M3: the coordinate system --- */
+
+export interface CFactor {
+  id: string
+  label: string
+  explained_variance: number
+  top_axes: [string, number][]
+}
+
+export interface CSpacePoint {
+  segment_id: string
+  profile: string | null
+  pair: string | null
+  coords: number[]
+}
+
+export interface CSpace {
+  factors: CFactor[]
+  residual: number
+  n_segments: number
+  points: CSpacePoint[]
+}
+
+export interface CNeighbor {
+  segment_id: string
+  distance: number
+  profile: string | null
+}
+
+export interface SegmentProjection {
+  segment_id: string
+  vector: { coords: number[]; residual: number }
+  neighbors: CNeighbor[]
+}
+
+export async function fetchCSpace(): Promise<CSpace> {
+  const res = await fetch('/api/cspace')
+  if (!res.ok) throw new Error(await detail(res))
+  return (await res.json()) as CSpace
+}
+
+export async function fetchProjection(segmentId: string, k = 5): Promise<SegmentProjection> {
+  const res = await fetch(`/api/segments/${encodeURIComponent(segmentId)}/projection?k=${k}`)
+  if (!res.ok) throw new Error(await detail(res))
+  return (await res.json()) as SegmentProjection
+}

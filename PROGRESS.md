@@ -5,22 +5,73 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** M2 (pilot corpus + reliability) complete & verified — a 30-segment
-corpus rated by both models; the Literary-Big-Five structure has real support in the
-data. Next up is M3 (coordinate system v1).
+**Current phase:** M3 (coordinate system v1) complete & verified — the projection is
+fitted and persisted, and a new segment projects to sensible neighbours in the running
+app. Next up is M4 (the generative engine MVP) — the last milestone of the v1 slice.
 
 ### State of the tree
 
 | Area | Where | Status |
 |---|---|---|
-| API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]` live |
+| API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]`, **`/api/cspace`, `/api/segments/{id}/projection`** live |
 | Instrument | `backend/src/lsap/instrument/` | `schema.py` + 30-axis `axes.yaml`; **`rater.py` implemented** (Claude structured output) |
 | Persistence | `backend/src/lsap/storage.py` | JSONL ratings + markdown corpus (git-diffable) |
 | Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | 30-segment pilot (`source: pilot`) + 60 ratings + reliability report |
-| Coordinates | `backend/src/lsap/coordinates/` | **`reliability.py` implemented** (agreement / correlation / PCA / twins); `projection.py` `CVector` real, `ProjectionModel` stubbed (M3) |
+| Coordinates | `backend/src/lsap/coordinates/` | **`reliability.py` + `projection.py` implemented** (agreement / correlation / PCA / twins; fitted + persisted projection, neighbours) |
+| Fitted model | `coordinates/model.json` | 5 locked factors over 30 segments, 79.4% explained, C6 residual 20.6% |
 | Engine | `backend/src/lsap/engine/` | `Dials` + `to_bands` real; `operators.yaml` real; `compile_constraints` stubbed (M4) |
 | Firewall | `backend/tests/test_firewall.py` | enforced & green (hardened: every import form + `storage`) |
-| Frontend | `frontend/src/` | Rater Studio: paste → rate → 30 scored axes + confidence |
+| Frontend | `frontend/src/` | Rater Studio (paste → rate → 30 scored axes) + **C-Space Map** (scatter, factor axes, neighbours) |
+
+---
+
+## M3 — Coordinate system v1 · built & verified 2026-07-03 · ✓
+
+Locked the surviving factors, fitted and persisted the projection, and put an arbitrary
+new segment on the map next to neighbours that actually read as its kin.
+
+**Shipped**
+- **`coordinates/projection.py`**: fit (consensus → standardize → PCA) → persist →
+  project → nearest neighbours. `scripts/fit_projection.py` fits over the pilot corpus,
+  writes `coordinates/model.json`, and self-checks the twin-pair criterion.
+- **API**: `GET /api/cspace` (factors + corpus points) and
+  `GET /api/segments/{id}/projection` (vector + neighbours); both 409 until a model is fitted.
+- **Frontend `CSpaceMap`**: SVG scatter with selectable factor axes, per-axis variance
+  share, the acknowledged residual, the rated segment highlighted, and a neighbour list.
+
+**The fitted coordinate system** (30 segments, 5 factors, **79.4% explained, C6 residual 20.6%**)
+
+| | var | derived label (from its own top loadings) |
+|---|---|---|
+| C1 | 44.8% | Figurative Density · Interior/Exterior Ratio · Cognitive Transparency |
+| C2 | 11.5% | Meaning Structure · Moral-Structure Clarity · Intensity Curve |
+| C3 | 10.5% | Emotional Volatility · Semantic Density · Lexical Complexity |
+| C4 | 7.0% | Plot Centrality · Rhythm Regularity · Lexical Complexity |
+| C5 | 5.5% | Rhythm Regularity · Event Density · Repetition Pattern |
+
+**Decisions (both forced by the data — DESIGN §4.2 was rewritten to match)**
+- **Derived factor labels, not the hypothesised names.** The blueprint's proposed
+  C1..C5 names don't map 1:1 onto the fit, so each component is labelled from its own top
+  loadings. Naming a factor after what it actually loads on avoids the symbolic-overfitting
+  trap (Charter P6).
+- **Neighbour distance in raw PCA-score space.** Raw scores are variance-weighted, so the
+  dominant factors drive similarity; the [0,1] display coords would give a
+  near-zero-variance direction equal weight to PC1. Degenerate components are dropped at
+  fit time (found via a test where a ~0%-variance direction made `project()` disagree with
+  its own fitted point).
+
+**Verified**
+- `uv run pytest` → **50 passed** (adds 7 projection + 4 C-space endpoint tests);
+  `ruff` clean. Frontend `vitest` → **4 passed**; `build` + `oxlint` clean.
+- **Twin criterion: 7/8** twin-pair members have their twin as nearest neighbour. The one
+  miss is defensible — `paradox-library` landed nearest `second-person-city` (both cool,
+  meta, epistemically unstable), with `paradox-map` next.
+- **End-to-end in the running app**: a brand-new minimalist passage rated through the UI
+  projected as a highlighted dot whose neighbours were `min-kitchen` (1.66),
+  `min-laundromat` (4.11), `catalogue-estate` (4.39), `scifi-clinical` (5.76) — the two
+  deliberately-minimalist twins first, then the other flat/documentary segments. 30 corpus
+  dots + the new point rendered, no console errors. (Screenshot capture times out in this
+  environment; verified via DOM/JS inspection.)
 
 ---
 

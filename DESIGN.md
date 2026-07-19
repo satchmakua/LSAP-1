@@ -211,27 +211,41 @@ ratings and they collapse to ~5–6 latent factors. This is the moment the frame
 crystallizes or reveals a more interesting shape — **either outcome passes** (Charter P3).
 
 ```python
-# coordinates/projection.py — 30 anchored axes --PCA--> C in [0,1]^5 (+ residual)
-# scalar axes normalized (value-1)/6 -> [0,1]; forced-choice one-hot before PCA.
+# coordinates/projection.py — the scalar axes --standardize--> PCA --> C-space
+# Fitted over the rated pilot corpus; persisted to coordinates/model.json.
 from pydantic import BaseModel
 
 class CVector(BaseModel):
-    c1_compression: float            # semantic density, metaphor load, condensation, rhythm
-    c2_narrative_structure: float    # linearity <-> fragmentation; causality; time
-    c3_consciousness_depth: float    # interiority, POV immersion, subject coherence
-    c4_epistemic_stability: float    # consistency <-> paradox of reality-rules
-    c5_affective_intensity: float    # emotional volatility, tonal amplitude
-    c6_residual: float               # the acknowledged remainder (Charter P5)
+    coords: list[float]   # one per locked factor, normalized to [0,1] over the fitted corpus
+    residual: float       # C6 — the share of variance the factors do NOT capture (Charter P5)
 
 class ProjectionModel:
-    def fit(self, ratings: list[Rating]) -> None: ...      # sklearn PCA over the corpus
-    def project(self, rating: Rating) -> CVector: ...      # a single point in C-space
-    def explained_variance(self) -> list[float]: ...       # per-factor variance explained
-    # persisted to coordinates/model.json so the map + engine-eval are reproducible
+    def fit(matrix, axis_ids, axis_names, segments) -> ProjectionModel   # sklearn PCA
+    def project(values: dict[str, float]) -> CVector    # display coords in [0,1]
+    def raw_scores(values) -> list[float]               # unnormalized PCA scores
+    def neighbors(scores, k, exclude) -> list[Neighbor] # distance in RAW score space
+    def explained_variance() -> list[float]
 ```
 
-Canonical names (blueprint §16 glossary) are used **everywhere downstream**; the glossary
-is the single source of truth when this doc and the blueprint drift on naming.
+**Two decisions the M2/M3 data forced (this section was rewritten to match the
+evidence — Charter P1/P3):**
+
+1. **Factor names are derived, not assumed.** The original design named the five factors
+   after the blueprint's hypothesis (Compression, Narrative Structure, Consciousness
+   Depth, Epistemic Stability, Affective Intensity). The pilot showed that mapping is not
+   what the data does — the Consciousness axes collapse into one interiority factor
+   (r = 0.93–0.96) and PC1 mixes figuration with interiority. So each component now
+   carries a **label built from its own top loadings** (e.g. C1 = "Figurative Density ·
+   Interior/Exterior Ratio · Cognitive Transparency", 44.8%), stored in `model.json`.
+   Naming a component after what it actually loads on is the honest move (Charter P6).
+2. **Distance is measured in raw PCA-score space, not the [0,1] display coords.** Raw
+   scores are naturally weighted by each factor's variance, so the dominant factors drive
+   similarity; min-max-normalized coords would give a near-zero-variance direction the
+   same weight as PC1. Degenerate (~0 variance) components are dropped at fit time.
+
+Forced-choice axes (A3/A5/S5) are analysed separately rather than one-hot into the PCA —
+at n≈30 one-hot encoding is degenerate. The blueprint's canonical vocabulary still names
+the *program*; the fitted factor labels name *this* fit.
 
 ### 4.3 The firewall invariant (Charter Principle 4) — a structural, tested rule
 

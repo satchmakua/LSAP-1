@@ -52,11 +52,16 @@ in [DESIGN.md](DESIGN.md); the domain theory is in
 
 ## Phase 2 — Coordinate system (L2/L3)
 
-- [ ] **M3 — Coordinate system v1.** Fit + persist the PCA (`coordinates/model.json`);
-  add a project endpoint; build the C-Space Map (scatter + nearest neighbors +
-  trajectory) in the frontend.
+- [x] **M3 — Coordinate system v1.** Fits + persists the projection
+  (`coordinates/model.json`, via `scripts/fit_projection.py`); `GET /api/cspace` and
+  `GET /api/segments/{id}/projection`; the C-Space Map in the frontend (SVG scatter,
+  selectable factor axes, highlighted segment + nearest-neighbour list).
   **Test:** submit a new segment → it appears as a dot in C-space with nearest
   neighbors that read as sensible; explained variance per factor is shown.
+  **✓ verified 2026-07-03** — five factors explain 79.4% (C6 residual 20.6%); 7/8
+  twin-pairs are each other's nearest neighbour; and in the running app a brand-new
+  minimalist passage projected nearest `min-kitchen` (1.66) and `min-laundromat` (4.11),
+  then the other flat/documentary segments. Axes are labelled with their variance share.
 
 ## Phase 3 — The engine (L6)
 
