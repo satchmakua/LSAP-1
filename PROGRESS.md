@@ -5,25 +5,100 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** **The v1 slice (M0–M4) is complete and verified.** You can rate a
-segment on 30 anchored axes, watch it land in a fitted C-space beside its kin, and dial
-the operators to generate measurably different prose — with the analysis/generation
-firewall intact throughout. Next work is v2+ (L4 tensor · L5 archetypes · L7 multi-agent
-· the D3 combinator), or deepening the pilot corpus toward real reliability.
+**Current phase:** **Phase 4 (v1 hardening) is underway — M5 is done; M6 is next.**
+The v1 slice (M0–M4) is complete: rate a segment on 30 anchored axes, watch it land in
+a fitted C-space beside its kin, dial the operators to generate measurably different
+prose — firewall intact throughout. M5 re-anchored the two absolute-ambiguous axes:
+L3 is fixed (0.40 → 0.83); L1 resisted two revisions and is written up as a
+split/retirement candidate (see the M5 entry — **decide with the human before M6**).
 
 ### State of the tree
 
 | Area | Where | Status |
 |---|---|---|
 | API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]`, `/api/cspace`, `/api/segments/{id}/projection`, **`GET /api/presets`, `POST /api/generate`** |
-| Instrument | `backend/src/lsap/instrument/` | `schema.py` + 30-axis `axes.yaml`; **`rater.py` implemented** (Claude structured output) |
-| Persistence | `backend/src/lsap/storage.py` | JSONL ratings + markdown corpus (git-diffable) |
-| Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | 30-segment pilot (`source: pilot`) + 60 ratings + reliability report |
-| Coordinates | `backend/src/lsap/coordinates/` | **`reliability.py` + `projection.py` implemented** (agreement / correlation / PCA / twins; fitted + persisted projection, neighbours) |
-| Fitted model | `coordinates/model.json` | 5 locked factors over 30 segments, 79.4% explained, C6 residual 20.6% |
+| Instrument | `backend/src/lsap/instrument/` | `schema.py` + 30-axis `axes.yaml` (**version 3** — L1/L3 re-anchored in M5); **`rater.py` implemented** (Claude structured output, stamps `axes_version`) |
+| Persistence | `backend/src/lsap/storage.py` | JSONL ratings + markdown corpus (git-diffable); `latest_ratings` = newest-wins per (rater, segment, axes_version) |
+| Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | 30-segment pilot (`source: pilot`) + 180 ratings across 3 anchor cohorts + reliability report (v1 vs v3 before/after) |
+| Coordinates | `backend/src/lsap/coordinates/` | **`reliability.py` + `projection.py` implemented** (N-rater per-pair agreement / correlation / PCA / twins; fitted + persisted projection, neighbours; cohort-aware) |
+| Fitted model | `coordinates/model.json` | 5 locked factors over 30 segments (axes_version 3), 79.2% explained, C6 residual 20.8% |
 | Engine | `backend/src/lsap/engine/` | **fully implemented** — `compiler.py` (rule tables, derived B6), `runtime.py` (state machine + WS/PL/MF/EF/LR loop), `presets.yaml`, `operators.yaml` |
 | Firewall | `backend/tests/test_firewall.py` | enforced & green (hardened: every import form + `storage`) |
 | Frontend | `frontend/src/` | Tabbed: Rater Studio (rate → 30 axes) + C-Space Map (scatter, neighbours) · **Engine Console** (5 sliders, presets, per-paragraph state panel, re-rate) |
+
+---
+
+## M5 — Rating-selection defect fix + re-anchor L1 & L3 · built & verified 2026-07-19 · ✓ (stop rule fired for L1)
+
+The first hardening milestone, and the first honest negative result: one axis fixed
+decisively, one axis shown to be beyond anchor repair — which is itself the finding.
+
+**Shipped**
+- **The defect fix (prerequisite for all of Phase 4).** Both analysis loaders took the
+  *first* rating per (rater, segment) while `save_rating` appends — every re-rate was
+  written to disk and silently ignored. Selection is now **newest-wins per (rater,
+  segment, axes_version)** via `storage.latest_ratings`; `Rating.axes_version` (defaults
+  to 1 so the 60 stored ratings parse unchanged) is stamped from a new `version:` key in
+  `axes.yaml`, so ratings scored under different anchors can never be silently pooled.
+  Loader/consensus tests append a second rating and assert the newer one is used.
+- **N-rater `build_report`** (started by a concurrent session; kept and finished):
+  per-pair agreement with pairwise-complete/ragged coverage — M7's prerequisite arrived
+  early. Plus a **before/after section** comparing the current cohort to the *oldest*
+  (pre-re-anchor baseline), columns labelled by `axes_version`, with a >0.10-regression
+  flag. `rate_corpus.py` resumability is version-aware: bumping `version:` queues a full
+  re-rate. `fit_from_storage` fits one cohort only and records it in `model.json`; the
+  projection endpoint projects with the model's own cohort.
+- **Anchors v2** (both axes, drafted by a 4-lens draft → 3-judge → synthesize workflow):
+  countable referents with full count-to-score maps — L1 as *marked words per 100* with
+  example words per band; L3 as *propositions per sentence* averaged over five
+  consecutive sentences, worked counts shown. **Anchors v3** (L1 only, final allowed
+  revision): after diagnosing that Haiku rates in one pass with no thinking room — a
+  counting procedure can't bite — each band gained a self-annotated **exemplar sentence**
+  (recognition channel pinned to the arithmetic channel), plus a negative exemplar:
+  atmospheric prose of common words scores 1–2.
+
+**Findings (30 segments × 2 raters × 2 re-rates ≈ 180 paid calls; all 60/60 twice, 0 failed)**
+- **L3 Semantic Density: 0.40 → 0.67 → 0.83 within-1 ✓.** The proposition-count anchor
+  fixed it; now among the stronger axes (Spearman ~0.74 held throughout).
+- **L1 Lexical Complexity: 0.40 → 0.37 → 0.30 ✗ — the stop rule fired.** The decisive
+  signature: both raters recalibrated downward nearly in lockstep (Opus 3.30 → 2.33 →
+  2.13; Haiku 4.93 → 4.17 → 3.97) while the offset froze at **+1.8** and Spearman held
+  ~0.75. The anchors moved both raters; nothing moved them *together*. "Rare word" is
+  rater-relative — the two models carry different effective vocabularies, so "rare for
+  whom?" has no anchor-fixable answer. Per Charter P2 this disagreement is data.
+  **Disposition (for the human, before M6):** split (technical/specialist rarity vs
+  literary-register elevation) or retire toward the cluster it already rides with
+  (L1~L2 r=0.87, L1~L3 r=0.86 in the pilot).
+- **N3 Causal Clarity destabilized with no anchor change: 0.73 → 0.60 → 0.40**, offset
+  growing 0.50 → 1.07 → 1.27, Spearman 0.38–0.49 (always the second-weakest ranker).
+  Its v1 0.73 was riding on a small offset that drifted between runs — within-1 at n=30
+  carries real run-to-run variance, and axis stability under re-measurement is now a
+  known question M6's larger n should answer. Watch list, not retuned (the M5 stop rule
+  scopes anchor surgery to L1/L3).
+- All other axes within −0.10 of their v1 baseline (P4 exactly −0.10; several improved:
+  S4 +0.23, S3 +0.13, A2 +0.13). **27/30 reliable** (was 26); ambiguous: L1, N3.
+- **Projection refit on the v3 cohort:** 5 factors, 79.2% explained, C6 residual 20.8%
+  (vs 79.4/20.6 pre-refit — the frame is stable). Twin nearest-neighbour **6/8** (was
+  7/8; `elegy-station` now lands one neighbour off — `letter-confession` — with its twin
+  second).
+
+**Verified**
+- Backend `pytest` → **76 passed** (adds selection/cohort tests in storage, reliability,
+  projection; rater stamping; old-JSONL parse compat; registry-version guard); `ruff`
+  clean. Frontend `vitest` → **6 passed**; `build` + `oxlint` clean. Firewall green.
+- Live API smoke: `/health` ok (30 axes), `/api/cspace` serves the refit model
+  (residual 0.2078, n=30), `min-kitchen`'s projection returns its twin
+  `min-laundromat` first at the refit distance.
+
+**Decisions**
+- **Newest = last line in the append-only file** (file order is chronological); no
+  timestamp parsing. Cohorts are never pooled — a re-anchored axis changes what a score
+  *means*, so cross-version averaging would be silent nonsense.
+- **"Before" in the report = the oldest cohort**, not the previous revision — the
+  standing question is "did re-anchoring help vs the original instrument".
+- **The stop rule is a feature, not a failure.** Two revisions were spent; continuing
+  to tune until two models agree would invert P2 (manufacture agreement instead of
+  measuring it). The honest exit is the write-up above.
 
 ---
 

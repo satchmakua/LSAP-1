@@ -11,10 +11,10 @@ analysis↔generation firewall).
 
 **Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Status: the v1 slice (M0–M4) is complete and verified.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
+**Status: v1 slice (M0–M4) complete; Phase 4 hardening underway — M5 done, M6 next.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
 
-- **Instrument:** 30 anchored axes, Claude-rated under a frozen manual. Inter-rater agreement on a 30-segment pilot: 26/30 axes reliable.
-- **Coordinates:** 5 locked factors, **79.4% explained, C6 residual 20.6%**; 7/8 redundant twin-pairs are mutual nearest neighbours.
+- **Instrument:** 30 anchored axes (registry **version 3**), Claude-rated under a frozen manual; ratings carry an `axes_version` and anchor cohorts are never pooled. Inter-rater agreement on the 30-segment pilot: **27/30 axes reliable**. M5 re-anchored the two ambiguous axes: L3 fixed (within-1 **0.40 → 0.83**); L1 resisted two revisions (frozen +1.8 offset, Spearman ~0.75) and is written up as a split/retirement candidate; N3 proved unstable under re-measurement.
+- **Coordinates:** 5 locked factors fitted on the v3 cohort, **79.2% explained, C6 residual 20.8%**; 6/8 redundant twin-pair members have their twin as nearest neighbour.
 - **Engine:** operators → rules → a stateful WS/PL/MF/EF/LR loop. Moving compression 0.05 → 0.95 took mean sentence length **6.3 → 140.5 words** and moved **4/4** predicted instrument axes up (Syntactic Depth 1→7).
 
 See [PROGRESS.md](PROGRESS.md), `reliability/report.md`, `coordinates/model.json`.
@@ -56,7 +56,7 @@ uv run python scripts/engine_ab.py --dial c1   # A/B a dial, then re-rate both r
 ## Docs
 
 - **[DESIGN.md](DESIGN.md)** — the engineering spec: stack, data contracts, architecture, milestones.
-- **[ROADMAP.md](ROADMAP.md)** — the milestone checklist (M0 done; M1–M4 next).
+- **[ROADMAP.md](ROADMAP.md)** — the milestone checklist (M0–M5 done; M6–M7 harden, then the v2 layers).
 - **[PROGRESS.md](PROGRESS.md)** — the build log.
 - **[LSAP_Foundational_Blueprint.md](docs/LSAP_Foundational_Blueprint.md)** — the domain theory (the L0–L7 stack and the Epistemic Charter).
 - **[docs/adr/](docs/adr/)** — architecture decision records, including the [analysis/generation firewall](docs/adr/0002-analysis-generation-firewall.md).
@@ -65,6 +65,6 @@ uv run python scripts/engine_ab.py --dial c1   # A/B a dial, then re-rate both r
 
 ```
 backend/   FastAPI + Pydantic — instrument (L1) · coordinates (L2/L3) · engine (L6) · api
-frontend/  React 19 + Vite — Rater Studio · (C-Space Map, Engine Console to come)
+frontend/  React 19 + Vite — Rater Studio · C-Space Map · Engine Console
 docs/      ADRs and long-form notes
 ```

@@ -93,7 +93,7 @@ are the follow-ups the numbers themselves argue for._
 > **newest-wins per (rater, segment, axes_version)**, with a test that appends a second
 > rating and asserts the newer value is the one used.
 
-- [ ] **M5 — Re-anchor L1 & L3.** M2 found these two absolute-ambiguous: within-1
+- [x] **M5 — Re-anchor L1 & L3.** M2 found these two absolute-ambiguous: within-1
   agreement **0.40**, |Δ| ≈ 1.6 — yet Spearman ≈ 0.75. The raters *rank* segments
   together but use the 1–7 scale differently, so the fault is the anchors, not the axis.
   Rewrite both in `axes.yaml` with countable referents and worked exemplars at 1/4/7
@@ -111,6 +111,19 @@ are the follow-ups the numbers themselves argue for._
   within-1 agreement ≥ **0.65**, with no other axis falling more than 0.1 below its
   current value; the report shows before/after side by side and states which
   `axes_version` each column came from.
+  **✓ verified 2026-07-19 — the stop rule fired for L1; that exit is part of this
+  milestone's spec.** Defect fix shipped (newest-wins per (rater, segment, axes_version),
+  cohorts never pooled, loader + consensus tests). Two anchor revisions run (v2, v3;
+  ~180 paid calls): **L3 0.40 → 0.67 → 0.83 ✓** (passes the gate with room). **L1
+  0.40 → 0.37 → 0.30 ✗** — both raters recalibrated downward in lockstep while the
+  +1.8 offset stayed frozen and Spearman held ~0.75: the miscalibration is
+  rater-relative vocabulary, not anchor wording. Per the stop rule L1 is written up in
+  `PROGRESS.md` as a **candidate for splitting or retirement** (decide with the human
+  before M6's ~300-call run). Finding: **N3 destabilized without its anchors changing**
+  (0.73 → 0.60 → 0.40, offset growing, Spearman 0.38–0.49) — within-1 at n=30 carries
+  real run-to-run variance; N3 joins the watch list. All other axes within −0.10 of
+  their v1 baseline. Report: `reliability/report.md` (v1 vs v3 side by side, columns
+  labelled by `axes_version`).
 
 - [ ] **M6 — Grow the pilot corpus past n=30.** With 27 scalar features, n=30 makes the
   PCA provisional. Extend `scripts/corpus_specs.json` toward **n ≈ 100** — more profiles,
