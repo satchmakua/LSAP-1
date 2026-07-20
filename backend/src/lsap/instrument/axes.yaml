@@ -1,15 +1,57 @@
 # The 30 observable-feature axes (blueprint §6), 5 per field, scored on a 7-point
 # anchored scale — except three forced-choice axes (A3, A5, S5). Anchors are given at
 # 1 / 4 / 7. Score BEHAVIOR, not quality; ignore author identity and genre reputation.
+#
+# version history: 1 = the M1 originals; 2 = M5 re-anchor of L1 + L3 (countable
+# referents + worked exemplars — the pilot found them absolute-ambiguous: the raters
+# ranked together, Spearman ~0.75, but calibrated the 1-7 scale ~1.6 apart);
+# 3 = M5 revision 2 of L1 only (v2 fixed L3, 0.40→0.67, but not L1 — exemplar sentences
+# per band added so a no-thinking rater calibrates by resemblance; count still decides).
+version: 3
 axes:
   # ---------------- Language (L) ----------------
   - id: L1
     field: L
     name: Lexical Complexity
     kind: scalar
-    definition: Rarity, register, and technicality of word choice.
-    anchors: {1: "Plain, common, everyday words.", 4: "Mixed register.", 7: "Rare, latinate, or technical diction."}
-    watch_for: ["Long words != complex ideas", "Do not reward 'beauty'"]
+    definition: >-
+      Rarity and technicality of diction, measured as marked words per 100 — words
+      outside roughly the 5,000 most common English words (rare, literary, technical,
+      archaic, or foreign), unlikely in casual conversation or a general newspaper.
+      Count one representative 100-word stretch (average two if register shifts), skip
+      proper nouns, count a repeated word once. Map counts to scores: 0-1 marked = 1,
+      2 = 2, 3-4 = 3, about 5 = 4, 6-7 = 5, 8-9 = 6, 10 or more = 7. Each anchor
+      includes an exemplar sentence — place the prose with the exemplar whose share of
+      marked words it most resembles.
+    anchors:
+      1: >-
+        0-1 marked words per 100 — everyday diction throughout ('walk', 'cold',
+        'kitchen', 'said'). Exemplar: 'Rain fell on the empty street, the last light
+        died in the window, and the shadows kept their secrets.' — all nineteen words
+        are common. An atmospheric sentence built entirely of common words sits here,
+        scoring 1-2.
+      4: >-
+        About 5 marked words per 100 — roughly one marked word in every twenty: an
+        everyday base carrying steady literary, formal, or mildly technical items
+        ('pallid', 'undulating', 'admonish', 'lattice'). Exemplar: 'A pallid light
+        settled on the water, and the boats swung slowly at their ropes as the tide
+        went out.' — one marked word ('pallid') in twenty. Typical published fiction
+        counts 2-5 per 100.
+      7: >-
+        10 or more marked words per 100 — one in every ten or closer — at least three of
+        them dictionary-level rare, archaic, or specialist ('tenebrous', 'catafalque',
+        'glabrous', 'antinomian'). Exemplar: 'The tenebrous nave enclosed a catafalque
+        draped in cerements, its marmoreal saints keeping vigil.' — five marked words in
+        fourteen, four of them rare. If you cannot list three such words from your
+        stretch, score 6 at most.
+    watch_for:
+      - "Score word rarity only — not imagery, mood, rhythm, or subject matter"
+      - "Test each candidate word alone: if it would pass in a plain news story, it is not marked"
+      - "Vivid or literary-staple common words ('gleaming', 'shattered', 'dusk', 'threshold', 'murmur', 'hollow', 'ash') are not marked"
+      - "Match prose to the anchor exemplars by share of marked words, not by subject or mood — when count and resemblance disagree, the count decides"
+      - "Frequency marks a word, not length or idea difficulty — 'immediately' and 'nevertheless' are common"
+      - "Dialect spellings of common words ('gonna', 'warn't') are not marked — archaisms and specialist jargon are"
+      - "Pick the 100-word stretch as typical of the segment, not its most heavily marked stretch"
   - id: L2
     field: L
     name: Syntactic Depth
@@ -21,9 +63,33 @@ axes:
     field: L
     name: Semantic Density
     kind: scalar
-    definition: Ideas conveyed per sentence (NOT sentence length).
-    anchors: {1: "One idea, spread out.", 4: "Steady idea flow.", 7: "Many compressed ideas per sentence."}
-    watch_for: ["Do not confuse with syntactic depth", "Count ideas, not clauses"]
+    definition: >-
+      Ideas conveyed per sentence, not sentence length. Take five consecutive sentences
+      from a representative paragraph, count each one's propositions — events, claims, or
+      asserted states that could each stand alone as a simple sentence in a faithful
+      restatement — and average. Modifiers packing a claim ('exiled', 'half-burned')
+      count one each; attributes in passing ('tall', 'grey') count zero.
+    anchors:
+      1: >-
+        Averages about 1 proposition per typical sentence — e.g. 'He opened the door.
+        The hall was dark.' = 1 each; one idea often stretches across several sentences.
+        Averages near 1.5 score 2, near 2 score 3.
+      4: >-
+        Averages about 3 propositions per typical sentence — e.g. 'She left the letter
+        and walked to the harbor, where the boats were coming in.' = 3 (left the letter;
+        walked to the harbor; boats coming in). Typical published fiction averages 2-3.
+      7: >-
+        Averages 6 or more propositions per typical sentence, sustained — e.g. 'Exiled
+        twice, she trusted no government, so her coded letters left a different city
+        each week.' = 6 (exiled; twice; trusted no government; 'so' links distrust to
+        practice; letters coded; different city weekly). Averages near 4 score 5, near 5
+        score 6.
+    watch_for:
+      - "Do not confuse with syntactic depth"
+      - "Count ideas, not clauses"
+      - "Restatement of an already-counted idea adds nothing; length by itself adds nothing — a long sentence can carry one idea"
+      - "Claim-packing modifiers ('exiled twice') add one each; attributes in passing ('the red door') add none"
+      - "Score the consecutive run as it comes, not a hand-picked densest stretch"
   - id: L4
     field: L
     name: Imagery Mode

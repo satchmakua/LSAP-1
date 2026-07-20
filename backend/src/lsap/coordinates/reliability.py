@@ -428,10 +428,11 @@ def main() -> None:
     report = build_report(axes, axes_version=current)
     text = format_report(report)
     # When an older anchor cohort exists, show before/after side by side, each column
-    # labelled with the axes_version it came from (the M5 acceptance view).
+    # labelled with the axes_version it came from (the M5 acceptance view). "Before" is
+    # the OLDEST cohort — the pre-re-anchor baseline, not an intermediate revision.
     prior = [v for v in available_versions() if v < current]
     if prior and not report.get("error"):
-        before = build_report(axes, axes_version=prior[-1])
+        before = build_report(axes, axes_version=prior[0])
         if not before.get("error"):
             report["before_after"] = compare_reports(before, report)
             text += "\n" + format_comparison(report["before_after"])
