@@ -8,9 +8,11 @@ from lsap.coordinates.reliability import (
     forced_choice_agreement,
     format_comparison,
     load_rater_matrices,
+    origin_structure_comparison,
     redundant_pairs,
     run_pca,
     scalar_axis_agreement,
+    split_half_stability,
     twin_consistency,
 )
 from lsap.instrument.schema import AxisDef, AxisScore, Rating
@@ -74,6 +76,49 @@ def test_pearson_constant_column_is_zero_not_nan():
     assert _pearson(np.array([1, 1, 1]), np.array([1, 2, 3])) == 0.0
 
 
+def _two_factor_matrix(n: int, seed: int = 7) -> np.ndarray:
+    """8 axes driven by 2 independent latents plus small noise — a real structure."""
+    rng = np.random.default_rng(seed)
+    f1, f2 = rng.normal(size=n), rng.normal(size=n)
+    cols = [f1 * w for w in (2.0, 1.5, -1.8, 1.2)] + [f2 * w for w in (2.0, -1.6, 1.4, 1.1)]
+    return np.stack(cols, axis=1) + rng.normal(scale=0.15, size=(n, 8))
+
+
+def test_split_half_stability_high_for_structure_low_for_noise():
+    stable = split_half_stability(_two_factor_matrix(60), n_components=2, seed=1)
+    assert stable["mean_abs_r"] > 0.9
+    noise = np.random.default_rng(3).normal(size=(60, 8))
+    unstable = split_half_stability(noise, n_components=2, seed=1)
+    assert unstable["mean_abs_r"] < stable["mean_abs_r"] - 0.2
+
+
+def test_split_half_stability_is_deterministic_and_guards_small_n():
+    m = _two_factor_matrix(40)
+    a = split_half_stability(m, seed=5)
+    b = split_half_stability(m, seed=5)
+    assert a == b  # seeded — no wall-clock randomness
+    assert "error" in split_half_stability(m[:6])
+
+
+def test_origin_comparison_matches_when_minority_shares_the_structure():
+    m = _two_factor_matrix(50)
+    origins = ["model"] * 40 + ["public-domain"] * 10
+    out = origin_structure_comparison(m, origins, [f"A{i}" for i in range(8)], n_components=2)
+    assert out is not None
+    assert out["majority_origin"] == "model"
+    assert out["n_minority"] == 10
+    # Both halves are draws from the same generator, so the loadings must match well.
+    assert min(out["loading_match_abs_r"]) > 0.8
+    assert len(out["top_axis_offsets"]) == 5
+
+
+def test_origin_comparison_none_without_a_real_minority():
+    m = _two_factor_matrix(30)
+    assert origin_structure_comparison(m, ["model"] * 30, [f"A{i}" for i in range(8)]) is None
+    origins = ["model"] * 27 + ["public-domain"] * 3  # below the n>=5 floor
+    assert origin_structure_comparison(m, origins, [f"A{i}" for i in range(8)]) is None
+
+
 # ---- storage-backed selection (the M5 defect fix) -----------------------------------
 
 TWO_AXES = [
@@ -129,6 +174,24 @@ def test_load_rater_matrices_selects_one_axes_version_cohort(tmp_path, monkeypat
     _ids, v2, _c2, _m2 = load_rater_matrices(TWO_AXES, axes_version=2)
     assert v2["claude-opus-4-8"][0].tolist() == [7, 7]
     assert np.isnan(v2["claude-opus-4-8"][1]).all()  # p2 unrated under v2 stays NaN
+
+
+def test_load_rater_matrices_restricts_to_only_segments(tmp_path, monkeypatch):
+    """The like-for-like guard: comparing cohorts must not mix in segments only one
+    cohort has, or corpus growth would masquerade as an anchor effect."""
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    for seg in ("old1", "old2", "new1"):
+        _pilot(seg)
+        _save(seg, "claude-opus-4-8", (4, 4), axes_version=2)
+    _save("old1", "claude-opus-4-8", (1, 1), axes_version=1)
+    _save("old2", "claude-opus-4-8", (1, 1), axes_version=1)
+
+    common = {"old1", "old2"}
+    seg_ids, values, _c, _m = load_rater_matrices(
+        TWO_AXES, axes_version=2, only_segments=common
+    )
+    assert seg_ids == ["old1", "old2"]  # new1 excluded even though it has v2 ratings
+    assert values["claude-opus-4-8"].shape[0] == 2
 
 
 def test_compare_reports_flags_regressions_and_labels_versions():

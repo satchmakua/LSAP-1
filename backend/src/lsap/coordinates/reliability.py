@@ -109,6 +109,91 @@ def run_pca(m: np.ndarray, ids: list[str]) -> dict:
     }
 
 
+def _match_components(a: np.ndarray, b: np.ndarray) -> list[float]:
+    """Greedily match rows of `b` (components × axes) to rows of `a` by |Pearson r| over
+    the axis loadings, each row used once. A PCA component's sign and order are
+    arbitrary, so matching is by absolute correlation. Returns |r| per row of `a`."""
+    taken: set[int] = set()
+    out: list[float] = []
+    for i in range(a.shape[0]):
+        best_j, best_r = -1, 0.0
+        for j in range(b.shape[0]):
+            if j in taken:
+                continue
+            r = abs(_pearson(a[i], b[j]))
+            if r >= best_r:
+                best_j, best_r = j, r
+        taken.add(best_j)
+        out.append(best_r)
+    return out
+
+
+def split_half_stability(
+    m: np.ndarray, *, n_components: int = 5, n_splits: int = 20, seed: int = 0
+) -> dict:
+    """Fit PCA on two random halves of the segments and correlate the loadings (M6).
+
+    Averaged over `n_splits` random splits (seeded — no wall-clock randomness). High
+    mean |r| on the top components means the factor structure is not an artifact of
+    which half of the corpus you look at; low means the fit is not yet stable at this n.
+    """
+    x = np.asarray(m, dtype=float)
+    n = x.shape[0]
+    half = n // 2
+    k = int(min(n_components, half - 1, x.shape[1]))
+    if half < 4 or k < 1:
+        return {"error": f"too few segments for a split-half check (n={n})"}
+    rng = np.random.default_rng(seed)
+    per_comp = np.zeros(k)
+    for _ in range(n_splits):
+        idx = rng.permutation(n)
+        halves = []
+        for part in (idx[:half], idx[half : 2 * half]):
+            xs = StandardScaler().fit_transform(x[part])
+            halves.append(PCA(n_components=k).fit(xs).components_)
+        per_comp += np.array(_match_components(halves[0], halves[1]))
+    per_comp /= n_splits
+    return {
+        "n_splits": n_splits,
+        "n_half": half,
+        "n_components": k,
+        "mean_abs_r_per_component": [round(float(v), 3) for v in per_comp],
+        "mean_abs_r": round(float(per_comp.mean()), 3),
+    }
+
+
+def origin_structure_comparison(
+    m: np.ndarray, origins: list[str], axis_ids: list[str], *, n_components: int = 5
+) -> dict | None:
+    """Does the non-model-written subset share the model-written corpus's structure (M6)?
+
+    Compares PCA loadings fitted on the majority origin alone vs on everything, and
+    reports per-axis consensus offsets (minority mean − majority mean). With a small
+    minority n this is indicative, not conclusive — the caveat ships in the report."""
+    counts = {o: origins.count(o) for o in set(origins)}
+    if len(counts) < 2:
+        return None
+    major = max(counts, key=lambda o: counts[o])
+    minor_n = sum(v for o, v in counts.items() if o != major)
+    if minor_n < 5 or counts[major] < 10:
+        return None
+    x = np.asarray(m, dtype=float)
+    is_major = np.array([o == major for o in origins])
+    k = int(min(n_components, int(is_major.sum()) - 1, x.shape[1]))
+    pca_major = PCA(n_components=k).fit(StandardScaler().fit_transform(x[is_major]))
+    pca_all = PCA(n_components=k).fit(StandardScaler().fit_transform(x))
+    matched = _match_components(pca_major.components_, pca_all.components_)
+    offsets = x[~is_major].mean(axis=0) - x[is_major].mean(axis=0)
+    order = np.argsort(-np.abs(offsets))[:5]
+    return {
+        "majority_origin": major,
+        "n_majority": int(is_major.sum()),
+        "n_minority": minor_n,
+        "loading_match_abs_r": [round(float(v), 3) for v in matched],
+        "top_axis_offsets": [[axis_ids[i], round(float(offsets[i]), 2)] for i in order],
+    }
+
+
 def twin_consistency(m: np.ndarray, seg_ids: list[str], pairs: dict[str, str]) -> dict:
     """Mean |Δ| between twin segments (same target profile) vs. the all-pairs baseline.
     `pairs` maps segment_id → pair_group; a group with 2 members is a twin pair."""
@@ -137,7 +222,11 @@ def twin_consistency(m: np.ndarray, seg_ids: list[str], pairs: dict[str, str]) -
 
 
 def load_rater_matrices(
-    axes: list[AxisDef], *, source: str = "pilot", axes_version: int | None = None
+    axes: list[AxisDef],
+    *,
+    source: str = "pilot",
+    axes_version: int | None = None,
+    only_segments: set[str] | None = None,
 ) -> tuple[list[str], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, dict]]:
     """Load value + confidence matrices per rater over the pilot segments.
 
@@ -147,18 +236,26 @@ def load_rater_matrices(
     **newest-wins** per (rater, segment) — first-wins would silently ignore every
     re-rating — within ONE `axes_version` cohort (default: the registry's current
     version); re-anchored cohorts are never pooled. Segments unrated under that version
-    stay NaN."""
+    stay NaN. `only_segments` restricts to a given set — used to compare two anchor
+    cohorts over the segments they share, so corpus growth can't masquerade as an
+    anchor effect."""
     if axes_version is None:
         axes_version = load_axes_version()
     axis_ids = [a.id for a in axes]
     segs = [s for s in storage.list_segments() if s.get("source") == source]
-    seg_ids = sorted(s["id"] for s in segs)
+    seg_ids = sorted(
+        s["id"] for s in segs if only_segments is None or s["id"] in only_segments
+    )
     meta: dict[str, dict] = {}
     vals: dict[str, dict[str, dict[str, int]]] = {}
     confs: dict[str, dict[str, dict[str, int]]] = {}
     for sid in seg_ids:
         seg = storage.load_segment(sid) or {}
-        meta[sid] = {"profile": seg.get("profile"), "pair": seg.get("pair")}
+        meta[sid] = {
+            "profile": seg.get("profile"),
+            "pair": seg.get("pair"),
+            "origin": seg.get("origin"),  # None/"model" vs "public-domain" (M6)
+        }
         for rid, r in storage.latest_ratings(sid, axes_version=axes_version).items():
             vals.setdefault(rid, {})[sid] = {sc.axis_id: sc.value for sc in r.scores}
             confs.setdefault(rid, {})[sid] = {sc.axis_id: sc.confidence for sc in r.scores}
@@ -182,12 +279,16 @@ def load_rater_matrices(
 
 
 def build_report(
-    axes: list[AxisDef], *, source: str = "pilot", axes_version: int | None = None
+    axes: list[AxisDef],
+    *,
+    source: str = "pilot",
+    axes_version: int | None = None,
+    only_segments: set[str] | None = None,
 ) -> dict:
     if axes_version is None:
         axes_version = load_axes_version()
     seg_ids, values, confidence, meta = load_rater_matrices(
-        axes, source=source, axes_version=axes_version
+        axes, source=source, axes_version=axes_version, only_segments=only_segments
     )
     raters = sorted(values)
     axis_ids = [a.id for a in axes]
@@ -272,10 +373,19 @@ def build_report(
         report["twin_consistency"] = twin_consistency(
             consensus, kept, {sid: meta[sid].get("pair") for sid in kept}
         )
+        report["split_half"] = (
+            split_half_stability(consensus) if n_complete >= 10 else None
+        )
+        origins = [(meta[s].get("origin") or "model") for s in kept]
+        report["origin_comparison"] = origin_structure_comparison(
+            consensus, origins, scalar_ids
+        )
     else:
         report["redundant_pairs"] = []
         report["pca"] = None
         report["twin_consistency"] = None
+        report["split_half"] = None
+        report["origin_comparison"] = None
 
     # verdicts
     reliable, ambiguous = [], []
@@ -347,6 +457,26 @@ def format_report(report: dict) -> str:
         ]
         for i, comp in enumerate(p["top_axes_per_component"], 1):
             lines.append(f"    PC{i}: " + ", ".join(f"{a}({w:+.2f})" for a, w in comp))
+    sh = report.get("split_half")
+    if sh and not sh.get("error"):
+        lines += [
+            "",
+            "## Split-half stability (PCA loadings, "
+            f"{sh['n_splits']} seeded splits of {sh['n_half']}+{sh['n_half']})",
+            f"  |r| per component: {sh['mean_abs_r_per_component']}   "
+            f"mean: {sh['mean_abs_r']}",
+        ]
+    oc = report.get("origin_comparison")
+    if oc is not None:
+        lines += [
+            "",
+            f"## Origin check — {oc['majority_origin']} (n={oc['n_majority']}) vs "
+            f"other origins (n={oc['n_minority']}; indicative only at this n)",
+            f"  loading match |r| ({oc['majority_origin']}-only fit vs all-fit): "
+            f"{oc['loading_match_abs_r']}",
+            "  largest per-axis consensus offsets (minority − majority): "
+            + ", ".join(f"{a}({v:+.2f})" for a, v in oc["top_axis_offsets"]),
+        ]
     t = report["twin_consistency"]
     if t is not None:
         lines += [
@@ -372,6 +502,17 @@ def available_versions(*, source: str = "pilot") -> list[int]:
     return sorted(versions)
 
 
+def segments_rated_under(version: int, *, source: str = "pilot") -> set[str]:
+    """Segments with at least 2 raters under `version` — the comparable set."""
+    out: set[str] = set()
+    for s in storage.list_segments():
+        if s.get("source") != source:
+            continue
+        if len(storage.latest_ratings(s["id"], axes_version=version)) >= 2:
+            out.add(s["id"])
+    return out
+
+
 def compare_reports(before: dict, after: dict) -> dict:
     """Per-axis primary agreement (within-1 / exact-match) side by side across two
     axes_version cohorts. A drop > 0.10 on any axis is flagged — the M5 gate."""
@@ -394,6 +535,7 @@ def compare_reports(before: dict, after: dict) -> dict:
     return {
         "before_axes_version": before.get("axes_version"),
         "after_axes_version": after.get("axes_version"),
+        "n_segments": after.get("n_segments"),
         "axes": axes_cmp,
         "regressions": regressions,
     }
@@ -404,6 +546,8 @@ def format_comparison(cmp: dict) -> str:
     lines = [
         "",
         f"## Before/after re-anchoring — axes_version {v_old} vs {v_new}",
+        f"   Like-for-like: the {cmp.get('n_segments')} segments rated under BOTH cohorts,",
+        "   so corpus growth cannot masquerade as an anchor effect.",
         "   (per-axis primary agreement: within-1 for scalar, exact-match for forced-choice)",
         f"   {'axis':30}  v{v_old}     v{v_new}     delta",
     ]
@@ -432,10 +576,15 @@ def main() -> None:
     # the OLDEST cohort — the pre-re-anchor baseline, not an intermediate revision.
     prior = [v for v in available_versions() if v < current]
     if prior and not report.get("error"):
-        before = build_report(axes, axes_version=prior[0])
-        if not before.get("error"):
-            report["before_after"] = compare_reports(before, report)
-            text += "\n" + format_comparison(report["before_after"])
+        # Compare over the segments rated under BOTH cohorts only. Once the corpus grows,
+        # an unrestricted comparison would mix an anchor change with a composition change.
+        common = segments_rated_under(prior[0]) & segments_rated_under(current)
+        if len(common) >= 2:
+            before = build_report(axes, axes_version=prior[0], only_segments=common)
+            after_same = build_report(axes, axes_version=current, only_segments=common)
+            if not before.get("error") and not after_same.get("error"):
+                report["before_after"] = compare_reports(before, after_same)
+                text += "\n" + format_comparison(report["before_after"])
     out_dir = storage.data_dir() / "reliability"
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "report.md").write_text(text + "\n", encoding="utf-8")

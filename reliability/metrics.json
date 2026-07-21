@@ -1,5 +1,5 @@
 {
-  "n_segments": 30,
+  "n_segments": 100,
   "axes_version": 3,
   "raters": [
     "claude-haiku-4-5",
@@ -7,33 +7,103 @@
   ],
   "segment_ids": [
     "absurd-bureau",
+    "alibi-vase",
+    "allotment-notes",
+    "aphorism-table",
+    "aphorism-workshop",
+    "banter-trucks",
     "baroque-memory",
+    "call-derby",
+    "caper-carousel",
     "catalogue-estate",
     "child-attic",
+    "chorus-pharmacy",
+    "chorus-pool",
+    "chronicle-bakery",
+    "coop-bicycles",
     "cosmic-shore",
     "courtroom",
+    "crew-deck",
+    "crew-line",
+    "crow-market",
+    "deadpan-swan",
+    "disputation-tavern",
     "dissolve-room",
+    "distant-swim",
     "domestic-dinner",
     "dream-house",
+    "duet-piano",
     "elegy-orchard",
     "elegy-station",
+    "encyclo-parlor",
+    "epic-lawn",
+    "eve-keys",
     "fable-river",
+    "farce-backstage",
+    "farce-corridor",
+    "fieldnotes-marsh",
     "frag-party",
     "frag-window",
+    "frame-raising",
+    "future-firstday",
+    "giddy-bus",
+    "glass-furnace",
+    "glossary-household",
+    "gossip-harbor",
     "gothic-manor",
+    "guestbook-cliff",
+    "holiday-letter",
     "letter-confession",
+    "levee-night",
+    "manual-wardrobe",
+    "margin-birdguide",
+    "margin-etiquette",
     "min-kitchen",
     "min-laundromat",
+    "mosaic-jigsaw",
+    "nested-ferry",
+    "night-callers",
     "noir-alley",
+    "one-breath-beach",
     "paradox-library",
     "paradox-map",
     "paranoia-flat",
     "pastoral-dawn",
+    "pd-anderson-winesburg",
+    "pd-austen-persuasion",
+    "pd-cather-antonia",
+    "pd-chekhov-lady",
+    "pd-conrad-darkness",
+    "pd-dostoevsky-underground",
+    "pd-gilman-wallpaper",
+    "pd-james-beast",
+    "pd-joyce-dead",
+    "pd-london-fire",
+    "pd-melville-bartleby",
+    "pd-poe-usher",
+    "pd-stein-lives",
+    "pd-twain-huck",
+    "pd-woolf-dalloway",
+    "pickup-court",
+    "pit-twelve",
+    "quiz-tiebreak",
+    "recipe-dumpling",
+    "satire-report",
     "scifi-clinical",
     "second-person-city",
+    "sermon-harvest",
+    "surge-couloir",
+    "surge-rapids",
     "tender-morning",
+    "terrace-roar",
+    "testimony-bell",
+    "testimony-train",
     "thriller-stairwell",
+    "toast-firehouse",
+    "toast-hall",
     "trap-office",
+    "vain-recital",
+    "vain-reunion",
     "vision-desert",
     "war-trench"
   ],
@@ -44,849 +114,875 @@
     "L1": {
       "name": "Lexical Complexity",
       "kind": "scalar",
-      "mean_confidence": 4.2,
+      "mean_confidence": 4.11,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.7548387096774194,
-          "pearson": 0.6682110322476349,
-          "weighted_kappa": 0.3004627981488074,
-          "mean_abs_diff": 1.8333333333333333,
-          "within1_rate": 0.3,
-          "n": 30
+          "spearman": 0.5636963696369636,
+          "pearson": 0.605467350612838,
+          "weighted_kappa": 0.30667297681022243,
+          "mean_abs_diff": 1.47,
+          "within1_rate": 0.52,
+          "n": 100
         }
       },
-      "pearson": 0.6682,
-      "spearman": 0.7548,
-      "weighted_kappa": 0.3005,
-      "mean_abs_diff": 1.8333,
-      "within1_rate": 0.3
+      "weighted_kappa": 0.3067,
+      "within1_rate": 0.52,
+      "spearman": 0.5637,
+      "pearson": 0.6055,
+      "mean_abs_diff": 1.47
     },
     "L2": {
       "name": "Syntactic Depth",
       "kind": "scalar",
-      "mean_confidence": 4.33,
+      "mean_confidence": 4.14,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8349276974416019,
-          "pearson": 0.8760625142140819,
-          "weighted_kappa": 0.8118668596237337,
-          "mean_abs_diff": 0.6666666666666666,
-          "within1_rate": 0.9,
-          "n": 30
+          "spearman": 0.7480588058805879,
+          "pearson": 0.8076253468547022,
+          "weighted_kappa": 0.7725414025761603,
+          "mean_abs_diff": 0.67,
+          "within1_rate": 0.89,
+          "n": 100
         }
       },
-      "pearson": 0.8761,
-      "spearman": 0.8349,
-      "weighted_kappa": 0.8119,
-      "mean_abs_diff": 0.6667,
-      "within1_rate": 0.9
+      "weighted_kappa": 0.7725,
+      "within1_rate": 0.89,
+      "spearman": 0.7481,
+      "pearson": 0.8076,
+      "mean_abs_diff": 0.67
     },
     "L3": {
       "name": "Semantic Density",
       "kind": "scalar",
-      "mean_confidence": 3.87,
+      "mean_confidence": 3.77,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8629588431590656,
-          "pearson": 0.9205679591796374,
-          "weighted_kappa": 0.588271990018715,
-          "mean_abs_diff": 1.1333333333333333,
-          "within1_rate": 0.8333333333333334,
-          "n": 30
+          "spearman": 0.6607260726072607,
+          "pearson": 0.7570561657281885,
+          "weighted_kappa": 0.5530856521063268,
+          "mean_abs_diff": 0.89,
+          "within1_rate": 0.87,
+          "n": 100
         }
       },
-      "pearson": 0.9206,
-      "spearman": 0.863,
-      "weighted_kappa": 0.5883,
-      "mean_abs_diff": 1.1333,
-      "within1_rate": 0.8333
+      "weighted_kappa": 0.5531,
+      "within1_rate": 0.87,
+      "spearman": 0.6607,
+      "pearson": 0.7571,
+      "mean_abs_diff": 0.89
     },
     "L4": {
       "name": "Imagery Mode",
       "kind": "scalar",
-      "mean_confidence": 4.0,
+      "mean_confidence": 3.89,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.5492769744160179,
-          "pearson": 0.5696919568125908,
-          "weighted_kappa": 0.544,
-          "mean_abs_diff": 0.9,
-          "within1_rate": 0.8333333333333334,
-          "n": 30
+          "spearman": 0.39535553555355535,
+          "pearson": 0.5506729502381396,
+          "weighted_kappa": 0.48855989232839847,
+          "mean_abs_diff": 0.92,
+          "within1_rate": 0.82,
+          "n": 100
         }
       },
-      "pearson": 0.5697,
-      "spearman": 0.5493,
-      "weighted_kappa": 0.544,
-      "mean_abs_diff": 0.9,
-      "within1_rate": 0.8333
+      "weighted_kappa": 0.4886,
+      "within1_rate": 0.82,
+      "spearman": 0.3954,
+      "pearson": 0.5507,
+      "mean_abs_diff": 0.92
     },
     "L5": {
       "name": "Repetition Pattern",
       "kind": "scalar",
-      "mean_confidence": 4.35,
+      "mean_confidence": 4.26,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.5483870967741935,
-          "pearson": 0.6822224914887599,
-          "weighted_kappa": 0.5674418604651162,
-          "mean_abs_diff": 0.7666666666666667,
-          "within1_rate": 0.9333333333333333,
-          "n": 30
+          "spearman": 0.6051845184518452,
+          "pearson": 0.68742602993211,
+          "weighted_kappa": 0.5745943806885635,
+          "mean_abs_diff": 0.7,
+          "within1_rate": 0.94,
+          "n": 100
         }
       },
-      "pearson": 0.6822,
-      "spearman": 0.5484,
-      "weighted_kappa": 0.5674,
-      "mean_abs_diff": 0.7667,
-      "within1_rate": 0.9333
+      "weighted_kappa": 0.5746,
+      "within1_rate": 0.94,
+      "spearman": 0.6052,
+      "pearson": 0.6874,
+      "mean_abs_diff": 0.7
     },
     "N1": {
       "name": "Event Density",
       "kind": "scalar",
-      "mean_confidence": 4.03,
+      "mean_confidence": 3.97,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.7334816462736374,
-          "pearson": 0.7909394104252477,
-          "weighted_kappa": 0.6352201257861636,
-          "mean_abs_diff": 0.9333333333333333,
-          "within1_rate": 0.7333333333333333,
-          "n": 30
+          "spearman": 0.795139513951395,
+          "pearson": 0.8021242722237356,
+          "weighted_kappa": 0.6765799256505576,
+          "mean_abs_diff": 0.9,
+          "within1_rate": 0.75,
+          "n": 100
         }
       },
-      "pearson": 0.7909,
-      "spearman": 0.7335,
-      "weighted_kappa": 0.6352,
-      "mean_abs_diff": 0.9333,
-      "within1_rate": 0.7333
+      "weighted_kappa": 0.6766,
+      "within1_rate": 0.75,
+      "spearman": 0.7951,
+      "pearson": 0.8021,
+      "mean_abs_diff": 0.9
     },
     "N2": {
       "name": "Structural Linearity",
       "kind": "scalar",
-      "mean_confidence": 4.3,
+      "mean_confidence": 4.19,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.625361512791991,
-          "pearson": 0.8848016581878684,
-          "weighted_kappa": 0.8776978417266187,
-          "mean_abs_diff": 0.5,
-          "within1_rate": 0.9666666666666667,
-          "n": 30
+          "spearman": 0.547002700270027,
+          "pearson": 0.7311811628219392,
+          "weighted_kappa": 0.7239263803680982,
+          "mean_abs_diff": 0.71,
+          "within1_rate": 0.88,
+          "n": 100
         }
       },
-      "pearson": 0.8848,
-      "spearman": 0.6254,
-      "weighted_kappa": 0.8777,
-      "mean_abs_diff": 0.5,
-      "within1_rate": 0.9667
+      "weighted_kappa": 0.7239,
+      "within1_rate": 0.88,
+      "spearman": 0.547,
+      "pearson": 0.7312,
+      "mean_abs_diff": 0.71
     },
     "N3": {
       "name": "Causal Clarity",
       "kind": "scalar",
-      "mean_confidence": 3.95,
+      "mean_confidence": 3.92,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.3842046718576196,
-          "pearson": 0.2457127962433563,
-          "weighted_kappa": 0.16879795396419428,
-          "mean_abs_diff": 1.7333333333333334,
-          "within1_rate": 0.4,
-          "n": 30
+          "spearman": 0.378085808580858,
+          "pearson": 0.3455677735254829,
+          "weighted_kappa": 0.21858500527983105,
+          "mean_abs_diff": 1.38,
+          "within1_rate": 0.55,
+          "n": 100
         }
       },
-      "pearson": 0.2457,
-      "spearman": 0.3842,
-      "weighted_kappa": 0.1688,
-      "mean_abs_diff": 1.7333,
-      "within1_rate": 0.4
+      "weighted_kappa": 0.2186,
+      "within1_rate": 0.55,
+      "spearman": 0.3781,
+      "pearson": 0.3456,
+      "mean_abs_diff": 1.38
     },
     "N4": {
       "name": "Temporal Behavior",
       "kind": "scalar",
-      "mean_confidence": 3.88,
+      "mean_confidence": 3.85,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.6307007786429366,
-          "pearson": 0.746254992118711,
-          "weighted_kappa": 0.7297921478060047,
-          "mean_abs_diff": 0.6333333333333333,
-          "within1_rate": 0.8333333333333334,
-          "n": 30
+          "spearman": 0.6355115511551155,
+          "pearson": 0.7185633590053535,
+          "weighted_kappa": 0.7036311023989545,
+          "mean_abs_diff": 0.79,
+          "within1_rate": 0.83,
+          "n": 100
         }
       },
-      "pearson": 0.7463,
-      "spearman": 0.6307,
-      "weighted_kappa": 0.7298,
-      "mean_abs_diff": 0.6333,
-      "within1_rate": 0.8333
+      "weighted_kappa": 0.7036,
+      "within1_rate": 0.83,
+      "spearman": 0.6355,
+      "pearson": 0.7186,
+      "mean_abs_diff": 0.79
     },
     "N5": {
       "name": "Plot Centrality",
       "kind": "scalar",
-      "mean_confidence": 4.23,
+      "mean_confidence": 4.03,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.5341490545050055,
-          "pearson": 0.655749907836754,
-          "weighted_kappa": 0.6366572466693581,
-          "mean_abs_diff": 0.9333333333333333,
-          "within1_rate": 0.8,
-          "n": 30
+          "spearman": 0.3568676867686768,
+          "pearson": 0.4574396337399733,
+          "weighted_kappa": 0.39683228466044695,
+          "mean_abs_diff": 1.2,
+          "within1_rate": 0.66,
+          "n": 100
         }
       },
-      "pearson": 0.6557,
-      "spearman": 0.5341,
-      "weighted_kappa": 0.6367,
-      "mean_abs_diff": 0.9333,
-      "within1_rate": 0.8
+      "weighted_kappa": 0.3968,
+      "within1_rate": 0.66,
+      "spearman": 0.3569,
+      "pearson": 0.4574,
+      "mean_abs_diff": 1.2
     },
     "C1": {
       "name": "Narrative Distance",
       "kind": "scalar",
-      "mean_confidence": 4.2,
+      "mean_confidence": 4.01,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.7922135706340377,
-          "pearson": 0.8330203628370589,
-          "weighted_kappa": 0.8060836501901141,
-          "mean_abs_diff": 0.6666666666666666,
-          "within1_rate": 0.8333333333333334,
-          "n": 30
+          "spearman": 0.7080228022802278,
+          "pearson": 0.7236127715506696,
+          "weighted_kappa": 0.6930803571428572,
+          "mean_abs_diff": 0.82,
+          "within1_rate": 0.81,
+          "n": 100
         }
       },
-      "pearson": 0.833,
-      "spearman": 0.7922,
-      "weighted_kappa": 0.8061,
-      "mean_abs_diff": 0.6667,
-      "within1_rate": 0.8333
+      "weighted_kappa": 0.6931,
+      "within1_rate": 0.81,
+      "spearman": 0.708,
+      "pearson": 0.7236,
+      "mean_abs_diff": 0.82
     },
     "C2": {
       "name": "Subject Stability",
       "kind": "scalar",
-      "mean_confidence": 4.27,
+      "mean_confidence": 4.21,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.5648498331479421,
-          "pearson": 0.8117334447114161,
-          "weighted_kappa": 0.8,
-          "mean_abs_diff": 0.7,
-          "within1_rate": 0.9,
-          "n": 30
+          "spearman": 0.3947434743474346,
+          "pearson": 0.5870901622012213,
+          "weighted_kappa": 0.5842203299627462,
+          "mean_abs_diff": 0.71,
+          "within1_rate": 0.86,
+          "n": 100
         }
       },
-      "pearson": 0.8117,
-      "spearman": 0.5648,
-      "weighted_kappa": 0.8,
-      "mean_abs_diff": 0.7,
-      "within1_rate": 0.9
+      "weighted_kappa": 0.5842,
+      "within1_rate": 0.86,
+      "spearman": 0.3947,
+      "pearson": 0.5871,
+      "mean_abs_diff": 0.71
     },
     "C3": {
       "name": "Cognitive Transparency",
       "kind": "scalar",
-      "mean_confidence": 4.27,
+      "mean_confidence": 4.04,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8407119021134594,
-          "pearson": 0.8948441327037511,
-          "weighted_kappa": 0.8618705035971224,
-          "mean_abs_diff": 0.7333333333333333,
-          "within1_rate": 0.9,
-          "n": 30
+          "spearman": 0.8234863486348635,
+          "pearson": 0.8119666774085041,
+          "weighted_kappa": 0.7637222828062522,
+          "mean_abs_diff": 0.88,
+          "within1_rate": 0.82,
+          "n": 100
         }
       },
-      "pearson": 0.8948,
-      "spearman": 0.8407,
-      "weighted_kappa": 0.8619,
-      "mean_abs_diff": 0.7333,
-      "within1_rate": 0.9
+      "weighted_kappa": 0.7637,
+      "within1_rate": 0.82,
+      "spearman": 0.8235,
+      "pearson": 0.812,
+      "mean_abs_diff": 0.88
     },
     "C4": {
       "name": "Polyphony",
       "kind": "scalar",
-      "mean_confidence": 4.28,
+      "mean_confidence": 4.16,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.6440489432703003,
-          "pearson": 0.8330973131853227,
-          "weighted_kappa": 0.8071216617210683,
-          "mean_abs_diff": 0.43333333333333335,
-          "within1_rate": 1.0,
-          "n": 30
+          "spearman": 0.6703510351035104,
+          "pearson": 0.8395982053652771,
+          "weighted_kappa": 0.8321167883211679,
+          "mean_abs_diff": 0.66,
+          "within1_rate": 0.94,
+          "n": 100
         }
       },
-      "pearson": 0.8331,
-      "spearman": 0.644,
-      "weighted_kappa": 0.8071,
-      "mean_abs_diff": 0.4333,
-      "within1_rate": 1.0
+      "weighted_kappa": 0.8321,
+      "within1_rate": 0.94,
+      "spearman": 0.6704,
+      "pearson": 0.8396,
+      "mean_abs_diff": 0.66
     },
     "C5": {
       "name": "Interior/Exterior Ratio",
       "kind": "scalar",
-      "mean_confidence": 4.13,
+      "mean_confidence": 3.96,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8625139043381533,
-          "pearson": 0.861206816732838,
-          "weighted_kappa": 0.7575169738118331,
-          "mean_abs_diff": 1.0666666666666667,
-          "within1_rate": 0.7666666666666667,
-          "n": 30
+          "spearman": 0.7348334833483346,
+          "pearson": 0.7986215925288924,
+          "weighted_kappa": 0.6622931747673217,
+          "mean_abs_diff": 1.15,
+          "within1_rate": 0.73,
+          "n": 100
         }
       },
-      "pearson": 0.8612,
-      "spearman": 0.8625,
-      "weighted_kappa": 0.7575,
-      "mean_abs_diff": 1.0667,
-      "within1_rate": 0.7667
+      "weighted_kappa": 0.6623,
+      "within1_rate": 0.73,
+      "spearman": 0.7348,
+      "pearson": 0.7986,
+      "mean_abs_diff": 1.15
     },
     "P1": {
       "name": "Ontological Stability",
       "kind": "scalar",
-      "mean_confidence": 4.53,
+      "mean_confidence": 4.58,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8131256952169076,
-          "pearson": 0.9237361890558922,
-          "weighted_kappa": 0.9170305676855895,
-          "mean_abs_diff": 0.43333333333333335,
-          "within1_rate": 0.9,
-          "n": 30
+          "spearman": 0.7729372937293729,
+          "pearson": 0.9036946345802104,
+          "weighted_kappa": 0.8980030062271849,
+          "mean_abs_diff": 0.3,
+          "within1_rate": 0.96,
+          "n": 100
         }
       },
-      "pearson": 0.9237,
-      "spearman": 0.8131,
-      "weighted_kappa": 0.917,
-      "mean_abs_diff": 0.4333,
-      "within1_rate": 0.9
+      "weighted_kappa": 0.898,
+      "within1_rate": 0.96,
+      "spearman": 0.7729,
+      "pearson": 0.9037,
+      "mean_abs_diff": 0.3
     },
     "P2": {
       "name": "Epistemic Certainty",
       "kind": "scalar",
-      "mean_confidence": 3.97,
+      "mean_confidence": 3.87,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8660734149054505,
-          "pearson": 0.8794396558611428,
-          "weighted_kappa": 0.8640641338445452,
-          "mean_abs_diff": 0.6666666666666666,
-          "within1_rate": 0.9,
-          "n": 30
+          "spearman": 0.744014401440144,
+          "pearson": 0.8540152395263108,
+          "weighted_kappa": 0.8520388180512641,
+          "mean_abs_diff": 0.5,
+          "within1_rate": 0.93,
+          "n": 100
         }
       },
-      "pearson": 0.8794,
-      "spearman": 0.8661,
-      "weighted_kappa": 0.8641,
-      "mean_abs_diff": 0.6667,
-      "within1_rate": 0.9
+      "weighted_kappa": 0.852,
+      "within1_rate": 0.93,
+      "spearman": 0.744,
+      "pearson": 0.854,
+      "mean_abs_diff": 0.5
     },
     "P3": {
       "name": "Moral-Structure Clarity",
       "kind": "scalar",
-      "mean_confidence": 3.47,
+      "mean_confidence": 3.54,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.4776418242491657,
-          "pearson": 0.4596841565787576,
-          "weighted_kappa": 0.4277108433734941,
-          "mean_abs_diff": 0.8,
-          "within1_rate": 0.8333333333333334,
-          "n": 30
+          "spearman": 0.5034263426342633,
+          "pearson": 0.5190313030209881,
+          "weighted_kappa": 0.4843911127777256,
+          "mean_abs_diff": 0.72,
+          "within1_rate": 0.85,
+          "n": 100
         }
       },
-      "pearson": 0.4597,
-      "spearman": 0.4776,
-      "weighted_kappa": 0.4277,
-      "mean_abs_diff": 0.8,
-      "within1_rate": 0.8333
+      "weighted_kappa": 0.4844,
+      "within1_rate": 0.85,
+      "spearman": 0.5034,
+      "pearson": 0.519,
+      "mean_abs_diff": 0.72
     },
     "P4": {
       "name": "Meaning Structure",
       "kind": "scalar",
-      "mean_confidence": 3.68,
+      "mean_confidence": 3.69,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.6791991101223581,
-          "pearson": 0.718742748541866,
-          "weighted_kappa": 0.6175243393602226,
-          "mean_abs_diff": 1.1,
-          "within1_rate": 0.7,
-          "n": 30
+          "spearman": 0.6554575457545753,
+          "pearson": 0.6748487372793733,
+          "weighted_kappa": 0.5777027027027026,
+          "mean_abs_diff": 1.03,
+          "within1_rate": 0.75,
+          "n": 100
         }
       },
-      "pearson": 0.7187,
-      "spearman": 0.6792,
-      "weighted_kappa": 0.6175,
-      "mean_abs_diff": 1.1,
-      "within1_rate": 0.7
+      "weighted_kappa": 0.5777,
+      "within1_rate": 0.75,
+      "spearman": 0.6555,
+      "pearson": 0.6748,
+      "mean_abs_diff": 1.03
     },
     "P5": {
       "name": "Agency Model",
       "kind": "scalar",
-      "mean_confidence": 3.72,
+      "mean_confidence": 3.62,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.7276974416017797,
-          "pearson": 0.6832548967498991,
-          "weighted_kappa": 0.6129032258064515,
-          "mean_abs_diff": 1.0,
-          "within1_rate": 0.7,
-          "n": 30
+          "spearman": 0.5692649264926493,
+          "pearson": 0.6339599710258658,
+          "weighted_kappa": 0.5579156639112692,
+          "mean_abs_diff": 1.01,
+          "within1_rate": 0.75,
+          "n": 100
         }
       },
-      "pearson": 0.6833,
-      "spearman": 0.7277,
-      "weighted_kappa": 0.6129,
-      "mean_abs_diff": 1.0,
-      "within1_rate": 0.7
+      "weighted_kappa": 0.5579,
+      "within1_rate": 0.75,
+      "spearman": 0.5693,
+      "pearson": 0.634,
+      "mean_abs_diff": 1.01
     },
     "A1": {
       "name": "Valence",
       "kind": "scalar",
-      "mean_confidence": 4.1,
+      "mean_confidence": 4.01,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8545050055617353,
-          "pearson": 0.9450287573804673,
-          "weighted_kappa": 0.899856938483548,
-          "mean_abs_diff": 0.4666666666666667,
-          "within1_rate": 1.0,
-          "n": 30
+          "spearman": 0.8952775277527751,
+          "pearson": 0.910388355430737,
+          "weighted_kappa": 0.8954266592303401,
+          "mean_abs_diff": 0.54,
+          "within1_rate": 0.97,
+          "n": 100
         }
       },
-      "pearson": 0.945,
-      "spearman": 0.8545,
-      "weighted_kappa": 0.8999,
-      "mean_abs_diff": 0.4667,
-      "within1_rate": 1.0
+      "weighted_kappa": 0.8954,
+      "within1_rate": 0.97,
+      "spearman": 0.8953,
+      "pearson": 0.9104,
+      "mean_abs_diff": 0.54
     },
     "A2": {
       "name": "Emotional Volatility",
       "kind": "scalar",
-      "mean_confidence": 3.82,
+      "mean_confidence": 3.69,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.7210233592880979,
-          "pearson": 0.7645404459826938,
-          "weighted_kappa": 0.5894736842105264,
-          "mean_abs_diff": 0.7666666666666667,
-          "within1_rate": 0.8666666666666667,
-          "n": 30
+          "spearman": 0.6232463246324631,
+          "pearson": 0.6683337662026033,
+          "weighted_kappa": 0.5853858784893268,
+          "mean_abs_diff": 0.65,
+          "within1_rate": 0.88,
+          "n": 100
         }
       },
-      "pearson": 0.7645,
-      "spearman": 0.721,
-      "weighted_kappa": 0.5895,
-      "mean_abs_diff": 0.7667,
-      "within1_rate": 0.8667
+      "weighted_kappa": 0.5854,
+      "within1_rate": 0.88,
+      "spearman": 0.6232,
+      "pearson": 0.6683,
+      "mean_abs_diff": 0.65
     },
     "A3": {
       "name": "Dominant Affect",
       "kind": "forced_choice",
-      "mean_confidence": 3.98,
+      "mean_confidence": 3.9,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "exact_match_rate": 0.6666666666666666,
-          "cohen_kappa": 0.5720399429386591,
-          "n": 30
+          "exact_match_rate": 0.53,
+          "cohen_kappa": 0.4593350972046475,
+          "n": 100
         }
       },
-      "exact_match_rate": 0.6667,
-      "cohen_kappa": 0.572
+      "cohen_kappa": 0.4593,
+      "exact_match_rate": 0.53
     },
     "A4": {
       "name": "Intensity Curve",
       "kind": "scalar",
-      "mean_confidence": 3.88,
+      "mean_confidence": 3.83,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.8593993325917685,
-          "pearson": 0.8513824469684098,
-          "weighted_kappa": 0.8099173553719008,
-          "mean_abs_diff": 0.5666666666666667,
-          "within1_rate": 0.9,
-          "n": 30
+          "spearman": 0.686060606060606,
+          "pearson": 0.7498819770171812,
+          "weighted_kappa": 0.7197240359738819,
+          "mean_abs_diff": 0.61,
+          "within1_rate": 0.89,
+          "n": 100
         }
       },
-      "pearson": 0.8514,
-      "spearman": 0.8594,
-      "weighted_kappa": 0.8099,
-      "mean_abs_diff": 0.5667,
-      "within1_rate": 0.9
+      "weighted_kappa": 0.7197,
+      "within1_rate": 0.89,
+      "spearman": 0.6861,
+      "pearson": 0.7499,
+      "mean_abs_diff": 0.61
     },
     "A5": {
       "name": "Resolution Type",
       "kind": "forced_choice",
-      "mean_confidence": 3.85,
+      "mean_confidence": 3.81,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "exact_match_rate": 0.7333333333333333,
-          "cohen_kappa": 0.5366795366795367,
-          "n": 30
+          "exact_match_rate": 0.84,
+          "cohen_kappa": 0.7428066227294647,
+          "n": 100
         }
       },
-      "exact_match_rate": 0.7333,
-      "cohen_kappa": 0.5367
+      "cohen_kappa": 0.7428,
+      "exact_match_rate": 0.84
     },
     "S1": {
       "name": "Rhythm Regularity",
       "kind": "scalar",
-      "mean_confidence": 3.72,
+      "mean_confidence": 3.71,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.5372636262513905,
-          "pearson": 0.6270597128624554,
-          "weighted_kappa": 0.4444444444444444,
-          "mean_abs_diff": 0.8,
-          "within1_rate": 0.8666666666666667,
-          "n": 30
+          "spearman": 0.6573417341734172,
+          "pearson": 0.6984780152546253,
+          "weighted_kappa": 0.6327976499049595,
+          "mean_abs_diff": 0.63,
+          "within1_rate": 0.91,
+          "n": 100
         }
       },
-      "pearson": 0.6271,
-      "spearman": 0.5373,
-      "weighted_kappa": 0.4444,
-      "mean_abs_diff": 0.8,
-      "within1_rate": 0.8667
+      "weighted_kappa": 0.6328,
+      "within1_rate": 0.91,
+      "spearman": 0.6573,
+      "pearson": 0.6985,
+      "mean_abs_diff": 0.63
     },
     "S2": {
       "name": "Sentence-Length Variance",
       "kind": "scalar",
-      "mean_confidence": 4.13,
+      "mean_confidence": 4.12,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.5764182424916573,
-          "pearson": 0.37962771339856677,
-          "weighted_kappa": 0.3745427944403804,
-          "mean_abs_diff": 0.7666666666666667,
-          "within1_rate": 0.8666666666666667,
-          "n": 30
+          "spearman": 0.4636663666366636,
+          "pearson": 0.41026327982316374,
+          "weighted_kappa": 0.40418679549114345,
+          "mean_abs_diff": 0.8,
+          "within1_rate": 0.87,
+          "n": 100
         }
       },
-      "pearson": 0.3796,
-      "spearman": 0.5764,
-      "weighted_kappa": 0.3745,
-      "mean_abs_diff": 0.7667,
-      "within1_rate": 0.8667
+      "weighted_kappa": 0.4042,
+      "within1_rate": 0.87,
+      "spearman": 0.4637,
+      "pearson": 0.4103,
+      "mean_abs_diff": 0.8
     },
     "S3": {
       "name": "Voice Dominance",
       "kind": "scalar",
-      "mean_confidence": 4.33,
+      "mean_confidence": 4.32,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.6195773081201335,
-          "pearson": 0.7817306444682443,
-          "weighted_kappa": 0.6288906624102154,
-          "mean_abs_diff": 0.8333333333333334,
-          "within1_rate": 0.9,
-          "n": 30
+          "spearman": 0.49848184818481844,
+          "pearson": 0.5748366414139381,
+          "weighted_kappa": 0.4833912707609116,
+          "mean_abs_diff": 0.77,
+          "within1_rate": 0.87,
+          "n": 100
         }
       },
-      "pearson": 0.7817,
-      "spearman": 0.6196,
-      "weighted_kappa": 0.6289,
-      "mean_abs_diff": 0.8333,
-      "within1_rate": 0.9
+      "weighted_kappa": 0.4834,
+      "within1_rate": 0.87,
+      "spearman": 0.4985,
+      "pearson": 0.5748,
+      "mean_abs_diff": 0.77
     },
     "S4": {
       "name": "Figurative Density",
       "kind": "scalar",
-      "mean_confidence": 4.33,
+      "mean_confidence": 4.03,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "spearman": 0.921690767519466,
-          "pearson": 0.9449228162321802,
-          "weighted_kappa": 0.9076923076923077,
-          "mean_abs_diff": 0.6,
-          "within1_rate": 0.9666666666666667,
-          "n": 30
+          "spearman": 0.7888388838883887,
+          "pearson": 0.8504207470468071,
+          "weighted_kappa": 0.7419904873014449,
+          "mean_abs_diff": 0.79,
+          "within1_rate": 0.84,
+          "n": 100
         }
       },
-      "pearson": 0.9449,
-      "spearman": 0.9217,
-      "weighted_kappa": 0.9077,
-      "mean_abs_diff": 0.6,
-      "within1_rate": 0.9667
+      "weighted_kappa": 0.742,
+      "within1_rate": 0.84,
+      "spearman": 0.7888,
+      "pearson": 0.8504,
+      "mean_abs_diff": 0.79
     },
     "S5": {
       "name": "Aesthetic Register",
       "kind": "forced_choice",
-      "mean_confidence": 4.18,
+      "mean_confidence": 4.02,
       "pairs": {
         "claude-haiku-4-5 vs claude-opus-4-8": {
-          "exact_match_rate": 0.8333333333333334,
-          "cohen_kappa": 0.7087378640776698,
-          "n": 30
+          "exact_match_rate": 0.79,
+          "cohen_kappa": 0.6036240090600227,
+          "n": 100
         }
       },
-      "exact_match_rate": 0.8333,
-      "cohen_kappa": 0.7087
+      "cohen_kappa": 0.6036,
+      "exact_match_rate": 0.79
     }
   },
-  "n_segments_in_pca": 30,
+  "n_segments_in_pca": 100,
   "redundant_pairs": [
     [
       "C1",
       "C3",
-      0.9434858476481784
-    ],
-    [
-      "N2",
-      "N4",
-      0.9303796296788452
+      0.9068973668240112
     ],
     [
       "C3",
       "C5",
-      0.9217244869148798
+      0.8978337550154813
     ],
     [
       "C1",
       "C5",
-      0.9065243992103239
-    ],
-    [
-      "P1",
-      "P2",
-      0.8604792765770719
-    ],
-    [
-      "N3",
-      "P2",
-      0.8253384964074757
-    ],
-    [
-      "L2",
-      "L3",
-      0.8184696820316437
-    ],
-    [
-      "L2",
-      "S4",
-      0.8162301473574233
+      0.8529498131780087
     ],
     [
       "N5",
       "C5",
-      0.8087751984276774
+      0.8093323531718097
     ],
     [
-      "L1",
       "L2",
-      0.8084812203697639
-    ],
-    [
-      "C5",
-      "S4",
-      0.8050359325928473
+      "L3",
+      0.8005502230435999
     ]
   ],
   "pca": {
     "explained_variance_ratio": [
-      0.4373,
-      0.1187,
-      0.0995,
-      0.0788,
-      0.0578,
-      0.0504,
-      0.0364,
-      0.0287,
-      0.0198,
-      0.0176,
-      0.0118,
-      0.0106,
-      0.0076,
-      0.0054,
-      0.0045,
-      0.0035,
-      0.0023,
-      0.0021,
-      0.002,
-      0.0016,
-      0.0014,
-      0.0008,
-      0.0006,
-      0.0004,
-      0.0002,
-      0.0001,
-      0.0
+      0.3376,
+      0.15,
+      0.0885,
+      0.0729,
+      0.0603,
+      0.052,
+      0.0374,
+      0.0276,
+      0.0233,
+      0.0204,
+      0.0173,
+      0.0157,
+      0.0129,
+      0.0113,
+      0.0096,
+      0.0093,
+      0.0086,
+      0.008,
+      0.0073,
+      0.007,
+      0.0052,
+      0.0046,
+      0.0041,
+      0.0034,
+      0.0024,
+      0.0019,
+      0.0013
     ],
     "cumulative": [
-      0.4373,
-      0.556,
-      0.6555,
-      0.7344,
-      0.7922,
-      0.8426,
-      0.879,
-      0.9077,
-      0.9275,
-      0.9452,
-      0.9569,
-      0.9676,
-      0.9751,
-      0.9805,
-      0.985,
-      0.9885,
-      0.9908,
-      0.9929,
-      0.9948,
-      0.9965,
-      0.9979,
+      0.3376,
+      0.4876,
+      0.5761,
+      0.649,
+      0.7093,
+      0.7613,
+      0.7986,
+      0.8263,
+      0.8496,
+      0.87,
+      0.8874,
+      0.9031,
+      0.916,
+      0.9273,
+      0.9369,
+      0.9462,
+      0.9548,
+      0.9628,
+      0.9701,
+      0.9771,
+      0.9823,
+      0.9869,
+      0.991,
+      0.9944,
+      0.9968,
       0.9987,
-      0.9992,
-      0.9997,
-      0.9999,
-      1.0,
       1.0
     ],
-    "n_for_80pct": 6,
-    "n_for_90pct": 8,
+    "n_for_80pct": 8,
+    "n_for_90pct": 12,
     "top_axes_per_component": [
       [
         [
           "C5",
-          0.25
-        ],
-        [
-          "S4",
-          0.24
+          0.27
         ],
         [
           "L2",
           0.24
         ],
         [
-          "N3",
+          "C2",
           0.24
         ],
         [
-          "C2",
+          "C3",
+          0.24
+        ],
+        [
+          "C1",
           0.23
         ]
       ],
       [
         [
           "P4",
-          0.45
-        ],
-        [
-          "P3",
-          0.34
-        ],
-        [
-          "P2",
-          0.28
+          0.37
         ],
         [
           "A4",
-          -0.25
+          -0.31
         ],
         [
-          "S2",
-          -0.24
+          "A1",
+          -0.3
+        ],
+        [
+          "P2",
+          0.3
+        ],
+        [
+          "S4",
+          -0.27
+        ]
+      ],
+      [
+        [
+          "A2",
+          0.36
+        ],
+        [
+          "L1",
+          -0.35
+        ],
+        [
+          "L3",
+          -0.35
+        ],
+        [
+          "S1",
+          -0.34
+        ],
+        [
+          "C3",
+          0.32
         ]
       ],
       [
         [
           "N1",
-          0.36
+          0.48
         ],
         [
           "A2",
-          0.35
+          0.37
         ],
         [
-          "L3",
-          -0.32
+          "A4",
+          0.34
         ],
         [
-          "S1",
-          -0.3
+          "L5",
+          0.27
         ],
         [
-          "A1",
-          -0.28
+          "C5",
+          -0.26
         ]
       ],
       [
         [
           "C4",
-          0.42
+          0.53
         ],
         [
-          "L1",
-          -0.37
+          "P3",
+          -0.38
         ],
         [
-          "A4",
-          -0.34
+          "N4",
+          0.34
+        ],
+        [
+          "N2",
+          0.3
+        ],
+        [
+          "A1",
+          0.3
+        ]
+      ],
+      [
+        [
+          "L5",
+          0.47
+        ],
+        [
+          "S1",
+          0.31
         ],
         [
           "N5",
           0.31
         ],
         [
-          "N1",
-          -0.27
-        ]
-      ],
-      [
-        [
-          "S1",
-          0.6
+          "L1",
+          -0.31
         ],
         [
-          "L4",
-          -0.38
-        ],
-        [
-          "L5",
-          0.29
-        ],
-        [
-          "S3",
-          0.27
-        ],
-        [
-          "A1",
-          -0.23
-        ]
-      ],
-      [
-        [
-          "N2",
-          0.42
-        ],
-        [
-          "N5",
-          -0.37
-        ],
-        [
-          "P5",
-          -0.35
-        ],
-        [
-          "C4",
-          0.35
-        ],
-        [
-          "N4",
-          0.33
+          "L2",
+          -0.28
         ]
       ]
     ]
   },
   "twin_consistency": {
-    "n_twin_pairs": 4,
-    "mean_twin_distance": 0.565,
-    "mean_all_pairs_distance": 1.483,
+    "n_twin_pairs": 13,
+    "mean_twin_distance": 0.527,
+    "mean_all_pairs_distance": 1.315,
     "twin_distances": [
+      0.63,
+      0.426,
+      0.593,
       0.5,
+      0.519,
       0.352,
+      0.5,
       0.685,
-      0.722
+      0.722,
+      0.5,
+      0.537,
+      0.481,
+      0.407
+    ]
+  },
+  "split_half": {
+    "n_splits": 20,
+    "n_half": 50,
+    "n_components": 5,
+    "mean_abs_r_per_component": [
+      0.867,
+      0.842,
+      0.612,
+      0.586,
+      0.486
+    ],
+    "mean_abs_r": 0.679
+  },
+  "origin_comparison": {
+    "majority_origin": "model",
+    "n_majority": 85,
+    "n_minority": 15,
+    "loading_match_abs_r": [
+      0.998,
+      0.999,
+      0.991,
+      0.949,
+      0.975
+    ],
+    "top_axis_offsets": [
+      [
+        "A1",
+        -0.99
+      ],
+      [
+        "C3",
+        0.82
+      ],
+      [
+        "L5",
+        -0.79
+      ],
+      [
+        "N1",
+        -0.77
+      ],
+      [
+        "C5",
+        0.63
+      ]
     ]
   },
   "verdict": {
@@ -898,7 +994,6 @@
       "N1",
       "N2",
       "N4",
-      "N5",
       "C1",
       "C2",
       "C3",
@@ -919,18 +1014,11 @@
       "S4",
       "S5"
     ],
-    "ambiguous_axes": [
-      "L1",
-      "N3"
-    ],
+    "ambiguous_axes": [],
     "redundant_axis_pairs": [
       [
         "C1",
         "C3"
-      ],
-      [
-        "N2",
-        "N4"
       ],
       [
         "C3",
@@ -941,38 +1029,19 @@
         "C5"
       ],
       [
-        "P1",
-        "P2"
-      ],
-      [
-        "N3",
-        "P2"
-      ],
-      [
-        "L2",
-        "L3"
-      ],
-      [
-        "L2",
-        "S4"
-      ],
-      [
         "N5",
         "C5"
       ],
       [
-        "L1",
-        "L2"
-      ],
-      [
-        "C5",
-        "S4"
+        "L2",
+        "L3"
       ]
     ]
   },
   "before_after": {
     "before_axes_version": 1,
     "after_axes_version": 3,
+    "n_segments": 30,
     "axes": {
       "L1": {
         "name": "Lexical Complexity",

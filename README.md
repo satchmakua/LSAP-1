@@ -11,10 +11,11 @@ analysis↔generation firewall).
 
 **Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Status: v1 slice (M0–M4) complete; Phase 4 hardening underway — M5 done, M6 next.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
+**Status: v1 slice (M0–M4) complete; Phase 4 hardening underway — M5 and M6 done, M7 next.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
 
-- **Instrument:** 30 anchored axes (registry **version 3**), Claude-rated under a frozen manual; ratings carry an `axes_version` and anchor cohorts are never pooled. Inter-rater agreement on the 30-segment pilot: **27/30 axes reliable**. M5 re-anchored the two ambiguous axes: L3 fixed (within-1 **0.40 → 0.83**); L1 resisted two revisions (frozen +1.8 offset, Spearman ~0.75) and is written up as a split/retirement candidate; N3 proved unstable under re-measurement.
-- **Coordinates:** 5 locked factors fitted on the v3 cohort, **79.2% explained, C6 residual 20.8%**; 6/8 redundant twin-pair members have their twin as nearest neighbour.
+- **Corpus:** **100 segments** — 85 written by Claude to structural briefs (never by author imitation) plus **15 public-domain** passages as a non-model control, each verified verbatim against its source.
+- **Instrument:** 30 anchored axes (registry **version 3**), Claude-rated under a frozen manual; ratings carry an `axes_version` and anchor cohorts are never pooled. M5 re-anchored the two ambiguous axes: L3 fixed (within-1 **0.40 → 0.87**); L1 resisted two revisions but recovered to 0.52 on the wider corpus and remains a split candidate.
+- **Coordinates:** 5 locked factors over 100 segments, **70.9% explained, C6 residual 29.1%**. M6's honest headline: **the pilot's factor structure was substantially an n=30 artifact** (PC1 44.8% → 33.8%; 80% now needs 8 components, not 6) — but the factors are far **more reproducible** than the pilot could know (split-half loading stability **0.505 → 0.679**) and are **not a generator artifact** (public-domain prose loads the same structure, |r| 0.95–0.999). Every twin pair lands in its partner's top 5 of 100.
 - **Engine:** operators → rules → a stateful WS/PL/MF/EF/LR loop. Moving compression 0.05 → 0.95 took mean sentence length **6.3 → 140.5 words** and moved **4/4** predicted instrument axes up (Syntactic Depth 1→7).
 
 See [PROGRESS.md](PROGRESS.md), `reliability/report.md`, `coordinates/model.json`.
@@ -47,6 +48,7 @@ Operational runners (from `backend/`, needing `ANTHROPIC_API_KEY`):
 
 ```bash
 uv run python scripts/generate_corpus.py       # write the pilot corpus (idempotent)
+uv run python scripts/ingest_public_domain.py segments.json   # add non-model control segments
 uv run python scripts/rate_corpus.py           # rate it with both raters (resumable)
 uv run python -m lsap.coordinates.reliability  # agreement / correlation / PCA report
 uv run python scripts/fit_projection.py        # fit + persist coordinates/model.json
@@ -56,7 +58,7 @@ uv run python scripts/engine_ab.py --dial c1   # A/B a dial, then re-rate both r
 ## Docs
 
 - **[DESIGN.md](DESIGN.md)** — the engineering spec: stack, data contracts, architecture, milestones.
-- **[ROADMAP.md](ROADMAP.md)** — the milestone checklist (M0–M5 done; M6–M7 harden, then the v2 layers).
+- **[ROADMAP.md](ROADMAP.md)** — the milestone checklist (M0–M6 done; M7 adds a human rater, then the v2 layers).
 - **[PROGRESS.md](PROGRESS.md)** — the build log.
 - **[LSAP_Foundational_Blueprint.md](docs/LSAP_Foundational_Blueprint.md)** — the domain theory (the L0–L7 stack and the Epistemic Charter).
 - **[docs/adr/](docs/adr/)** — architecture decision records, including the [analysis/generation firewall](docs/adr/0002-analysis-generation-firewall.md).

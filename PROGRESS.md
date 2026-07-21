@@ -5,12 +5,16 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** **Phase 4 (v1 hardening) is underway — M5 is done; M6 is next.**
-The v1 slice (M0–M4) is complete: rate a segment on 30 anchored axes, watch it land in
-a fitted C-space beside its kin, dial the operators to generate measurably different
-prose — firewall intact throughout. M5 re-anchored the two absolute-ambiguous axes:
-L3 is fixed (0.40 → 0.83); L1 resisted two revisions and is written up as a
-split/retirement candidate (see the M5 entry — **decide with the human before M6**).
+**Current phase:** **Phase 4 (v1 hardening) — M5 and M6 done; M7 (a human rater) is
+next, and it is the last milestone before the Phase 5 checkpoint.** The v1 slice (M0–M4)
+is complete: rate a segment on 30 anchored axes, watch it land in a fitted C-space beside
+its kin, dial the operators to generate measurably different prose — firewall intact
+throughout. M5 fixed the rating-selection defect and re-anchored L3 (0.40 → 0.87); L1
+resisted two revisions but recovered to 0.52 at n=100. **M6 grew the corpus to 100 and
+found the pilot's factor structure was substantially an n=30 artifact** — PC1 44.8% →
+33.8%, C6 residual 20.6% → 29.1% — while showing the factors are *more* reproducible
+than the pilot could know (split-half 0.505 → 0.679) and are **not** a generator
+artifact (public-domain prose loads the same structure).
 
 ### State of the tree
 
@@ -19,12 +23,98 @@ split/retirement candidate (see the M5 entry — **decide with the human before 
 | API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]`, `/api/cspace`, `/api/segments/{id}/projection`, **`GET /api/presets`, `POST /api/generate`** |
 | Instrument | `backend/src/lsap/instrument/` | `schema.py` + 30-axis `axes.yaml` (**version 3** — L1/L3 re-anchored in M5); **`rater.py` implemented** (Claude structured output, stamps `axes_version`) |
 | Persistence | `backend/src/lsap/storage.py` | JSONL ratings + markdown corpus (git-diffable); `latest_ratings` = newest-wins per (rater, segment, axes_version) |
-| Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | 30-segment pilot (`source: pilot`) + 180 ratings across 3 anchor cohorts + reliability report (v1 vs v3 before/after) |
+| Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | **100-segment pilot** (85 model-written + 15 `origin: public-domain`) + 460 ratings across 3 anchor cohorts + reliability report (like-for-like v1 vs v3, split-half, origin check) |
 | Coordinates | `backend/src/lsap/coordinates/` | **`reliability.py` + `projection.py` implemented** (N-rater per-pair agreement / correlation / PCA / twins; fitted + persisted projection, neighbours; cohort-aware) |
-| Fitted model | `coordinates/model.json` | 5 locked factors over 30 segments (axes_version 3), 79.2% explained, C6 residual 20.8% |
+| Fitted model | `coordinates/model.json` | 5 locked factors over **100** segments (axes_version 3), **70.9% explained, C6 residual 29.1%**; split-half loading stability 0.679 |
 | Engine | `backend/src/lsap/engine/` | **fully implemented** — `compiler.py` (rule tables, derived B6), `runtime.py` (state machine + WS/PL/MF/EF/LR loop), `presets.yaml`, `operators.yaml` |
 | Firewall | `backend/tests/test_firewall.py` | enforced & green (hardened: every import form + `storage`) |
 | Frontend | `frontend/src/` | Tabbed: Rater Studio (rate → 30 axes) + C-Space Map (scatter, neighbours) · **Engine Console** (5 sliders, presets, per-paragraph state panel, re-rate) |
+
+---
+
+## M6 — Grow the pilot corpus to n=100 · built & verified 2026-07-19 · ✓ (the structure did not hold; that is the finding)
+
+The milestone the Charter was written for. The pilot's tidy "Literary Big Five" was
+substantially an artifact of n=30 — and the honest report of that is the deliverable.
+
+**Shipped**
+- **Corpus 30 → 100 segments.** 55 new model-written segments from briefs designed in
+  **brief space** (Charter P1 — no C-space positions were consulted): five designers
+  each covering a contrast region the pilot under-covered (comic/positive-valence,
+  polyphony/dialogue, discursive/formal, exterior action, perspective/time), then a
+  coverage judge curating to 55 with 9 verbatim twin pairs. **13 twin pairs** corpus-wide.
+- **15 public-domain segments** (`origin: public-domain`), the non-model-family control
+  the milestone requires — Woolf, Joyce, Austen, Twain, Melville ×1, Poe, Stein,
+  Conrad, James, Cather, Gilman, Anderson, London, and Garnett translations of Chekhov
+  and Dostoevsky; all first published ≤ 1929. Each was verified **programmatically as a
+  verbatim contiguous span of its cited Gutenberg source** — one candidate (a Moby-Dick
+  passage stitched from two chapters) was caught and replaced.
+  Runner: `scripts/ingest_public_domain.py`.
+- **Two new analyses** in `coordinates/reliability.py`: `split_half_stability` (PCA on
+  two seeded random halves, loadings matched by |r| — sign/order-free — averaged over 20
+  splits) and `origin_structure_comparison` (majority-origin-only fit vs all-fit, plus
+  per-axis consensus offsets).
+- **Fixed a comparison defect the corpus growth exposed**: `build_report` gained
+  `only_segments`, so the before/after table compares the segments rated under **both**
+  cohorts. Unrestricted, it had begun reporting five regressions (N3, N5, C2, C5, A3)
+  that were really a composition change; like-for-like, only **N3** regressed — matching
+  M5 exactly.
+
+**Findings (n=100, axes_version 3, 195 paid calls, 0 failures)**
+- **PC1 did not hold near 45%: 44.8% → 33.8%.** Five factors explain **70.9%** (was
+  79.4%); **8 components** now reach 80% (was 6). The Big Five is closer to a **Big
+  Eight** at this corpus breadth.
+- **C6 residual grew 20.6% → 29.1%** — the frame captures materially less of a more
+  varied corpus. Exactly the disclosure P5 exists to force.
+- **The same *kind* of axes load on PC1, not the same list.** Still the interiority
+  factor — C5/C3/C1 recur — but composition shifted (L2, C2 in; S4, N4, P5 out).
+  Fitted C1 label is now "Interior/Exterior Ratio · Syntactic Depth · Subject Stability".
+- **Split-half stability rose sharply: 0.505 → 0.679** (PC1 0.749 → 0.867, PC2 0.485 →
+  0.842). The factors explain *less* variance but are far *more reproducible* — the n=30
+  fit was fitting noise it had no way to detect. This is the single most important number
+  in the milestone.
+- **The structure is not a generator artifact.** Public-domain segments load the same
+  factors: loading match |r| **0.998, 0.999, 0.991, 0.949, 0.975**. They differ in
+  *level*, not structure — lower Valence (−0.99), less Repetition (−0.79), lower Event
+  Density (−0.77); higher Cognitive Transparency (+0.82), more Interior (+0.63).
+  **Indicative only at n=15** — the caveat ships with the number.
+- **Twin consistency held**: every twin is in its partner's **top 5 of 100** (median rank
+  1, mean 1.9; random expectation ~50). Strict nearest-neighbour is 15/26, down from 7/8,
+  which is density dilution rather than instrument drift — twin mean |Δ| 0.527 vs
+  all-pairs 1.315.
+- **Agreement improved on the wider corpus**: **L1 0.30 → 0.52**, N3 0.40 → 0.55,
+  L3 0.83 → 0.87. This supports the small-n-noise reading of M5's regressions, and is
+  evidence for keeping L1 rather than retiring it (see the disposition note below).
+
+**Decisions**
+- **Twin *rank* reported alongside nearest-neighbour hits.** A strict
+  nearest-neighbour criterion is not comparable across corpus sizes; rank-among-100 is.
+  Reporting only 15/26 would have implied a regression that the data does not support.
+- **PD segments carry `source: pilot` + `origin: public-domain`**, so they join the
+  analysis while remaining separable — that separability is the whole control.
+- **Nothing was tuned in response to these numbers.** The falling PC1 is reported, not
+  fixed; no axis was dropped to raise explained variance.
+
+**Open for the human**
+- **L1 disposition** (deferred from M5 by agreement): at n=100 it recovered to 0.52 —
+  still below the 0.70 reliable bar but no longer the 0.30 outlier. The split (technical
+  rarity vs literary-register elevation) remains the live option; retirement now looks
+  premature.
+- **A3 Dominant Affect (0.53 exact-match) is the new weakest axis** — the wider corpus's
+  comic and warm registers gave the raters more to disagree about. It has never been
+  through an anchor revision.
+- Corpus thin spots the coverage judge flagged honestly: anger/rage near-absent
+  corpus-wide; polyphony now almost entirely comic or warm (no grave multi-voice text);
+  rural-comic settings cluster in a way the rater may confound with structural warmth.
+  See `docs/m6-corpus-design-notes.md`.
+
+**Verified**
+- Backend `pytest` → **81 passed** (adds split-half determinism/discrimination, origin
+  comparison, and the `only_segments` like-for-like guard); `ruff` clean. Frontend
+  `vitest` → 6 passed; `build` + `oxlint` clean. Firewall green.
+- Generation 55/55, rating 140/140, **0 failures, 0 flagged ratings**. Report at
+  `reliability/report.md`; refit model at `coordinates/model.json` (n=100,
+  `axes_version: 3`).
 
 ---
 

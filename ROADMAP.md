@@ -125,7 +125,7 @@ are the follow-ups the numbers themselves argue for._
   their v1 baseline. Report: `reliability/report.md` (v1 vs v3 side by side, columns
   labelled by `axes_version`).
 
-- [ ] **M6 — Grow the pilot corpus past n=30.** With 27 scalar features, n=30 makes the
+- [x] **M6 — Grow the pilot corpus past n=30.** With 27 scalar features, n=30 makes the
   PCA provisional. Extend `scripts/corpus_specs.json` toward **n ≈ 100** — more profiles,
   more twin-pairs. Regenerate, re-rate (both scripts are resumable), re-fit.
   - **Do not choose new segments by their position in the fitted C-space.** Picking gaps
@@ -141,6 +141,24 @@ are the follow-ups the numbers themselves argue for._
   two random halves, correlate the loadings, report the number. Report the **C6 residual**
   and whether it moved (P5 — never let the model quietly claim completeness). Say plainly
   whether the structure held; "it didn't" is a passing result if it's honest.
+  **✓ verified 2026-07-19 — n=100 (85 model-written + 15 public-domain), 195 paid calls,
+  0 failures. The structure did NOT hold as the pilot framed it, and that is the result.**
+  **PC1 fell 44.8% → 33.8%**; five factors explain **70.9%** (was 79.4%); the **C6
+  residual grew 20.6% → 29.1%**; 80% now needs **8 components** (was 6) — a Literary Big
+  *Eight* at this breadth. PC1 is still the interiority factor (C5/C3/C1 recur) but its
+  composition shifted (L2, C2 in; S4, N4, P5 out). Cutting the other way, and weightier:
+  **split-half stability rose 0.505 → 0.679** (PC1 0.75 → 0.87, PC2 0.49 → 0.84), so n=30
+  was fitting noise; and the **public-domain segments load the same structure** (loading
+  match |r| **0.95–0.999**) — the factors are not a generator artifact, though PD prose
+  sits lower on Valence (−0.99) and Event Density (−0.77), higher on Cognitive
+  Transparency (+0.82) (indicative only at n=15). Twin consistency held: every twin is in
+  its partner's **top 5 of 100** (median rank 1, mean 1.9; strict nearest-neighbour 15/26,
+  diluted by a 3× denser space). Agreement improved on the wider corpus — **L1 0.30 →
+  0.52**, N3 0.40 → 0.55 — supporting the small-n-noise reading of M5's regressions.
+  Also fixed here: the before/after comparison now runs **like-for-like** over segments
+  rated under both cohorts (it had begun mixing an anchor change with a composition
+  change; on that basis only N3 regressed, matching M5). Corpus design notes and the
+  coverage judge's honest thin-spot list: `docs/m6-corpus-design-notes.md`.
 
 - [ ] **M7 — Add a human rater.** Reliability today is two models agreeing. Add a manual
   scoring mode to the Rater Studio (anchors + watch-fors visible per axis, confidence

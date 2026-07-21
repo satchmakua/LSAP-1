@@ -234,9 +234,9 @@ evidence — Charter P1/P3):**
    after the blueprint's hypothesis (Compression, Narrative Structure, Consciousness
    Depth, Epistemic Stability, Affective Intensity). The pilot showed that mapping is not
    what the data does — the Consciousness axes collapse into one interiority factor
-   (r = 0.93–0.96) and PC1 mixes figuration with interiority. So each component now
-   carries a **label built from its own top loadings** (e.g. C1 = "Figurative Density ·
-   Interior/Exterior Ratio · Cognitive Transparency", 44.8%), stored in `model.json`.
+   (r = 0.85–0.91) and PC1 mixes syntax with interiority. So each component now
+   carries a **label built from its own top loadings** (e.g. C1 = "Interior/Exterior
+   Ratio · Syntactic Depth · Subject Stability", 33.8%), stored in `model.json`.
    Naming a component after what it actually loads on is the honest move (Charter P6).
 2. **Distance is measured in raw PCA-score space, not the [0,1] display coords.** Raw
    scores are naturally weighted by each factor's variance, so the dominant factors drive
@@ -246,6 +246,19 @@ evidence — Charter P1/P3):**
 Forced-choice axes (A3/A5/S5) are analysed separately rather than one-hot into the PCA —
 at n≈30 one-hot encoding is degenerate. The blueprint's canonical vocabulary still names
 the *program*; the fitted factor labels name *this* fit.
+
+**What M6 (n=100) did to this section's numbers — the "more interesting shape" clause
+cashing in.** Quadrupling the corpus and widening its brief space did *not* reproduce the
+pilot's tidy result: **PC1 fell 44.8% → 33.8%**, five factors now explain **70.9%** (was
+79.4%), the **C6 residual grew 20.6% → 29.1%**, and **8 components** are needed for 80%
+(was 6). The "Literary Big Five" is weaker than the pilot implied — at this corpus breadth
+it is closer to a Big Eight. Two things cut the other way, and matter more than the
+variance share: the factors became far more **reproducible** (split-half loading
+agreement 0.505 → 0.679; PC1 0.75 → 0.87, PC2 0.49 → 0.84), i.e. n=30 was fitting noise
+it could not have known it was fitting; and the non-model-written segments load the
+**same structure** (loading match |r| 0.95–0.999), so the factors are not an artifact of
+the generator. The design keeps five locked factors plus the acknowledged residual; the
+residual is simply now carrying an honest 29%.
 
 ### 4.3 The firewall invariant (Charter Principle 4) — a structural, tested rule
 

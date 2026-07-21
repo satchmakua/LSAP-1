@@ -117,5 +117,225 @@
 
   {"id": "frag-window", "pair": "p_frag",
    "profile": "Fragmented modernist consciousness: time and viewpoint fragment, several minds bleed together, stream of consciousness, high interiority, associative and non-linear.",
-   "situation": "At a window at dusk a mind drifts across unfinished thoughts and the other lives glimpsed below."}
+   "situation": "At a window at dusk a mind drifts across unfinished thoughts and the other lives glimpsed below."},
+
+  {"id": "farce-corridor", "pair": "p_comi_farce",
+   "profile": "Screwball farce at full velocity: dialogue-dominant with four or more distinct speakers interrupting and overlapping, very high event density where each mishap causally triggers the next, strict present-moment linear time, exterior action with almost no interiority. Sentence rhythm whipsaws between clipped one-line volleys and breathless run-on pileups; affect is giddy and escalating, and everything resolves in laughter with no real harm done.",
+   "situation": "A hotel corridor at midnight where two wedding parties, one room-service cart, a lost ring, and a row of identical doors conspire to open at exactly the wrong moments."},
+
+  {"id": "farce-backstage", "pair": "p_comi_farce",
+   "profile": "Screwball farce at full velocity: dialogue-dominant with four or more distinct speakers interrupting and overlapping, very high event density where each mishap causally triggers the next, strict present-moment linear time, exterior action with almost no interiority. Sentence rhythm whipsaws between clipped one-line volleys and breathless run-on pileups; affect is giddy and escalating, and everything resolves in laughter with no real harm done.",
+   "situation": "Backstage on opening night of an amateur theater production, where a mislabeled props table keeps sending the wrong objects onstage in every scene."},
+
+  {"id": "toast-hall", "pair": "p_comi_toast",
+   "profile": "Warm ensemble comedy built from many voices: five or more speakers with audibly distinct speech styles, dialogue and reported speech carrying most of the text, narration moving lightly among perspectives at mid distance. Teasing is affectionate and victimless, rhythm is relaxed but varied, and the affect is sustained communal joy that swells rather than breaks near the end.",
+   "situation": "A village-hall wedding reception where the toasts keep multiplying — best man, both grandmothers, an uninvited neighbor — each speech trying to top the last."},
+
+  {"id": "toast-firehouse", "pair": "p_comi_toast",
+   "profile": "Warm ensemble comedy built from many voices: five or more speakers with audibly distinct speech styles, dialogue and reported speech carrying most of the text, narration moving lightly among perspectives at mid distance. Teasing is affectionate and victimless, rhythm is relaxed but varied, and the affect is sustained communal joy that swells rather than breaks near the end.",
+   "situation": "The firehouse kitchen on a night shift, as the crew throws a surprise send-off for a retiring engineer and everyone talks over everyone retelling the same three legendary calls."},
+
+  {"id": "epic-lawn", "pair": null,
+   "profile": "Mock-epic delivered with total sincerity: elevated ornate register, long periodic sentences, dense figurative language and formal epithets lavished on trivial stakes, so the comedy lives entirely in the gap between style and subject. Confident omniscient narration, linear chronicle time, and a genuinely triumphant arc.",
+   "situation": "The deciding end of a retirees' lawn-bowling championship on a municipal green, where a disputed measurement brings the whole park to a standstill."},
+
+  {"id": "satire-report", "pair": null,
+   "profile": "Acid satire in a discursive, document-shaped register: continuous argumentative prose with rhetorical questions, ironic concession, and euphemism doing the comic work; almost no scene, minimal event, high semantic density. The voice is controlled, courteous, and self-congratulatory, and the satire emerges from the widening gap between the claims and what they plainly describe.",
+   "situation": "An annual letter to shareholders recasting a company's catastrophic year — recalls, resignations, a small office fire — as visionary disruption."},
+
+  {"id": "banter-trucks", "pair": null,
+   "profile": "Two-voice romantic comedy carried almost entirely by banter: rapid back-and-forth dialogue with minimal tags, competitive wit as courtship, sparse exterior narration, and only brief flickers of interiority that betray what the speakers won't say aloud. Warmth accumulates under the sparring and the ending tilts openly toward affection.",
+   "situation": "Two rival food-truck owners forced to share one generator at a street festival, trading insults and tastes of each other's cooking through a long, busy evening."},
+
+  {"id": "giddy-bus", "pair": null,
+   "profile": "Giddy first-person exuberance in present tense: breathless run-on sentences crashing into one- and two-word fragments, exclamatory and sensation-flooded, interiority pouring outward onto everything seen. Affect is joy with positive volatility — spiking, tumbling, spiking higher — and the ordinary world is rendered transfigured without ever turning solemn.",
+   "situation": "Riding the crosstown bus home the morning after passing the citizenship exam, while the whole unremarkable city suddenly reads like a welcome banner."},
+
+  {"id": "deadpan-swan", "pair": null,
+   "profile": "Dry comedy through official documentary form: flat declarative minutes-style prose, scrupulous literalism, numbered or itemized structure, comic timing achieved by anticlimax and paragraph break rather than commentary. Affect is held at a polite ironic distance while the recorded events grow steadily ridiculous; figurative language near zero.",
+   "situation": "The official minutes of an emergency village committee meeting concerning a swan that has occupied the post office and shows no intention of leaving."},
+
+  {"id": "one-breath-beach", "pair": null,
+   "profile": "Nearly the whole piece built from two or three colossal run-on sentences, clause chained to clause by conjunctions and relative pronouns for hundreds of words before any full stop; present tense, sensation-saturated, exterior motion and bodily joy braided together. Affect is unbroken accelerating exhilaration with no irony and no shadow.",
+   "situation": "A young dog let off the leash on an empty beach for the first time, from the unclipping of the collar to the collapse, at last, in the warm sand."},
+
+  {"id": "allotment-notes", "pair": null,
+   "profile": "Polyphonic found-text comedy with no narrator: a chain of posted notices, replies, corrections, and counter-notices in distinct registers — officious, wounded, lyrical, legalistic — each voice self-serving and stylistically identifiable. The story and the joke emerge entirely in the ironies between documents; time advances through dates and escalation.",
+   "situation": "A community allotment garden's noticeboard feud over the disappearance of a prize zucchini, escalating from polite inquiry through accusation, a poem, and an unexpected confession."},
+
+  {"id": "chorus-pharmacy", "pair": "p_poly_chorus",
+   "profile": "Communal first-person-plural narration — a collective 'we' with no single stable narrator — that periodically splits into brief attributed snatches of individual speech before re-merging; long accretive list-like sentences alternate with short choral pronouncements; warm, wry affect; iterative-habitual time ('we would', 'every year') dipping occasionally into one specific day.",
+   "situation": "A street watches, across one summer, the new family gut the shuttered corner pharmacy and reopen it as something no one expected."},
+
+  {"id": "chorus-pool", "pair": "p_poly_chorus",
+   "profile": "Communal first-person-plural narration — a collective 'we' with no single stable narrator — that periodically splits into brief attributed snatches of individual speech before re-merging; long accretive list-like sentences alternate with short choral pronouncements; warm, wry affect; iterative-habitual time ('we would', 'every year') dipping occasionally into one specific day.",
+   "situation": "A neighborhood spends the final season of its condemned public pool taking turns saying goodbye to it."},
+
+  {"id": "testimony-bell", "pair": "p_poly_testimony",
+   "profile": "An oral-testimony collage: six or more distinct labeled speakers recount the same event in turn, each in a strongly individuated idiom and rhythm, their accounts contradicting one another on key facts with no narrating voice to adjudicate; direct speech dominates, framing is minimal, and time is retrospective, circling the single event.",
+   "situation": "Villagers give their separate accounts of the night the church bell vanished from the tower."},
+
+  {"id": "testimony-train", "pair": "p_poly_testimony",
+   "profile": "An oral-testimony collage: six or more distinct labeled speakers recount the same event in turn, each in a strongly individuated idiom and rhythm, their accounts contradicting one another on key facts with no narrating voice to adjudicate; direct speech dominates, framing is minimal, and time is retrospective, circling the single event.",
+   "situation": "Passengers and crew of a night train give their separate accounts of the unexplained three-hour stop in open country."},
+
+  {"id": "holiday-letter", "pair": null,
+   "profile": "Rendered almost entirely in quoted dialogue among four or more speakers who interrupt, overlap, and finish one another's sentences; speech turns are short with high sentence-length variance and near-zero narration or interiority; comic, affectionate affect; one continuous real-time scene.",
+   "situation": "Around the kitchen table, four adult siblings draft the family's annual holiday letter, arguing line by line over what counts as news and whose version of the year goes in."},
+
+  {"id": "coop-bicycles", "pair": null,
+   "profile": "Verbatim meeting-transcript form: speaker tags, procedural boilerplate, points of order, and cross-talk from a dozen voices in clashing registers (officialese, vernacular, tangent); no narrator and no interiority, with humor arising only from juxtaposition; strict chronological real time.",
+   "situation": "An apartment cooperative's emergency board meeting about bicycles in the courtyard escalates into grievances going back twenty years."},
+
+  {"id": "gossip-harbor", "pair": null,
+   "profile": "A single piece of news relayed through a chain of successive conversations, each retelling mutating its details and imputed motives; narration slips in and out of the speakers' voices through free indirect speech; wry, speculative affect; time hops forward hour by hour across one day.",
+   "situation": "The rumored engagement of the schoolteacher and the fishmonger travels shop to shop through a harbor town between opening and closing time."},
+
+  {"id": "terrace-roar", "pair": null,
+   "profile": "A crowd-collective narrator: chants, counted-down minutes, and surges of shared speech, with staccato fragments breaking into long rolling accumulations for very high rhythm and sentence-length variance; exuberant rising affect toward open triumph; strict present-tense real time.",
+   "situation": "The final ten minutes of the last match of the season, a small-town club one goal from improbable promotion."},
+
+  {"id": "duet-piano", "pair": null,
+   "profile": "Two narrators alternate short passages telling one shared story, each interrupting to correct, dispute, and mock the other's version while both address the reader directly; their registers split, one ornate and digressive, one blunt and clipped; retrospective time, contested at every step.",
+   "situation": "Two elderly siblings jointly explain how the family piano came to be buried in the back garden forty years ago."},
+
+  {"id": "night-callers", "pair": null,
+   "profile": "A thin frame voice introduces a sequence of caller voices, each a monologue in its own idiom, pacing, and grammar; quoted speech dominates over description, with interiority arriving only inside the callers' own words; gentle nocturnal warmth threaded with small aches; episodic time inside one continuous broadcast.",
+   "situation": "A late-night radio phone-in invites listeners to describe an object they lost and never replaced, and the calls accumulate."},
+
+  {"id": "guestbook-cliff", "pair": null,
+   "profile": "Assembled entirely from dated entries by successive hands in one shared book, each writer idiomatically distinct and replying to, amending, or blessing the entries that came before; epigrammatic one-line jottings set against longer discursive outpourings; time spans decades carried by the dates alone.",
+   "situation": "The visitors' book of a remote clifftop guesthouse, in which returning guests argue across decades about the best room, the weather, and what the place has meant to them."},
+
+  {"id": "aphorism-table", "pair": "p_disc_apho",
+   "profile": "A numbered sequence of freestanding aphorisms: each entry one to three short sentences, maximally compressed and highly abstract, with no scene, characters, or narrative time. Meaning is carried entirely by assertion, antithesis, and wit, delivered with total epistemic confidence in a polished epigrammatic register.",
+   "situation": "A numbered collection of aphorisms on hospitality — hosts, guests, invitations, and the ethics of the shared table."},
+
+  {"id": "aphorism-workshop", "pair": "p_disc_apho",
+   "profile": "A numbered sequence of freestanding aphorisms: each entry one to three short sentences, maximally compressed and highly abstract, with no scene, characters, or narrative time. Meaning is carried entirely by assertion, antithesis, and wit, delivered with total epistemic confidence in a polished epigrammatic register.",
+   "situation": "A numbered collection of aphorisms on tools, repair, and maintenance — what breaks, what mends, and what upkeep teaches."},
+
+  {"id": "margin-birdguide", "pair": "p_disc_marg",
+   "profile": "Two voices share the page: passages of a formal printed text alternate with a second reader's marginal annotations that interrupt, dispute, and joke. The registers clash deliberately — elevated and impersonal against colloquial and quick — sentence-length variance is extreme, and the real argument emerges from the friction between the voices rather than from either alone.",
+   "situation": "Excerpts from an old field guide to river birds, annotated decades later in the margins by an amused, contrary reader who has actually watched the birds."},
+
+  {"id": "margin-etiquette", "pair": "p_disc_marg",
+   "profile": "Two voices share the page: passages of a formal printed text alternate with a second reader's marginal annotations that interrupt, dispute, and joke. The registers clash deliberately — elevated and impersonal against colloquial and quick — sentence-length variance is extreme, and the real argument emerges from the friction between the voices rather than from either alone.",
+   "situation": "Pages of a strict household etiquette manual, annotated in the margins by the teenager who has been required to study it before a formal visit."},
+
+  {"id": "sermon-harvest", "pair": null,
+   "profile": "Oratorical address to a gathered congregation: cadenced periodic sentences built on anaphora and refrain, repetition as load-bearing structure, second-person-plural address, and a steadily rising intensity curve toward affirmation. Meaning is explicitly asserted and morally clear; the dominant affect is communal joy and gratitude, wholly without irony.",
+   "situation": "A harvest thanksgiving sermon in a small rural chapel, moving from the year's labor in the fields to the laden table waiting in the hall next door."},
+
+  {"id": "recipe-dumpling", "pair": null,
+   "profile": "A recipe whose terse numbered imperative steps keep being interrupted by long digressive asides. Sentence-length variance is extreme — three-word commands against page-spanning reminiscence — time slips between the timeless imperative present and remembered scenes, and the affect is warm, comic, and unhurried.",
+   "situation": "Instructions for making a festival dumpling whose recipe has passed through three generations, with digressions on the aunts who guarded, altered, and argued over it."},
+
+  {"id": "manual-wardrobe", "pair": null,
+   "profile": "Opens as numbered, affectless product instructions and drifts, step by step, into direct second-person address about the reader's own life. The procedural register decays gradually — sentences lengthen, hedges appear, imperatives turn intimate — and the drift itself, not any event, is the story.",
+   "situation": "Assembly instructions for a flat-pack wardrobe that slowly become instructions for the room it stands in, the house around it, and the person doing the assembling."},
+
+  {"id": "encyclo-parlor", "pair": null,
+   "profile": "A reference-work entry: taxonomic subheadings, definitional sentences, cross-references, and a third-person impersonal register with no narrative scene. The official affect is neutral, but a dry wit leaks through the choice of examples, and meaning accrues by classification rather than by story.",
+   "situation": "An encyclopedia entry on an invented parlor game — its rules, disputed origins, regional variants, tournament customs, and one notable scandal."},
+
+  {"id": "fieldnotes-marsh", "pair": null,
+   "profile": "Dated telegraphic field entries: clipped noun phrases, abbreviations, counts and measurements, and almost no stated interiority. Paratactic and exterior throughout, with no argument announced — yet delight accumulates strictly through what the notes choose to record.",
+   "situation": "A volunteer's field notebook across one spring, monitoring the return of birds, frogs, and reeds to a restored marsh at the edge of a city."},
+
+  {"id": "disputation-tavern", "pair": null,
+   "profile": "Almost entirely dialogue: two speakers with sharply distinct idiolects dispute a single abstract question in real time, the argument advancing by objection, concession, and counter-example. Narration is limited to bare attributions; tempo is quick, the affect is warm comic friction, and no narrator imposes a verdict.",
+   "situation": "Two old friends in a tavern argue about whether luck exists, keeping a running tally of points won and lost on a napkin between them."},
+
+  {"id": "glossary-household", "pair": null,
+   "profile": "A glossary of invented words: headword, part of speech, definition, and usage example for each entry, in strict alphabetical order. Syntax is definitional throughout, time is nonlinear and assembled by the reader across entries, and all warmth and comedy are carried by the example sentences.",
+   "situation": "A glossary of one household's private vocabulary — the family's invented words for its rituals, objects, and moods — compiled and defined by the youngest child."},
+
+  {"id": "surge-couloir", "pair": "p_acti_surge",
+   "profile": "Long surging sentences that accelerate through stacked clauses and crest into brief full stops before building again; strictly exterior kinetic focus in present tense with almost no interiority, high event density, and an affect of exhilaration and mastery — speed without menace.",
+   "situation": "A skier drops into a steep snow couloir at first light and rides it clean, turn by turn, to the valley floor."},
+
+  {"id": "surge-rapids", "pair": "p_acti_surge",
+   "profile": "Long surging sentences that accelerate through stacked clauses and crest into brief full stops before building again; strictly exterior kinetic focus in present tense with almost no interiority, high event density, and an affect of exhilaration and mastery — speed without menace.",
+   "situation": "A kayaker runs a boulder-choked stretch of whitewater from the eddy above the first drop to the calm pool below."},
+
+  {"id": "crew-line", "pair": "p_acti_crew",
+   "profile": "The scene is carried almost entirely by rapid overlapping dialogue among four or more distinct working voices — calls, confirmations, counts, jokes — with only thin stage-direction narration between turns; no access to any interior, real-time chronology, and an affect of brisk good humor and shared competence.",
+   "situation": "A restaurant kitchen line pushes through the peak hour of a fully booked Saturday night service."},
+
+  {"id": "crew-deck", "pair": "p_acti_crew",
+   "profile": "The scene is carried almost entirely by rapid overlapping dialogue among four or more distinct working voices — calls, confirmations, counts, jokes — with only thin stage-direction narration between turns; no access to any interior, real-time chronology, and an affect of brisk good humor and shared competence.",
+   "situation": "A crab boat's deck crew hauls, sorts, and re-baits a string of pots in heavy swell before dark."},
+
+  {"id": "pickup-court", "pair": null,
+   "profile": "Very short declarative sentences at sprint tempo, present tense, the camera locked on bodies and ball with no interiority; affect is pure uncomplicated joy, rising through the game to a jubilant finish.",
+   "situation": "A five-on-five pickup basketball game on an outdoor court in summer, decided on a single final possession."},
+
+  {"id": "glass-furnace", "pair": null,
+   "profile": "Metronomic rhythm: sentences of near-uniform middle length in steady procedural sequence, minimal subordination, exact concrete process vocabulary; calm absorbed attention and quiet contentment, with time measured in repeated work cycles rather than clock time.",
+   "situation": "A glassblower gathers, shapes, and finishes a run of goblets at the furnace across a single shift."},
+
+  {"id": "frame-raising", "pair": null,
+   "profile": "First-person-plural narration — a collective 'we' with no individuated interior — in rolling mid-to-long sentences that move in clear chronological order across one day; communal warmth and festive momentum throughout, ending in celebration.",
+   "situation": "Neighbors and cousins raise the timber frame of a new barn in a single day, from the first post at dawn to the ridgepole and the long shared supper after."},
+
+  {"id": "caper-carousel", "pair": null,
+   "profile": "High sentence-length variance as a comic engine: long meticulous wind-up sentences snapped shut by abrupt fragments; airtight causal chaining of steps and payoffs, deadpan register, exterior focus, buoyant mischief with no real threat of harm.",
+   "situation": "Three old friends break into a shuttered fairground warehouse at night to take back the carousel horse the town auctioned off."},
+
+  {"id": "levee-night", "pair": null,
+   "profile": "Panoramic exterior narration tracking many named actors across one location, built from long additive sentences that accumulate clauses like a ledger of effort; urgency without fear, tight chronology through the night, resolving in shared triumph.",
+   "situation": "A river town spends the night sandbagging its levee as the flood crest arrives — and the levee holds."},
+
+  {"id": "call-derby", "pair": null,
+   "profile": "A single performative broadcast voice speaking live in present tense — exclamatory, formulaic, directly addressed to listeners — with sentence length and tempo compressing as the action tightens; no interiority beyond the performance, closing on a jubilant crescendo.",
+   "situation": "A radio announcer calls a championship horse race from the starting gate to a photo finish."},
+
+  {"id": "pit-twelve", "pair": null,
+   "profile": "Extreme temporal dilation: a span of about twelve seconds stretched across the entire piece in hyper-precise exterior choreography, clipped fragments alternating with sudden slow-motion long sentences; cool procedural exactness charged with elation, no access to thought beyond sensation.",
+   "situation": "A motor-racing pit crew performs the single twelve-second pit stop that decides the race."},
+
+  {"id": "vain-recital", "pair": "p_pers_vain",
+   "profile": "First-person narration by a narrator whose vanity visibly warps the telling — self-flattering interpretation laid over reported details that quietly contradict it; buoyant confident tone, long self-justifying sentences punctuated by short factual ones the narrator does not understand; comic register.",
+   "situation": "The narrator recounts their triumphant solo at the community talent show — the stunned silence, the early departures, the brief polite applause."},
+
+  {"id": "vain-reunion", "pair": "p_pers_vain",
+   "profile": "First-person narration by a narrator whose vanity visibly warps the telling — self-flattering interpretation laid over reported details that quietly contradict it; buoyant confident tone, long self-justifying sentences punctuated by short factual ones the narrator does not understand; comic register.",
+   "situation": "The narrator reports on the school reunion at which, by their own account, everyone was desperate to speak with them."},
+
+  {"id": "future-firstday", "pair": null,
+   "profile": "Narration entirely in the future tense — every event told as a certainty that has not yet happened; calm declarative prophecy accumulating concrete sensory detail; anticipatory warmth; time moves strictly forward through a single day.",
+   "situation": "A parent narrates, hour by hour, their toddler's first day of school — still years away, told as though already scheduled."},
+
+  {"id": "chronicle-bakery", "pair": null,
+   "profile": "Maximal narrative distance and vast temporal compression — four generations pass in brisk chronicle sentences, individual lives compressed to a clause, decades leaping between paragraphs; even, unhurried register of record; no scene lasts longer than a few lines.",
+   "situation": "A corner bakery on one street passes through four generations of a single family, from wood-fired oven to card reader."},
+
+  {"id": "crow-market", "pair": null,
+   "profile": "Close third-person focalization through a nonhuman perceiver whose salience hierarchy is alien to human priorities — shine, edge, motion, and food ranked above speech and faces; concrete present-tense perception with minimal abstraction; human events legible only obliquely at the margins.",
+   "situation": "A crow works a street market from awning to cobblestone over the course of one busy morning."},
+
+  {"id": "distant-swim", "pair": null,
+   "profile": "First-person retrospection across a six-decade gap — the narrating voice old and settled, explicitly aware of the distance, toggling between the remembered scene and the present act of remembering; long unhurried sentences; warmth and earned pride rather than grief.",
+   "situation": "At eighty, the narrator returns to the day they were fourteen and swam the full width of the lake for the first time."},
+
+  {"id": "nested-ferry", "pair": null,
+   "profile": "Three nested narrative frames, each in its own distinct voice and diction — a present-tense teller recounting an account they were once told, which itself contains a third, older tale; attribution kept visible ('she said that he said'), with the frames interrupting and correcting one another.",
+   "situation": "On an overnight ferry, a stranger in the bar retells a retired fisherman's story of the lighthouse keeper, inside which the keeper's own version still survives."},
+
+  {"id": "quiz-tiebreak", "pair": null,
+   "profile": "Strict real-time narration — narrated duration equals lived duration, with no summary, ellipsis, or flashback; present tense dominated by dialogue and small physical action, near-zero interiority; short sentences whose pace is chained to the clock.",
+   "situation": "The sudden-death tiebreaker of a village pub quiz, from the reading of the final question to the verdict, minute by minute."},
+
+  {"id": "alibi-vase", "pair": null,
+   "profile": "First-person account by a narrator who is deliberately lying — details revised mid-telling, later statements contradicting earlier ones, direct addresses to the listener protesting honesty; smooth plausible surface diction over visible seams, so the true sequence of events shows only through the cracks.",
+   "situation": "The narrator explains to an insurance adjuster exactly how the antique vase came to be broken while they were, at all times, somewhere else entirely."},
+
+  {"id": "eve-keys", "pair": null,
+   "profile": "Sustained joyful interiority: a single consciousness rendered in long, deeply subordinated associative sentences that drift among memory, sensation, and imagined futures, with almost no exterior event. Affect is warm anticipatory happiness without irony, and time is nonlinear, shuttling freely between the remembered past and the vividly pictured tomorrow.",
+   "situation": "Lying awake in a childhood bedroom on the last night before getting the keys to a first apartment, mind ranging over everything being left and everything to come."},
+
+  {"id": "mosaic-jigsaw", "pair": null,
+   "profile": "An achronological mosaic: dozens of short numbered fragments presented in deliberately shuffled order, each a self-contained concrete snapshot, with connective tissue and causal explanation suppressed so the reader must reassemble the chronology. Paratactic syntax, extreme variance between one-line fragments and fuller paragraphs, and a warm celebratory affect throughout.",
+   "situation": "A forty-year friendship between two neighbors told through the jigsaw puzzles they completed together, one fragment per puzzle, out of order."}
 ]

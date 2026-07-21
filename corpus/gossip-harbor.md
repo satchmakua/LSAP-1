@@ -1,0 +1,35 @@
+---
+id: gossip-harbor
+word_count: 1247
+source: pilot
+profile: A single piece of news relayed through a chain of successive conversations,
+  each retelling mutating its details and imputed motives; narration slips in and
+  out of the speakers' voices through free indirect speech; wry, speculative affect;
+  time hops forward hour by hour across one day.
+situation: The rumored engagement of the schoolteacher and the fishmonger travels
+  shop to shop through a harbor town between opening and closing time.
+pair: null
+created_at: '2026-07-20T15:59:53.622539+00:00'
+---
+
+At six, when the shutters went up and the light came off the water grey as a knife, it was only that the schoolteacher had bought a mackerel. That was all. She had come down early, before the children, and stood at the fishmonger's slab in her good coat, and the fishmonger had wrapped the mackerel and said something, and she had laughed. Mrs. Ede saw it from her doorway where she was sweeping salt off the step, and there was nothing in it, nothing at all, only that the schoolteacher never came so early, and never wore her good coat to buy a fish, and that the fishmonger had laughed too, which he did not do, being a widower and dour with it, a man who weighed a herring as though it had wronged him.
+
+By seven Mrs. Ede had told the baker's wife, and the mackerel had grown. It was not one fish now but a whole parcel, and paid for out of a purse the fishmonger would not let her open — he had waved her money away, the baker's wife understood, waved it away with the flat of his hand as a man does who intends to be feeding a person for the rest of her natural life. And had she not, the baker's wife asked, been seen at his window twice this fortnight? She had. Everyone had seen it, or would remember shortly that they had. There was the good coat to consider. A woman does not put on her good coat for a mackerel. She puts it on for a man, or for God, and the schoolteacher was not known to be devout.
+
+At eight it reached the ironmonger's, and here it acquired a ring. The baker's wife had not mentioned a ring, being a cautious soul, but the ironmonger's boy, carrying the news up the hill with a box of nails, felt the story lacked a certain finish without one, and so provided it. A ring, then, gold, worn on a string round her neck under the collar of the good coat so the school managers should not see it before she gave notice. For of course she would give notice. A married woman could not keep the school. That was the shame of it, the ironmonger said, weighing his own opinion as carefully as the fishmonger weighed his herring — a fine teacher lost to the town for the sake of a man who smelt of the harbor and would smell of it till he died, no matter how she scrubbed his shirts. Still. There was no accounting for a woman past thirty. The heart, the ironmonger supposed, kept its own hours.
+
+By nine it had gone into the chemist's, where the story met the counter-story, for the chemist's daughter had it on separate authority that the schoolteacher would not marry the fishmonger at all, but had refused him, cruelly, at the slab, in front of the mackerel and everyone, and that the laughter Mrs. Ede reported was not tender laughter but the terrible bright laughter of a woman saying no. This the chemist's daughter preferred, being herself lately refused and finding comfort in company. Poor man, she said, and did not mean it kindly; a man his age, to go asking a schoolteacher, who would want her books and her opinions carried into a house that had known peace. He had asked above himself and been shown the door, and now he would stand at that slab all day with his refused fish and his refused face, and serve them right, both of them, for the vanity of it.
+
+At ten the two versions collided on the quay, where the net-menders sat, and out of the collision a third rose up, more satisfying than either, which was that they had been secretly married these three months already and the mackerel this morning a mere breakfast between spouses. This explained everything. It explained the good coat, which was in truth a wife's coat now; it explained the waved-away money, which was housekeeping; it explained why she came early, before the children — because she came from his house, do you see, from over his shop, where she had slept, and the whole town too slow to notice a woman walking down a hill she had walked up the night before. The net-menders were delighted with themselves. There is nothing a town loves like being deceived and finding it out, for the finding-out returns to it all the cleverness the deceiving took away.
+
+By eleven the schoolteacher's own sister, buying thread, heard that her sister was married, or refused, or about to be, and could not say which was worse, since she had heard none of it from the woman herself. That was the wound of it. Three months, and not a word to her own blood. She went home and wrote a letter she did not send and cried over a mackerel she had bought without thinking, standing at the very slab, so that the fishmonger, who by now had heard a portion of what was said of him — a man always hears a portion — weighed her fish in a silence so total it frightened them both.
+
+At noon the vicar had it, in the softened, laundered form the vicar always had things, which is to say he had heard that there was an understanding, and that understandings, in his experience, were to be encouraged, being the seedbed of the sacrament. He resolved to call. He did not know on whom.
+
+At one it was in the public house, where it was funny, and the fishmonger was a sly old dog, and good luck to him, and did she know what she was taking on, and did he, and the laughter there was the frank harbor laughter that means no harm and does a great deal.
+
+At two it turned, as these things turn after their noon, and began to go sour and speculative. Someone recalled the fishmonger's first wife, and how she had died, and whether it had been so simple, and was it not strange he should marry again just when the talk of the first had died down, as if the man kept a woman the way he kept ice, for the freshness of it. This was cruel and everyone knew it and no one stopped it.
+
+At three, exhausted, the story began to shrink, the way the tide goes out and leaves the same stones. It was only an engagement again. By four the ring was gone. By five it was back to a fondness, a leaning, a matter of the good coat and the early hour and a laugh over a fish.
+
+And at six, when the shutters came down and the light went off the water grey as a knife, the schoolteacher walked down the hill in her good coat, and the town watched her from a hundred doorways, married and refused and widowed and wed, and she stopped at the slab, where the fishmonger stood waiting with something wrapped in paper, and she took it, and she smiled, and no one on the whole quay could hear, over the gulls and their own thundering certainties, that all she said was thank you, and all he said was mind how you go, the step's wet, and that neither of them knew yet a single thing the town had known all day.
