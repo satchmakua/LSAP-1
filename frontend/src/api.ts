@@ -74,6 +74,51 @@ export async function rateSegment(body: {
   return (await res.json()) as RateResponse
 }
 
+export interface SegmentSummary {
+  id: string
+  word_count: number | null
+  source: string | null
+  rater_ids: string[]
+  rating_count: number
+}
+
+export interface SegmentDetail {
+  id: string
+  text: string
+  word_count?: number | null
+  source?: string | null
+  origin?: string | null
+  ratings: Rating[]
+  [key: string]: unknown
+}
+
+export async function fetchSegments(): Promise<SegmentSummary[]> {
+  const res = await fetch('/api/segments')
+  if (!res.ok) throw new Error(await detail(res))
+  return (await res.json()) as SegmentSummary[]
+}
+
+export async function fetchSegment(id: string): Promise<SegmentDetail> {
+  const res = await fetch(`/api/segments/${encodeURIComponent(id)}`)
+  if (!res.ok) throw new Error(await detail(res))
+  return (await res.json()) as SegmentDetail
+}
+
+/* M7: a human rating of an existing corpus segment (no model call) */
+export async function rateManual(body: {
+  segment_id: string
+  rater_name: string
+  scores: AxisScore[]
+}): Promise<RateResponse> {
+  const res = await fetch('/api/rate/manual', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) throw new Error(await detail(res))
+  return (await res.json()) as RateResponse
+}
+
 /* --- M3: the coordinate system --- */
 
 export interface CFactor {

@@ -5,22 +5,22 @@ this is the working memory between build sessions. The forward-looking plan and
 acceptance tests live in [ROADMAP.md](ROADMAP.md); this is the "what got done and why"
 companion.
 
-**Current phase:** **Phase 4 (v1 hardening) — M5 and M6 done; M7 (a human rater) is
-next, and it is the last milestone before the Phase 5 checkpoint.** The v1 slice (M0–M4)
-is complete: rate a segment on 30 anchored axes, watch it land in a fitted C-space beside
-its kin, dial the operators to generate measurably different prose — firewall intact
-throughout. M5 fixed the rating-selection defect and re-anchored L3 (0.40 → 0.87); L1
-resisted two revisions but recovered to 0.52 at n=100. **M6 grew the corpus to 100 and
-found the pilot's factor structure was substantially an n=30 artifact** — PC1 44.8% →
-33.8%, C6 residual 20.6% → 29.1% — while showing the factors are *more* reproducible
-than the pilot could know (split-half 0.505 → 0.679) and are **not** a generator
-artifact (public-domain prose loads the same structure).
+**Current phase:** **Phase 4 (v1 hardening) — M5 and M6 done; M7's apparatus is built and
+verified, awaiting the human's hand-scoring.** The v1 slice (M0–M4) is complete: rate a
+segment on 30 anchored axes, watch it land in a fitted C-space beside its kin, dial the
+operators to generate measurably different prose — firewall intact throughout. M5 fixed
+the rating-selection defect and re-anchored L3 (0.40 → 0.87); L1 resisted two revisions
+but recovered to 0.52 at n=100. M6 grew the corpus to 100 and found the pilot's factor
+structure was substantially an n=30 artifact (PC1 44.8% → 33.8%, C6 residual 20.6% →
+29.1%) while showing the factors are *more* reproducible (split-half 0.505 → 0.679) and
+**not** a generator artifact. **M7's human-rating mode is live in the app** — the next
+action is the human hand-scoring ≥ 8 segments, then the Phase 4 → Phase 5 checkpoint.
 
 ### State of the tree
 
 | Area | Where | Status |
 |---|---|---|
-| API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, `/api/segments[/{id}]`, `/api/cspace`, `/api/segments/{id}/projection`, **`GET /api/presets`, `POST /api/generate`** |
+| API surface | `backend/src/lsap/api/app.py` | `/health`, `/api/axes`, `POST /api/rate`, **`POST /api/rate/manual`** (human), `/api/segments[/{id}]`, `/api/cspace`, `/api/segments/{id}/projection`, `GET /api/presets`, `POST /api/generate` |
 | Instrument | `backend/src/lsap/instrument/` | `schema.py` + 30-axis `axes.yaml` (**version 3** — L1/L3 re-anchored in M5); **`rater.py` implemented** (Claude structured output, stamps `axes_version`) |
 | Persistence | `backend/src/lsap/storage.py` | JSONL ratings + markdown corpus (git-diffable); `latest_ratings` = newest-wins per (rater, segment, axes_version) |
 | Corpus & data | `corpus/*.md`, `ratings/*.jsonl`, `reliability/` | **100-segment pilot** (85 model-written + 15 `origin: public-domain`) + 460 ratings across 3 anchor cohorts + reliability report (like-for-like v1 vs v3, split-half, origin check) |
@@ -28,7 +28,56 @@ artifact (public-domain prose loads the same structure).
 | Fitted model | `coordinates/model.json` | 5 locked factors over **100** segments (axes_version 3), **70.9% explained, C6 residual 29.1%**; split-half loading stability 0.679 |
 | Engine | `backend/src/lsap/engine/` | **fully implemented** — `compiler.py` (rule tables, derived B6), `runtime.py` (state machine + WS/PL/MF/EF/LR loop), `presets.yaml`, `operators.yaml` |
 | Firewall | `backend/tests/test_firewall.py` | enforced & green (hardened: every import form + `storage`) |
-| Frontend | `frontend/src/` | Tabbed: Rater Studio (rate → 30 axes) + C-Space Map (scatter, neighbours) · **Engine Console** (5 sliders, presets, per-paragraph state panel, re-rate) |
+| Frontend | `frontend/src/` | Tabbed: Rater Studio — **Model rating + Human scoring modes** (`ManualRater`) — + C-Space Map (scatter, neighbours) · Engine Console (5 sliders, presets, per-paragraph state panel, re-rate) |
+
+---
+
+## M7 — Human-rater mode · apparatus built & verified 2026-07-19 · ◐ (awaiting the human's ≥8 hand-scored segments)
+
+The milestone that turns "two models agreeing" into "a human and a model compared." The
+**tooling is complete and verified**; the milestone is not — its Test requires a *person*
+to hand-score ≥ 8 segments, and a model must never masquerade as that rater (Charter P2).
+Left unchecked in `ROADMAP.md` on purpose until the human rates.
+
+**Shipped**
+- **`POST /api/rate/manual`** — persists a human rating of an existing corpus segment with
+  no model call, stored as `rater_id: "human:<name>"`. Reuses `rater.build_rating` (the
+  completeness + clamp guarantee refactored out of `to_rating`), so a human rating is held
+  to the same contract as a model one. 404 if the segment is absent, 400 on incomplete
+  scores or a blank name.
+- **Human scoring mode in the Rater Studio** (`components/ManualRater.tsx`): a mode toggle
+  in the Instrument tab; pick any of the 100 corpus segments, read its text, and score all
+  30 axes with the **anchors, exemplars, and watch-fors visible per axis** and a
+  **confidence required** on each. Save is gated until every axis has a value and a
+  confidence, a segment is chosen, and a name is entered. API client: `fetchSegments`,
+  `fetchSegment`, `rateManual`.
+- **Human↔model divergence in the report** (`human_model_divergence`): for each
+  human-vs-model pair, the axes ranked by disagreement, pairwise-complete. Printed under
+  its own header with the Charter-P2 note that this is **data, not error** — reported,
+  never corrected. Dormant until a human rater exists.
+- The N-rater, pairwise-complete `build_report` (built across M5/M6) is confirmed to
+  handle a third rater with **ragged coverage** (the human rates a subset) — the
+  `only_segments` / pairwise-complete machinery is exactly what M7 needs.
+
+**Verified**
+- Backend `pytest` → **87 passed** (adds the manual endpoint 200/404/400/400 paths, a
+  **3-rater fixture** asserting three pairwise columns with the human at n=4 of 10, and
+  the divergence helper); `ruff` clean. Frontend `vitest` → **8 passed** (adds a
+  ManualRater render test: gating + a complete submit posting `human:<name>` with the
+  exact scores); `oxlint` + `build` clean.
+- **Live browser check** (dev server + real backend): Human scoring renders 30 axis cards
+  and 60 value/confidence groups; selecting `min-kitchen` loaded its 1,249-word text and
+  the v3 L1 anchors/exemplars; the "0/30 axes scored" gate held Save disabled; **no
+  console errors**. No rating was submitted — a model must not write a `human:*` rating.
+
+**What remains (the human's part, then closeout)**
+1. In the app: **Instrument → Human scoring**, enter your name, and hand-score **≥ 8**
+   corpus segments (ideally spanning contrast — a few minimalist, a few baroque, a couple
+   public-domain).
+2. Re-run `python -m lsap.coordinates.reliability`; the report gains the human↔model
+   columns and the divergence section. **Name the axes where you and the models diverge
+   most** — that divergence is data (P2), not a defect to fix.
+3. Tick M7, then **stop at the Phase 4 → Phase 5 boundary** for the go/no-go on v2 layers.
 
 ---
 

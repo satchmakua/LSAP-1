@@ -172,6 +172,15 @@ are the follow-ups the numbers themselves argue for._
   columns, and a 3-rater fixture test asserts three pairwise columns. Name the axes where
   human and model diverge most — that divergence is **data, not error** (Charter P2), and
   is not to be "corrected".
+  **◐ apparatus built & verified 2026-07-19 — box stays unchecked until the human rates.**
+  Shipped: `POST /api/rate/manual` (human, no model call, `human:<name>`), a **Human
+  scoring mode** in the Rater Studio (anchors/exemplars/watch-fors per axis, confidence
+  required, save-gated on all 30), `human_model_divergence` in the report, and the
+  **3-rater fixture test** (three pairwise columns, human ragged at n=4 of 10) — all green
+  (backend 87, frontend 8), browser-verified against the live backend. The remaining step
+  is the human's: a **model must not hand-score as `human:*`** (Charter P2), so M7
+  completes only when the human scores ≥ 8 segments and the report's human↔model columns
+  are read. **This is the Phase 4 → Phase 5 boundary — stop and check before any v2 layer.**
 
 ## Phase 5 — v2 layers (blueprint L4–L7 + D3)
 

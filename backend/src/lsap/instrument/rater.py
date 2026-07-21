@@ -76,6 +76,42 @@ def build_rater_output_model(axes: list[AxisDef]) -> type[BaseModel]:
     return create_model("RaterOutput", scores=(list[scored_axis], ...))
 
 
+def build_rating(
+    raw_scores: dict[str, tuple[int, int]],
+    *,
+    axes: list[AxisDef],
+    segment_id: str,
+    rater_id: str,
+    created_at: str,
+    axes_version: int,
+) -> Rating:
+    """Assemble a canonical `Rating` from `{axis_id: (value, confidence)}`. Checks that
+    every axis is present and clamps values; forced-choice values are the 1-based index
+    into `choices`. Shared by the model rater (`to_rating`) and the human/manual path so
+    both carry the same completeness and range guarantees."""
+    scores: list[AxisScore] = []
+    for a in axes:
+        sub = raw_scores.get(a.id)
+        if sub is None:
+            raise RaterError(f"rating is missing axis {a.id}")
+        value_raw, conf_raw = sub
+        if a.kind == "forced_choice":
+            assert a.choices is not None
+            value = min(len(a.choices), max(1, int(value_raw)))  # 1-based option index
+        else:
+            value = min(7, max(1, int(value_raw)))  # clamp to the 1–7 anchored scale
+        confidence = min(5, max(1, int(conf_raw)))  # clamp to 1–5
+        scores.append(AxisScore(axis_id=a.id, value=value, confidence=confidence))
+    return Rating(
+        segment_id=segment_id,
+        rater_id=rater_id,
+        axes_version=axes_version,
+        scores=scores,
+        flagged=compute_flagged(scores),
+        created_at=created_at,
+    )
+
+
 def to_rating(
     output: BaseModel,
     *,
@@ -85,28 +121,14 @@ def to_rating(
     created_at: str,
     axes_version: int,
 ) -> Rating:
-    """Convert the structured output into the canonical `Rating`. Checks that every axis
-    is present and clamps values; forced-choice values are the 1-based index into `choices`."""
-    by_id = {s.axis_id: s for s in output.scores}
-    scores: list[AxisScore] = []
-    for a in axes:
-        sub = by_id.get(a.id)
-        if sub is None:
-            raise RaterError(f"rating is missing axis {a.id}")
-        if a.kind == "forced_choice":
-            assert a.choices is not None
-            value = min(len(a.choices), max(1, int(sub.value)))  # 1-based option index
-        else:
-            value = min(7, max(1, int(sub.value)))  # clamp to the 1–7 anchored scale
-        confidence = min(5, max(1, int(sub.confidence)))  # clamp to 1–5
-        scores.append(AxisScore(axis_id=a.id, value=value, confidence=confidence))
-    return Rating(
+    """Convert the model's structured output into the canonical `Rating`."""
+    return build_rating(
+        {s.axis_id: (s.value, s.confidence) for s in output.scores},
+        axes=axes,
         segment_id=segment_id,
         rater_id=rater_id,
-        axes_version=axes_version,
-        scores=scores,
-        flagged=compute_flagged(scores),
         created_at=created_at,
+        axes_version=axes_version,
     )
 
 
