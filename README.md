@@ -11,7 +11,7 @@ analysis↔generation firewall).
 
 **Stack:** Python 3.11+ (FastAPI · Pydantic v2 · scikit-learn · Claude via the `anthropic` SDK) · React 19 + TypeScript (Vite 8) · local-first, git-diffable files (markdown corpus, YAML defs, JSONL ratings).
 
-**Status: v1 slice (M0–M4) complete; Phase 4 hardening underway — M5 and M6 done, M7 next.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
+**Status: v1 slice (M0–M4) complete; Phase 4 hardening — M5 and M6 done, M7's human-rater mode built and awaiting hand-scoring.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
 
 - **Corpus:** **100 segments** — 85 written by Claude to structural briefs (never by author imitation) plus **15 public-domain** passages as a non-model control, each verified verbatim against its source.
 - **Instrument:** 30 anchored axes (registry **version 3**), Claude-rated under a frozen manual; ratings carry an `axes_version` and anchor cohorts are never pooled. M5 re-anchored the two ambiguous axes: L3 fixed (within-1 **0.40 → 0.87**); L1 resisted two revisions but recovered to 0.52 on the wider corpus and remains a split candidate.
@@ -34,8 +34,10 @@ npm run build   # frontend production build
 
 Open **http://localhost:5173** — two tabs:
 
-- **Instrument** — paste a ~1–3k-word passage, pick a rater, score it on all 30 axes, and
-  see it placed in the **C-Space Map** beside its nearest neighbours.
+- **Instrument** — two modes. *Model rating*: paste a ~1–3k-word passage, pick a model
+  rater, score it on all 30 axes, and see it placed in the **C-Space Map** beside its
+  nearest neighbours. *Human scoring*: pick a corpus segment and hand-score it against the
+  visible anchors, stored as `human:<name>` for human↔model comparison.
 - **Engine** — dial the five operators (or pick a preset), give a situation, and generate;
   each paragraph shows its scene phase, language register, emotional energy and memory
   field. "Re-rate this output" sends the prose back through the instrument — one-way.

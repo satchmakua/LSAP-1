@@ -3,10 +3,13 @@ import numpy as np
 from lsap import storage
 from lsap.coordinates.reliability import (
     _pearson,
+    build_report,
     compare_reports,
     correlation_matrix,
     forced_choice_agreement,
     format_comparison,
+    format_report,
+    human_model_divergence,
     load_rater_matrices,
     origin_structure_comparison,
     redundant_pairs,
@@ -15,7 +18,7 @@ from lsap.coordinates.reliability import (
     split_half_stability,
     twin_consistency,
 )
-from lsap.instrument.schema import AxisDef, AxisScore, Rating
+from lsap.instrument.schema import AxisDef, AxisScore, Rating, load_axes
 
 
 def test_scalar_agreement_identical_and_monotonic_offset():
@@ -192,6 +195,60 @@ def test_load_rater_matrices_restricts_to_only_segments(tmp_path, monkeypatch):
     )
     assert seg_ids == ["old1", "old2"]  # new1 excluded even though it has v2 ratings
     assert values["claude-opus-4-8"].shape[0] == 2
+
+
+def _save_full(seg: str, rater_id: str, *, base: int, axes_version: int = 1) -> None:
+    """A full 30-axis rating (real axis ids) so build_report runs end to end."""
+    axes = load_axes()
+    storage.save_rating(
+        Rating(
+            segment_id=seg, rater_id=rater_id, axes_version=axes_version,
+            scores=[AxisScore(axis_id=a.id, value=base, confidence=4) for a in axes],
+            flagged=False, created_at="2026-07-19T00:00:00Z",
+        )
+    )
+
+
+def test_build_report_three_raters_with_ragged_human_coverage(tmp_path, monkeypatch):
+    """M7: a third (human) rater covering only part of the corpus yields three pairwise
+    columns, pairwise-complete — the human is never silently dropped or densely padded."""
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    axes = load_axes()
+    for i in range(10):
+        s = f"s{i}"
+        _pilot(s)
+        _save_full(s, "claude-opus-4-8", base=4)
+        _save_full(s, "claude-haiku-4-5", base=5)
+    for i in range(4):  # the human hand-scores only 4 of the 10 (ragged coverage)
+        _save_full(f"s{i}", "human:sh", base=6)
+
+    report = build_report(axes, axes_version=1)
+    assert len(report["rater_pairs"]) == 3  # 3 choose 2
+
+    pairs = report["axis_agreement"]["L1"]["pairs"]
+    assert len(pairs) == 3
+    human_pairs = {k: v for k, v in pairs.items() if "human:sh" in k}
+    assert len(human_pairs) == 2
+    for pm in human_pairs.values():
+        assert pm["n"] == 4  # pairwise-complete: only the segments both rated
+    model_pair = next(v for k, v in pairs.items() if "human" not in k)
+    assert model_pair["n"] == 10  # the model↔model pair still spans the whole corpus
+
+    hmd = report["human_model_divergence"]
+    assert hmd is not None and len(hmd) == 2  # human vs each of the two models
+    # every listed axis carries the pairwise-complete n and an agreement score
+    some = next(iter(hmd.values()))
+    assert some and all("agreement" in r and r["n"] == 4 for r in some)
+
+    text = format_report(report)
+    assert "Human" in text and "human:sh" in text
+
+
+def test_human_model_divergence_none_without_a_human():
+    agree = {"L1": {"name": "Lexical Complexity", "kind": "scalar",
+                    "pairs": {"claude-opus-4-8 vs claude-haiku-4-5":
+                              {"within1_rate": 0.5, "n": 10}}}}
+    assert human_model_divergence(agree, ["claude-opus-4-8", "claude-haiku-4-5"]) is None
 
 
 def test_compare_reports_flags_regressions_and_labels_versions():

@@ -12,6 +12,7 @@ import {
 import { ScoresView } from './components/ScoresView'
 import { CSpaceMap } from './components/CSpaceMap'
 import { EngineConsole } from './components/EngineConsole'
+import { ManualRater } from './components/ManualRater'
 import './App.css'
 
 const RATERS = [
@@ -31,6 +32,7 @@ export default function App() {
   const [cspace, setCspace] = useState<CSpace | null>(null)
   const [proj, setProj] = useState<SegmentProjection | null>(null)
   const [tab, setTab] = useState<'instrument' | 'engine'>('instrument')
+  const [mode, setMode] = useState<'model' | 'human'>('model')
 
   useEffect(() => {
     fetchAxes()
@@ -99,6 +101,27 @@ export default function App() {
 
       {tab === 'instrument' && (
         <>
+      <div className="mode-switch" role="group" aria-label="rating mode">
+        <button
+          type="button"
+          className={mode === 'model' ? 'active' : ''}
+          onClick={() => setMode('model')}
+        >
+          Model rating
+        </button>
+        <button
+          type="button"
+          className={mode === 'human' ? 'active' : ''}
+          onClick={() => setMode('human')}
+        >
+          Human scoring
+        </button>
+      </div>
+
+      {mode === 'human' && <ManualRater axes={axes} />}
+
+      {mode === 'model' && (
+        <>
       <p className="subtitle">Score a prose segment on the 30 observable-feature axes.</p>
       <form className="rate-form" onSubmit={onRate}>
         <textarea
@@ -136,6 +159,9 @@ export default function App() {
         </p>
       )}
       {rating && axes && <ScoresView axes={axes} rating={rating} />}
+        </>
+      )}
+
       {cspace && (
         <CSpaceMap
           cspace={cspace}

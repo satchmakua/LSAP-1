@@ -22,7 +22,7 @@ from lsap.engine.presets import load_presets
 from lsap.engine.runtime import EngineError, GenerationRun
 from lsap.instrument import rater
 from lsap.instrument.rater import RaterError
-from lsap.instrument.schema import AxisDef, Rating, load_axes
+from lsap.instrument.schema import AxisDef, Rating, load_axes, load_axes_version
 
 app = FastAPI(title="LSAP-1 API", version="0.1.0")
 
@@ -107,6 +107,53 @@ def rate_segment(req: RateRequest) -> RateResponse:
     storage.save_segment(seg_id, text, source=req.title or "pasted", created_at=created_at)
     storage.save_rating(rating)
     return RateResponse(rating=rating, segment_id=seg_id, word_count=storage.word_count(text))
+
+
+class ManualScore(BaseModel):
+    axis_id: str
+    value: int
+    confidence: int
+
+
+class ManualRateRequest(BaseModel):
+    segment_id: str
+    rater_name: str  # a person's handle, e.g. "sh" -> rater_id "human:sh"
+    scores: list[ManualScore]
+
+
+@app.post("/api/rate/manual")
+def rate_manual(req: ManualRateRequest) -> RateResponse:
+    """Persist a HUMAN rating of an existing corpus segment (M7). No model call — the
+    scores come from a person applying the manual. Stored as `rater_id: "human:<name>"`
+    so the reliability report can compare human↔model (Charter P2: where they diverge
+    is data, not error)."""
+    seg = storage.load_segment(req.segment_id)
+    if seg is None:
+        raise HTTPException(
+            status_code=404,
+            detail="segment not found — the human scores existing corpus segments",
+        )
+    name = req.rater_name.strip()
+    if not name:
+        raise HTTPException(status_code=400, detail="rater_name is required")
+    rater_id = name if name.startswith("human:") else f"human:{name}"
+
+    created_at = datetime.now(UTC).isoformat()
+    try:
+        rating = rater.build_rating(
+            {s.axis_id: (s.value, s.confidence) for s in req.scores},
+            axes=_AXES,
+            segment_id=req.segment_id,
+            rater_id=rater_id,
+            created_at=created_at,
+            axes_version=load_axes_version(),
+        )
+    except RaterError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+    storage.save_rating(rating)
+    wc = seg.get("word_count") or storage.word_count(str(seg.get("text", "")))
+    return RateResponse(rating=rating, segment_id=req.segment_id, word_count=wc)
 
 
 @app.get("/api/segments")

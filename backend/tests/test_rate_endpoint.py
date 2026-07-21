@@ -1,11 +1,13 @@
 from fastapi.testclient import TestClient
 
+from lsap import storage
 from lsap.api import app as app_module
 from lsap.api.app import app
 from lsap.instrument.rater import RaterError
-from lsap.instrument.schema import AxisScore, Rating
+from lsap.instrument.schema import AxisScore, Rating, load_axes
 
 client = TestClient(app)
+AXES = load_axes()
 
 
 def _fake_rating(seg_id: str, rater_id: str) -> Rating:
@@ -97,3 +99,57 @@ def test_rate_endpoint_maps_rater_error_to_400(tmp_path, monkeypatch):
 def test_segment_not_found_is_404(tmp_path, monkeypatch):
     monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
     assert client.get("/api/segments/does-not-exist").status_code == 404
+
+
+# --- M7: the manual (human) rating path -------------------------------------------
+
+def _all_axis_scores(value: int = 4, confidence: int = 4) -> list[dict]:
+    return [{"axis_id": a.id, "value": value, "confidence": confidence} for a in AXES]
+
+
+def test_manual_rate_persists_human_rating(tmp_path, monkeypatch):
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    storage.save_segment("seg-x", "some prose", source="pilot", created_at="t")
+
+    r = client.post(
+        "/api/rate/manual",
+        json={"segment_id": "seg-x", "rater_name": "sh", "scores": _all_axis_scores()},
+    )
+    assert r.status_code == 200, r.text
+    body = r.json()
+    # The name is namespaced so it can never collide with a model id.
+    assert body["rating"]["rater_id"] == "human:sh"
+    assert body["rating"]["axes_version"] >= 1
+    assert len(body["rating"]["scores"]) == 30
+
+    ratings = storage.load_ratings("seg-x")
+    assert [rr.rater_id for rr in ratings] == ["human:sh"]
+
+
+def test_manual_rate_404_when_segment_absent(tmp_path, monkeypatch):
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    r = client.post(
+        "/api/rate/manual",
+        json={"segment_id": "ghost", "rater_name": "sh", "scores": _all_axis_scores()},
+    )
+    assert r.status_code == 404
+
+
+def test_manual_rate_400_on_incomplete_scores(tmp_path, monkeypatch):
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    storage.save_segment("seg-y", "prose", source="pilot", created_at="t")
+    r = client.post(
+        "/api/rate/manual",
+        json={"segment_id": "seg-y", "rater_name": "sh", "scores": _all_axis_scores()[:29]},
+    )
+    assert r.status_code == 400  # a human rating must cover all 30 axes
+
+
+def test_manual_rate_400_on_blank_name(tmp_path, monkeypatch):
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    storage.save_segment("seg-z", "prose", source="pilot", created_at="t")
+    r = client.post(
+        "/api/rate/manual",
+        json={"segment_id": "seg-z", "rater_name": "   ", "scores": _all_axis_scores()},
+    )
+    assert r.status_code == 400

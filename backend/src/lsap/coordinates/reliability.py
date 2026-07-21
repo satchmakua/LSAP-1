@@ -400,7 +400,41 @@ def build_report(
         "ambiguous_axes": ambiguous,
         "redundant_axis_pairs": [(x, y) for x, y, _ in report["redundant_pairs"]],
     }
+
+    # human↔model divergence (M7): the axes where a human rater and a model disagree most.
+    # This is DATA under Charter P2 — reported, never "corrected".
+    report["human_model_divergence"] = human_model_divergence(agree, raters)
     return report
+
+
+def human_model_divergence(agree: dict, raters: list[str]) -> dict | None:
+    """Per human-vs-model rater pair, the axes ranked by disagreement (1 − primary
+    agreement over the segments both rated). None when no human rater is present.
+    Charter P2: divergence is data, not error — this names it, it does not fix it."""
+    humans = [r for r in raters if r.startswith("human:")]
+    models = [r for r in raters if not r.startswith("human:")]
+    if not humans or not models:
+        return None
+    out: dict[str, list] = {}
+    for h in humans:
+        for mdl in models:
+            key = f"{h} vs {mdl}"
+            rev = f"{mdl} vs {h}"
+            rows = []
+            for aid, m in agree.items():
+                pm = m.get("pairs", {}).get(key) or m.get("pairs", {}).get(rev)
+                if pm is None:
+                    continue
+                primary = pm.get("within1_rate", pm.get("exact_match_rate"))
+                if primary is None:
+                    continue
+                rows.append(
+                    {"axis_id": aid, "name": m["name"], "kind": m["kind"],
+                     "agreement": round(float(primary), 3), "n": pm["n"]}
+                )
+            if rows:
+                out[key] = sorted(rows, key=lambda r: r["agreement"])
+    return out or None
 
 
 def format_report(report: dict) -> str:
@@ -436,6 +470,22 @@ def format_report(report: dict) -> str:
             for label, pm in m.get("pairs", {}).items():
                 primary = pm.get("within1_rate", pm.get("exact_match_rate", nan))
                 lines.append(f"        {label}: {primary:.2f} (n={pm['n']})")
+    hmd = report.get("human_model_divergence")
+    if hmd:
+        lines.append("")
+        lines.append(
+            "## Human↔model divergence — where a human and a model most disagree"
+        )
+        lines.append(
+            "   (Charter P2: this is DATA, not error — reported, never corrected)"
+        )
+        for pair_label, rows in hmd.items():
+            lines.append(f"  {pair_label}:")
+            for r in rows[:5]:  # the five widest gaps
+                lines.append(
+                    f"      {r['axis_id']:3} {r['name']:26} "
+                    f"agreement={r['agreement']:.2f} (n={r['n']})"
+                )
     v = report["verdict"]
     lines += [
         "",
