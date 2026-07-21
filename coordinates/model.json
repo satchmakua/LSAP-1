@@ -30,325 +30,325 @@
     "S4"
   ],
   "mean": [
-    3.05,
-    4.633333333333334,
-    4.2,
-    3.3833333333333333,
-    5.35,
-    3.2666666666666666,
-    2.5833333333333335,
-    3.1666666666666665,
-    3.816666666666667,
-    5.433333333333334,
-    5.133333333333334,
-    2.3833333333333333,
-    4.9,
-    1.9166666666666667,
-    4.866666666666666,
-    2.3833333333333333,
-    3.8,
-    3.566666666666667,
-    3.683333333333333,
-    4.466666666666667,
-    3.066666666666667,
-    3.316666666666667,
-    4.65,
-    4.1,
-    4.983333333333333,
-    5.716666666666667,
-    4.6
+    2.885,
+    4.425,
+    4.025,
+    3.32,
+    5.24,
+    3.59,
+    2.435,
+    3.03,
+    3.775,
+    5.26,
+    4.79,
+    1.945,
+    4.57,
+    2.61,
+    4.465,
+    1.61,
+    3.15,
+    3.27,
+    3.095,
+    3.685,
+    4.24,
+    3.335,
+    4.665,
+    3.925,
+    5.09,
+    5.775,
+    4.455
   ],
   "scale": [
-    1.0904891868637059,
-    1.4197026292697903,
-    1.045625809423875,
-    1.249555476515104,
-    0.914239210126832,
-    1.4067298564006128,
-    1.4724318509036525,
-    1.0593499054713804,
-    1.4345924702003545,
-    1.4873541011548737,
-    1.6121069719124994,
-    1.5203252575974948,
-    1.877054430040145,
-    1.0006942034852049,
-    1.682920741515245,
-    1.9091155602064067,
-    1.715614564327703,
-    0.8730533902472529,
-    1.3384277675275902,
-    1.3097921802925665,
-    1.4873541011548739,
-    1.0761298971571953,
-    1.3425721582097552,
-    0.8306623862918074,
-    1.0204846343227754,
-    1.005678322769706,
-    1.8366636418607882
+    0.9323491835144165,
+    1.3007209539328564,
+    0.9093266739736606,
+    1.013706071797935,
+    0.846994687114388,
+    1.4446106741956461,
+    1.2402721475547205,
+    0.9105492847726588,
+    1.3442005058770068,
+    1.2072282302862205,
+    1.439062194625375,
+    1.090630551561801,
+    1.6778259742893487,
+    1.5804746122605067,
+    1.5317555287969422,
+    1.3277424449041306,
+    1.4585952145814822,
+    0.8786922100485469,
+    1.228199902296039,
+    1.1888124326402378,
+    1.6469365500832145,
+    0.9540833296940051,
+    1.1684498277632633,
+    0.9522998477370452,
+    0.9337558567420073,
+    0.8287792227125386,
+    1.3418177968710954
   ],
   "components": [
     [
-      0.17675361942556717,
-      0.23624858232043536,
-      0.1822131429612955,
-      0.2086379293739107,
-      0.14519021835941442,
-      -0.1125063615797103,
-      0.20495753645924486,
-      0.2351283606146301,
-      0.23035940054736115,
-      0.20822810862282923,
-      0.22449825979347912,
-      0.23193360611287775,
-      0.22209046967132812,
-      0.057972385657526694,
-      0.2514824170169481,
-      0.2039412366713048,
-      0.22583270771352099,
-      0.11069528751090628,
-      0.1186290618109893,
-      0.20355599236097296,
-      -0.09107189362925282,
-      0.16820692786986083,
-      0.18060591031450582,
-      0.057706450373815235,
-      0.2216136514249541,
-      0.21792391202890582,
-      0.2431947203592903
+      0.18583807997966648,
+      0.2446187533146864,
+      0.19947526482717934,
+      0.2145528544664956,
+      0.0961138383311899,
+      -0.15439609106050536,
+      0.223370569887264,
+      0.2255475506873079,
+      0.19194287709980135,
+      0.2289614795046412,
+      0.22959048167298277,
+      0.24334946455587914,
+      0.2401408721968555,
+      -0.027561727430541492,
+      0.2661817187636458,
+      0.19727853797083497,
+      0.226426345638963,
+      0.13121744018735199,
+      0.1515625133168462,
+      0.1808125992507083,
+      -0.12743257069502303,
+      0.13025945098410155,
+      0.12015127397431069,
+      0.0655863955420833,
+      0.20062276498283935,
+      0.2223658892584358,
+      0.22532991179217868
     ],
     [
-      0.005215237816075581,
-      -0.13855575192899852,
-      -0.003876514132486156,
-      -0.0588640496404882,
-      0.23493192333223586,
-      0.004259605233518444,
-      0.09030446825951473,
-      0.20267525920204668,
-      0.07897716638744563,
-      -0.10750801569516602,
-      -0.21253489219160093,
-      0.19551346059785793,
-      -0.19521998223271653,
-      0.06141300422241739,
-      -0.15804450369040396,
-      0.22263977359097004,
-      0.27721521608737437,
-      0.33650058482121287,
-      0.4469049402557743,
-      0.09815274723381835,
-      -0.20839737162254662,
-      -0.14346576244531373,
-      -0.24674942240454847,
-      0.013897020887885992,
-      -0.24202005113482236,
-      -0.12014297230415558,
-      -0.24019504191858423
+      -0.06035383809614335,
+      -0.15742385139845005,
+      -0.13494610409155042,
+      0.06199851032945495,
+      -0.12192331325540502,
+      -0.09443100488690934,
+      0.1190788314494376,
+      0.214279311826534,
+      0.02545108264720014,
+      -0.11353797933258077,
+      -0.16586482327014096,
+      0.1275645849406123,
+      -0.10466825711567225,
+      0.14462368351137803,
+      -0.07886259931040461,
+      0.2105269431168202,
+      0.2986340443397653,
+      0.21914905796673262,
+      0.37030335933481995,
+      0.20901145420981673,
+      -0.3028636722018982,
+      -0.06398305708761784,
+      -0.31013276918312144,
+      -0.253404216242912,
+      -0.2125764935211209,
+      -0.18546791009865912,
+      -0.26848795455792296
     ],
     [
-      -0.22096889564969577,
-      -0.22082373811431566,
-      -0.322043899699988,
-      -0.14529129329834478,
-      -0.2747414606576329,
-      0.3630566852376393,
-      -0.04136943737907035,
-      0.12331328501199665,
-      -0.06838735939842815,
-      0.010971755644578517,
-      0.2655063940526689,
-      -0.01085231026767306,
-      0.2403589419139366,
-      0.07038829140153921,
-      0.1244940886199093,
-      -0.06245847688251547,
-      0.07686614414086175,
-      0.23723277819826868,
-      0.10188655937149345,
-      0.04086271955332331,
-      -0.27950308982120764,
-      0.3463410295796862,
-      0.1023074647888097,
-      -0.2989184509418218,
-      0.06056736486769952,
-      -0.13100977128106123,
-      -0.053649131870956934
+      -0.3518202111951083,
+      -0.1983287129741415,
+      -0.34663826374362267,
+      -0.10810260655685364,
+      -0.2536494101930433,
+      0.13614375674636184,
+      0.030896968691936304,
+      0.03447081804006398,
+      0.025968099790638948,
+      0.1595754472779134,
+      0.2779076313528241,
+      0.047706737893728056,
+      0.32334991862348794,
+      0.22181462948952016,
+      0.19754837920386006,
+      -0.11988522092812666,
+      -0.049874963134884376,
+      0.06861215767139775,
+      -0.027521650572450616,
+      -0.0904023857888081,
+      0.01658756450851926,
+      0.35787799637669054,
+      0.16118600710284128,
+      -0.3391686594829126,
+      0.1243758787371706,
+      -0.03928006871222235,
+      -0.06870549887734838
     ],
     [
-      -0.37076939208118226,
-      -0.12997830146325168,
-      -0.2559066481527742,
-      0.004878295789241048,
-      0.10056172101941939,
-      -0.26632122503232464,
-      0.156968299349761,
-      0.05393064595395849,
-      0.173951622078032,
-      0.31014417073449174,
-      0.09248728992710402,
-      0.14075624682178986,
-      0.17279916192384165,
-      0.4230524634762602,
-      0.15891356131732295,
-      -0.13622459519217525,
-      -0.1177130635931159,
-      -0.18654572857746937,
-      0.07661988670859904,
-      -0.09629952307150019,
-      0.19900257150177872,
-      -0.1686933573494491,
-      -0.33617007806546456,
-      -0.09119729078871995,
-      -0.09438550214505764,
-      0.044422033183543326,
-      0.003085896862870841
+      -0.018313775660316844,
+      -0.06371288973254241,
+      -0.012249592038245018,
+      -0.2205991234283693,
+      0.27059076451004704,
+      0.4816726962914031,
+      -0.025821212045287277,
+      0.020062622727711404,
+      0.021601897844642462,
+      -0.2532066446001516,
+      -0.1184958381290307,
+      0.140713423616069,
+      -0.1851192026018651,
+      0.11397071139981216,
+      -0.255373770177278,
+      0.20054903744936256,
+      0.11581474361074456,
+      0.1737238520637017,
+      0.14960861675586692,
+      0.0666901234659588,
+      -0.006480494984583309,
+      0.37064136224440797,
+      0.33531128496688156,
+      0.1924207663478752,
+      0.1508602733943913,
+      0.09485899680281888,
+      0.017925879634274913
     ],
     [
-      -0.17052254279690612,
-      -0.10072412869647172,
-      -0.11287589406494754,
-      -0.3800202503256918,
-      0.2931251367356034,
-      0.08702665519698166,
-      0.11866006312764545,
-      -0.01678684165094094,
-      0.1475199338328742,
-      0.0030639850147445107,
-      -0.013801062430663494,
-      -0.022613133991227812,
-      -0.030610654430461764,
-      0.048007463628893736,
-      -0.14971346481356204,
-      -0.20562382780185892,
-      -0.14919963497604907,
-      -0.04707058642519692,
-      0.025832669292083478,
-      0.00029122481655551735,
-      -0.23246698489952855,
-      0.22306168141369048,
-      0.21207916974505092,
-      0.600163252027327,
-      -0.010526766579203343,
-      0.2652924958038402,
-      0.027323801394478278
+      -0.133839261813799,
+      -0.01033788720071153,
+      -0.01889046370449172,
+      0.21687666330920324,
+      0.1804888170514812,
+      -0.08590405370716411,
+      0.3013341002598116,
+      0.07628743486686598,
+      0.33823443715538437,
+      0.021271062911360442,
+      -0.23837678287169597,
+      0.17275978047296103,
+      -0.14679482429945542,
+      0.5334901751974218,
+      -0.10654622893309659,
+      -0.0034134505331688612,
+      -0.03859962878092637,
+      -0.3815828286438992,
+      -0.10339783509554562,
+      -0.0846155472738439,
+      0.29798486361038795,
+      -0.03033407465687015,
+      -0.053724292574662984,
+      -0.102839590798837,
+      0.05997788651530492,
+      0.08012882757499364,
+      0.028631566974657807
     ]
   ],
   "explained_variance_ratio": [
-    0.4373,
-    0.1187,
-    0.0995,
-    0.0788,
-    0.0578
+    0.3376,
+    0.15,
+    0.0885,
+    0.0729,
+    0.0603
   ],
-  "residual": 0.2078,
+  "residual": 0.2907,
   "score_min": [
-    -6.169176268413197,
-    -4.145985874685881,
-    -3.5770147390798277,
-    -3.0568388432161413,
-    -2.5832334796795395
+    -6.204032409546309,
+    -4.608690687447133,
+    -4.2519829791765975,
+    -3.4495895673715062,
+    -2.959054017647578
   ],
   "score_max": [
-    5.988571384955189,
-    4.219967013431831,
-    3.250078549700137,
-    3.154261651362893,
-    2.4443390589328517
+    8.087926593947893,
+    4.678907472881822,
+    2.641112974993685,
+    3.8171961810494315,
+    3.4423352579076645
   ],
   "factors": [
     {
       "id": "C1",
-      "label": "Interior/Exterior Ratio \u00b7 Figurative Density \u00b7 Syntactic Depth",
-      "explained_variance": 0.4373,
+      "label": "Interior/Exterior Ratio \u00b7 Syntactic Depth \u00b7 Subject Stability",
+      "explained_variance": 0.3376,
       "top_axes": [
         [
           "C5",
-          0.251
-        ],
-        [
-          "S4",
-          0.243
+          0.266
         ],
         [
           "L2",
-          0.236
+          0.245
+        ],
+        [
+          "C2",
+          0.243
         ]
       ]
     },
     {
       "id": "C2",
-      "label": "Meaning Structure \u00b7 Moral-Structure Clarity \u00b7 Epistemic Certainty",
-      "explained_variance": 0.1187,
+      "label": "Meaning Structure \u00b7 Intensity Curve \u00b7 Valence",
+      "explained_variance": 0.15,
       "top_axes": [
         [
           "P4",
-          0.447
+          0.37
         ],
         [
-          "P3",
-          0.337
+          "A4",
+          -0.31
         ],
         [
-          "P2",
-          0.277
+          "A1",
+          -0.303
         ]
       ]
     },
     {
       "id": "C3",
-      "label": "Event Density \u00b7 Emotional Volatility \u00b7 Semantic Density",
-      "explained_variance": 0.0995,
+      "label": "Emotional Volatility \u00b7 Lexical Complexity \u00b7 Semantic Density",
+      "explained_variance": 0.0885,
       "top_axes": [
         [
-          "N1",
-          0.363
+          "A2",
+          0.358
         ],
         [
-          "A2",
-          0.346
+          "L1",
+          -0.352
         ],
         [
           "L3",
-          -0.322
+          -0.347
         ]
       ]
     },
     {
       "id": "C4",
-      "label": "Polyphony \u00b7 Lexical Complexity \u00b7 Intensity Curve",
-      "explained_variance": 0.0788,
+      "label": "Event Density \u00b7 Emotional Volatility \u00b7 Intensity Curve",
+      "explained_variance": 0.0729,
       "top_axes": [
         [
-          "C4",
-          0.423
+          "N1",
+          0.482
         ],
         [
-          "L1",
-          -0.371
+          "A2",
+          0.371
         ],
         [
           "A4",
-          -0.336
+          0.335
         ]
       ]
     },
     {
       "id": "C5",
-      "label": "Rhythm Regularity \u00b7 Imagery Mode \u00b7 Repetition Pattern",
-      "explained_variance": 0.0578,
+      "label": "Polyphony \u00b7 Moral-Structure Clarity \u00b7 Temporal Behavior",
+      "explained_variance": 0.0603,
       "top_axes": [
         [
-          "S1",
-          0.6
+          "C4",
+          0.533
         ],
         [
-          "L4",
-          -0.38
+          "P3",
+          -0.382
         ],
         [
-          "L5",
-          0.293
+          "N4",
+          0.338
         ]
       ]
     }
@@ -359,18 +359,113 @@
       "profile": "Comic absurdity: playful escalating logic, an absurd premise treated deadpan, light affect, linear, comic register.",
       "pair": null,
       "coords": [
-        0.3937,
-        0.5948,
-        0.6375,
-        0.5818,
-        0.1916
+        0.4075,
+        0.7068,
+        0.6317,
+        0.4686,
+        0.3393
       ],
       "scores": [
-        -1.383224,
-        0.829974,
-        0.775117,
-        0.556727,
-        -1.619948
+        -0.380658,
+        1.956075,
+        0.102263,
+        -0.044328,
+        -0.787129
+      ]
+    },
+    {
+      "segment_id": "alibi-vase",
+      "profile": "First-person account by a narrator who is deliberately lying \u2014 details revised mid-telling, later statements contradicting earlier ones, direct addresses to the listener protesting honesty; smooth plausible surface diction over visible seams, so the true sequence of events shows only through the cracks.",
+      "pair": null,
+      "coords": [
+        0.5724,
+        0.8378,
+        0.8598,
+        0.3612,
+        0.3644
+      ],
+      "scores": [
+        1.976798,
+        3.172804,
+        1.674363,
+        -0.825187,
+        -0.626406
+      ]
+    },
+    {
+      "segment_id": "allotment-notes",
+      "profile": "Polyphonic found-text comedy with no narrator: a chain of posted notices, replies, corrections, and counter-notices in distinct registers \u2014 officious, wounded, lyrical, legalistic \u2014 each voice self-serving and stylistically identifiable. The story and the joke emerge entirely in the ironies between documents; time advances through dates and escalation.",
+      "pair": null,
+      "coords": [
+        0.3386,
+        0.5703,
+        0.9012,
+        0.4266,
+        0.583
+      ],
+      "scores": [
+        -1.364822,
+        0.688095,
+        1.960251,
+        -0.349428,
+        0.772751
+      ]
+    },
+    {
+      "segment_id": "aphorism-table",
+      "profile": "A numbered sequence of freestanding aphorisms: each entry one to three short sentences, maximally compressed and highly abstract, with no scene, characters, or narrative time. Meaning is carried entirely by assertion, antithesis, and wit, delivered with total epistemic confidence in a polished epigrammatic register.",
+      "pair": "p_disc_apho",
+      "coords": [
+        0.4564,
+        0.3597,
+        0.1448,
+        0.1107,
+        0.4337
+      ],
+      "scores": [
+        0.319013,
+        -1.268322,
+        -3.253868,
+        -2.644868,
+        -0.18251
+      ]
+    },
+    {
+      "segment_id": "aphorism-workshop",
+      "profile": "A numbered sequence of freestanding aphorisms: each entry one to three short sentences, maximally compressed and highly abstract, with no scene, characters, or narrative time. Meaning is carried entirely by assertion, antithesis, and wit, delivered with total epistemic confidence in a polished epigrammatic register.",
+      "pair": "p_disc_apho",
+      "coords": [
+        0.4489,
+        0.3092,
+        0.1039,
+        0.2503,
+        0.3269
+      ],
+      "scores": [
+        0.2113,
+        -1.737229,
+        -3.535641,
+        -1.630812,
+        -0.866156
+      ]
+    },
+    {
+      "segment_id": "banter-trucks",
+      "profile": "Two-voice romantic comedy carried almost entirely by banter: rapid back-and-forth dialogue with minimal tags, competitive wit as courtship, sparse exterior narration, and only brief flickers of interiority that betray what the speakers won't say aloud. Warmth accumulates under the sparring and the ending tilts openly toward affection.",
+      "pair": null,
+      "coords": [
+        0.3299,
+        0.4173,
+        0.8766,
+        0.4183,
+        0.3766
+      ],
+      "scores": [
+        -1.488473,
+        -0.733151,
+        1.790206,
+        -0.409552,
+        -0.548068
       ]
     },
     {
@@ -378,18 +473,56 @@
       "profile": "Maximal expansion: very long deeply subordinated sentences, dense abstraction and metaphor, deep interiority, elegiac tone, high figurative density.",
       "pair": null,
       "coords": [
-        0.745,
-        0.3751,
-        0.3698,
-        0.4427,
-        0.7298
+        0.7443,
+        0.3852,
+        0.4921,
+        0.3885,
+        0.4251
       ],
       "scores": [
-        2.887801,
-        -1.008223,
-        -1.052591,
-        -0.307181,
-        1.085987
+        4.43376,
+        -1.030964,
+        -0.860041,
+        -0.626481,
+        -0.238133
+      ]
+    },
+    {
+      "segment_id": "call-derby",
+      "profile": "A single performative broadcast voice speaking live in present tense \u2014 exclamatory, formulaic, directly addressed to listeners \u2014 with sentence length and tempo compressing as the action tightens; no interiority beyond the performance, closing on a jubilant crescendo.",
+      "pair": null,
+      "coords": [
+        0.2946,
+        0.1721,
+        0.4818,
+        1.0,
+        0.6047
+      ],
+      "scores": [
+        -1.993432,
+        -3.01012,
+        -0.931146,
+        3.817196,
+        0.911884
+      ]
+    },
+    {
+      "segment_id": "caper-carousel",
+      "profile": "High sentence-length variance as a comic engine: long meticulous wind-up sentences snapped shut by abrupt fragments; airtight causal chaining of steps and payoffs, deadpan register, exterior focus, buoyant mischief with no real threat of harm.",
+      "pair": null,
+      "coords": [
+        0.3495,
+        0.3651,
+        0.6278,
+        0.5364,
+        0.5314
+      ],
+      "scores": [
+        -1.208498,
+        -1.21749,
+        0.075549,
+        0.448216,
+        0.442806
       ]
     },
     {
@@ -397,18 +530,18 @@
       "profile": "Deadpan catalogue: list/inventory structure, flat affect, documentary, near-zero interiority, accumulation as form.",
       "pair": null,
       "coords": [
-        0.163,
-        1.0,
-        0.1199,
-        0.4233,
-        1.0
+        0.175,
+        0.8465,
+        0.0,
+        0.6284,
+        0.3168
       ],
       "scores": [
-        -4.187076,
-        4.219967,
-        -2.758302,
-        -0.42768,
-        2.444339
+        -3.703581,
+        3.252921,
+        -4.251983,
+        1.116665,
+        -0.930782
       ]
     },
     {
@@ -416,18 +549,94 @@
       "profile": "Naive child perspective: simple diction, high cognitive transparency, wonder and unease, concrete, slight misreading of the adult world.",
       "pair": null,
       "coords": [
-        0.3935,
-        0.2844,
-        0.826,
-        0.6503,
-        0.4723
+        0.3979,
+        0.4723,
+        1.0,
+        0.3607,
+        0.2681
       ],
       "scores": [
-        -1.384891,
-        -1.766987,
-        2.061892,
-        0.982114,
-        -0.20853
+        -0.516649,
+        -0.222533,
+        2.641113,
+        -0.828546,
+        -1.243049
+      ]
+    },
+    {
+      "segment_id": "chorus-pharmacy",
+      "profile": "Communal first-person-plural narration \u2014 a collective 'we' with no single stable narrator \u2014 that periodically splits into brief attributed snatches of individual speech before re-merging; long accretive list-like sentences alternate with short choral pronouncements; warm, wry affect; iterative-habitual time ('we would', 'every year') dipping occasionally into one specific day.",
+      "pair": "p_poly_chorus",
+      "coords": [
+        0.4406,
+        0.3148,
+        0.5689,
+        0.4197,
+        0.7262
+      ],
+      "scores": [
+        0.092734,
+        -1.684942,
+        -0.330529,
+        -0.399514,
+        1.689508
+      ]
+    },
+    {
+      "segment_id": "chorus-pool",
+      "profile": "Communal first-person-plural narration \u2014 a collective 'we' with no single stable narrator \u2014 that periodically splits into brief attributed snatches of individual speech before re-merging; long accretive list-like sentences alternate with short choral pronouncements; warm, wry affect; iterative-habitual time ('we would', 'every year') dipping occasionally into one specific day.",
+      "pair": "p_poly_chorus",
+      "coords": [
+        0.5082,
+        0.3672,
+        0.6984,
+        0.4526,
+        0.7877
+      ],
+      "scores": [
+        1.058865,
+        -1.198702,
+        0.562489,
+        -0.160839,
+        2.083564
+      ]
+    },
+    {
+      "segment_id": "chronicle-bakery",
+      "profile": "Maximal narrative distance and vast temporal compression \u2014 four generations pass in brisk chronicle sentences, individual lives compressed to a clause, decades leaping between paragraphs; even, unhurried register of record; no scene lasts longer than a few lines.",
+      "pair": null,
+      "coords": [
+        0.3331,
+        0.5587,
+        0.471,
+        0.5083,
+        0.6726
+      ],
+      "scores": [
+        -1.44401,
+        0.580497,
+        -1.005188,
+        0.244162,
+        1.346458
+      ]
+    },
+    {
+      "segment_id": "coop-bicycles",
+      "profile": "Verbatim meeting-transcript form: speaker tags, procedural boilerplate, points of order, and cross-talk from a dozen voices in clashing registers (officialese, vernacular, tangent); no narrator and no interiority, with humor arising only from juxtaposition; strict chronological real time.",
+      "pair": null,
+      "coords": [
+        0.1176,
+        0.8029,
+        0.8452,
+        0.5121,
+        0.6324
+      ],
+      "scores": [
+        -4.523626,
+        2.84843,
+        1.57376,
+        0.271473,
+        1.088956
       ]
     },
     {
@@ -435,18 +644,18 @@
       "profile": "Mounting cosmic dread: ornate abstract diction, the world's ontology grows unstable, horror rises to overwhelming intensity, ends unresolved.",
       "pair": null,
       "coords": [
-        0.866,
-        0.5085,
-        0.5117,
-        0.1445,
-        0.3656
+        0.879,
+        0.5505,
+        0.43,
+        0.6199,
+        0.0808
       ],
       "scores": [
-        4.359018,
-        0.107831,
-        -0.083547,
-        -2.159087,
-        -0.745061
+        6.358375,
+        0.503999,
+        -1.288257,
+        1.054913,
+        -2.441732
       ]
     },
     {
@@ -454,18 +663,113 @@
       "profile": "Forensic argument: high causal clarity, exterior, procedural and precise, low affect, strict logical sequencing.",
       "pair": null,
       "coords": [
-        0.1733,
-        0.4115,
-        0.0693,
-        0.2297,
-        0.4492
+        0.1812,
+        0.45,
+        0.0584,
+        0.4041,
+        0.5675
       ],
       "scores": [
-        -4.061736,
-        -0.703058,
-        -3.103922,
-        -1.630213,
-        -0.324641
+        -3.615039,
+        -0.429451,
+        -3.849374,
+        -0.512811,
+        0.67367
+      ]
+    },
+    {
+      "segment_id": "crew-deck",
+      "profile": "The scene is carried almost entirely by rapid overlapping dialogue among four or more distinct working voices \u2014 calls, confirmations, counts, jokes \u2014 with only thin stage-direction narration between turns; no access to any interior, real-time chronology, and an affect of brisk good humor and shared competence.",
+      "pair": "p_acti_crew",
+      "coords": [
+        0.1377,
+        0.5095,
+        0.6245,
+        0.7958,
+        0.4476
+      ],
+      "scores": [
+        -4.235486,
+        0.122961,
+        0.052821,
+        2.333336,
+        -0.094075
+      ]
+    },
+    {
+      "segment_id": "crew-line",
+      "profile": "The scene is carried almost entirely by rapid overlapping dialogue among four or more distinct working voices \u2014 calls, confirmations, counts, jokes \u2014 with only thin stage-direction narration between turns; no access to any interior, real-time chronology, and an affect of brisk good humor and shared competence.",
+      "pair": "p_acti_crew",
+      "coords": [
+        0.1615,
+        0.401,
+        0.7871,
+        0.6164,
+        0.5123
+      ],
+      "scores": [
+        -3.89612,
+        -0.884734,
+        1.173788,
+        1.029412,
+        0.3202
+      ]
+    },
+    {
+      "segment_id": "crow-market",
+      "profile": "Close third-person focalization through a nonhuman perceiver whose salience hierarchy is alien to human priorities \u2014 shine, edge, motion, and food ranked above speech and faces; concrete present-tense perception with minimal abstraction; human events legible only obliquely at the margins.",
+      "pair": null,
+      "coords": [
+        0.4927,
+        0.3953,
+        0.8466,
+        0.5835,
+        0.2469
+      ],
+      "scores": [
+        0.837187,
+        -0.937356,
+        1.583894,
+        0.790397,
+        -1.378303
+      ]
+    },
+    {
+      "segment_id": "deadpan-swan",
+      "profile": "Dry comedy through official documentary form: flat declarative minutes-style prose, scrupulous literalism, numbered or itemized structure, comic timing achieved by anticlimax and paragraph break rather than commentary. Affect is held at a polite ironic distance while the recorded events grow steadily ridiculous; figurative language near zero.",
+      "pair": null,
+      "coords": [
+        0.0745,
+        0.914,
+        0.3618,
+        0.4699,
+        0.5078
+      ],
+      "scores": [
+        -5.139524,
+        3.880588,
+        -1.758333,
+        -0.035144,
+        0.291503
+      ]
+    },
+    {
+      "segment_id": "disputation-tavern",
+      "profile": "Almost entirely dialogue: two speakers with sharply distinct idiolects dispute a single abstract question in real time, the argument advancing by objection, concession, and counter-example. Narration is limited to bare attributions; tempo is quick, the affect is warm comic friction, and no narrator imposes a verdict.",
+      "pair": null,
+      "coords": [
+        0.2875,
+        0.4928,
+        0.6194,
+        0.2575,
+        0.6166
+      ],
+      "scores": [
+        -2.094895,
+        -0.031425,
+        0.017293,
+        -1.57861,
+        0.98787
       ]
     },
     {
@@ -473,18 +777,37 @@
       "profile": "Dissolving subject: unstable sense of self, fragmented and looping, grief and confusion, high interiority, time slips.",
       "pair": null,
       "coords": [
-        0.8853,
-        0.6566,
-        0.691,
-        0.7093,
-        0.6633
+        0.8904,
+        0.7502,
+        0.8076,
+        0.6386,
+        0.6004
       ],
       "scores": [
-        4.593492,
-        1.347082,
-        1.140377,
-        1.348772,
-        0.751411
+        6.522132,
+        2.359099,
+        1.314946,
+        1.190982,
+        0.884321
+      ]
+    },
+    {
+      "segment_id": "distant-swim",
+      "profile": "First-person retrospection across a six-decade gap \u2014 the narrating voice old and settled, explicitly aware of the distance, toggling between the remembered scene and the present act of remembering; long unhurried sentences; warmth and earned pride rather than grief.",
+      "pair": null,
+      "coords": [
+        0.5784,
+        0.3713,
+        0.6696,
+        0.2473,
+        0.5381
+      ],
+      "scores": [
+        2.063146,
+        -1.159997,
+        0.363785,
+        -1.652546,
+        0.485833
       ]
     },
     {
@@ -492,18 +815,18 @@
       "profile": "Realist tension with subtext: balanced surface, meaning beneath small talk, restrained affect, realist register, steady time.",
       "pair": null,
       "coords": [
-        0.4091,
-        0.4258,
-        0.6352,
-        0.6998,
-        0.3625
+        0.4158,
+        0.6027,
+        0.7664,
+        0.2219,
+        0.3317
       ],
       "scores": [
-        -1.195151,
-        -0.583701,
-        0.759438,
-        1.289563,
-        -0.760771
+        -0.260891,
+        0.988871,
+        1.030861,
+        -1.837097,
+        -0.835591
       ]
     },
     {
@@ -512,17 +835,36 @@
       "pair": null,
       "coords": [
         1.0,
-        0.818,
-        0.5421,
-        0.5114,
-        0.5553
+        0.8186,
+        0.4876,
+        0.8102,
+        0.6221
       ],
       "scores": [
-        5.988571,
-        2.697758,
-        0.123888,
-        0.119504,
-        0.208381
+        8.087927,
+        2.994311,
+        -0.890741,
+        2.438186,
+        1.023034
+      ]
+    },
+    {
+      "segment_id": "duet-piano",
+      "profile": "Two narrators alternate short passages telling one shared story, each interrupting to correct, dispute, and mock the other's version while both address the reader directly; their registers split, one ornate and digressive, one blunt and clipped; retrospective time, contested at every step.",
+      "pair": null,
+      "coords": [
+        0.6058,
+        0.5371,
+        0.6412,
+        0.6202,
+        0.5319
+      ],
+      "scores": [
+        2.45444,
+        0.380009,
+        0.167932,
+        1.057498,
+        0.445953
       ]
     },
     {
@@ -530,18 +872,18 @@
       "profile": "Restrained grief: quiet poetic interiority, suppressed emotion, unresolved ending, documentary drift with controlled figuration.",
       "pair": "p_elegy",
       "coords": [
-        0.5395,
-        0.4406,
-        0.5628,
-        0.5878,
-        0.4703
+        0.5496,
+        0.5629,
+        0.6376,
+        0.2884,
+        0.2925
       ],
       "scores": [
-        0.38949,
-        -0.459802,
-        0.265455,
-        0.593741,
-        -0.218945
+        1.650476,
+        0.619205,
+        0.143136,
+        -1.354194,
+        -1.086936
       ]
     },
     {
@@ -549,18 +891,75 @@
       "profile": "Restrained grief: quiet poetic interiority, suppressed emotion, unresolved ending, documentary drift with controlled figuration.",
       "pair": "p_elegy",
       "coords": [
-        0.6252,
-        0.3117,
-        0.5081,
-        0.5725,
-        0.4975
+        0.6254,
+        0.4095,
+        0.6244,
+        0.2372,
+        0.2733
       ],
       "scores": [
-        1.431836,
-        -1.538235,
-        -0.108001,
-        0.498733,
-        -0.081897
+        2.734761,
+        -0.804973,
+        0.052065,
+        -1.726254,
+        -1.209642
+      ]
+    },
+    {
+      "segment_id": "encyclo-parlor",
+      "profile": "A reference-work entry: taxonomic subheadings, definitional sentences, cross-references, and a third-person impersonal register with no narrative scene. The official affect is neutral, but a dry wit leaks through the choice of examples, and meaning accrues by classification rather than by story.",
+      "pair": null,
+      "coords": [
+        0.3876,
+        0.8353,
+        0.1109,
+        0.5193,
+        0.5264
+      ],
+      "scores": [
+        -0.664186,
+        3.148902,
+        -3.487387,
+        0.324205,
+        0.410523
+      ]
+    },
+    {
+      "segment_id": "epic-lawn",
+      "profile": "Mock-epic delivered with total sincerity: elevated ornate register, long periodic sentences, dense figurative language and formal epithets lavished on trivial stakes, so the comedy lives entirely in the gap between style and subject. Confident omniscient narration, linear chronicle time, and a genuinely triumphant arc.",
+      "pair": null,
+      "coords": [
+        0.4921,
+        0.18,
+        0.185,
+        0.7166,
+        0.4537
+      ],
+      "scores": [
+        0.829164,
+        -2.9366,
+        -2.976738,
+        1.757756,
+        -0.054569
+      ]
+    },
+    {
+      "segment_id": "eve-keys",
+      "profile": "Sustained joyful interiority: a single consciousness rendered in long, deeply subordinated associative sentences that drift among memory, sensation, and imagined futures, with almost no exterior event. Affect is warm anticipatory happiness without irony, and time is nonlinear, shuttling freely between the remembered past and the vividly pictured tomorrow.",
+      "pair": null,
+      "coords": [
+        0.5323,
+        0.1946,
+        0.6229,
+        0.1434,
+        0.5194
+      ],
+      "scores": [
+        1.403688,
+        -2.801468,
+        0.041717,
+        -2.407494,
+        0.365554
       ]
     },
     {
@@ -568,18 +967,75 @@
       "profile": "Mythic fable: timeless oral register, clear moral structure, archetypal figures, low interiority, simple cadenced sentences.",
       "pair": null,
       "coords": [
-        0.2886,
-        0.264,
-        0.3435,
-        0.5591,
-        0.6451
+        0.2783,
+        0.334,
+        0.5473,
+        0.5404,
+        0.6358
       ],
       "scores": [
-        -2.66016,
-        -1.937024,
-        -1.232113,
-        0.41548,
-        0.659902
+        -2.226798,
+        -1.506521,
+        -0.479347,
+        0.477043,
+        1.11081
+      ]
+    },
+    {
+      "segment_id": "farce-backstage",
+      "profile": "Screwball farce at full velocity: dialogue-dominant with four or more distinct speakers interrupting and overlapping, very high event density where each mishap causally triggers the next, strict present-moment linear time, exterior action with almost no interiority. Sentence rhythm whipsaws between clipped one-line volleys and breathless run-on pileups; affect is giddy and escalating, and everything resolves in laughter with no real harm done.",
+      "pair": "p_comi_farce",
+      "coords": [
+        0.2714,
+        0.434,
+        0.8721,
+        0.7028,
+        0.5198
+      ],
+      "scores": [
+        -2.325721,
+        -0.57811,
+        1.759179,
+        1.657839,
+        0.368627
+      ]
+    },
+    {
+      "segment_id": "farce-corridor",
+      "profile": "Screwball farce at full velocity: dialogue-dominant with four or more distinct speakers interrupting and overlapping, very high event density where each mishap causally triggers the next, strict present-moment linear time, exterior action with almost no interiority. Sentence rhythm whipsaws between clipped one-line volleys and breathless run-on pileups; affect is giddy and escalating, and everything resolves in laughter with no real harm done.",
+      "pair": "p_comi_farce",
+      "coords": [
+        0.1867,
+        0.4274,
+        0.847,
+        0.8399,
+        0.7128
+      ],
+      "scores": [
+        -3.535638,
+        -0.639061,
+        1.586297,
+        2.653621,
+        1.603868
+      ]
+    },
+    {
+      "segment_id": "fieldnotes-marsh",
+      "profile": "Dated telegraphic field entries: clipped noun phrases, abbreviations, counts and measurements, and almost no stated interiority. Paratactic and exterior throughout, with no argument announced \u2014 yet delight accumulates strictly through what the notes choose to record.",
+      "pair": null,
+      "coords": [
+        0.0546,
+        0.742,
+        0.5244,
+        0.5297,
+        0.3981
+      ],
+      "scores": [
+        -5.423007,
+        2.282356,
+        -0.636913,
+        0.399923,
+        -0.41066
       ]
     },
     {
@@ -587,18 +1043,18 @@
       "profile": "Fragmented modernist consciousness: time and viewpoint fragment, several minds bleed together, stream of consciousness, high interiority, associative and non-linear.",
       "pair": "p_frag",
       "coords": [
-        0.7889,
-        0.5118,
-        0.5351,
-        1.0,
-        0.5816
+        0.7691,
+        0.5779,
+        0.7435,
+        0.4165,
+        0.7624
       ],
       "scores": [
-        3.422576,
-        0.135459,
-        0.07635,
-        3.154262,
-        0.341028
+        4.787547,
+        0.758467,
+        0.873336,
+        -0.423225,
+        1.92152
       ]
     },
     {
@@ -606,18 +1062,132 @@
       "profile": "Fragmented modernist consciousness: time and viewpoint fragment, several minds bleed together, stream of consciousness, high interiority, associative and non-linear.",
       "pair": "p_frag",
       "coords": [
-        0.8047,
-        0.5339,
-        0.5241,
-        0.8153,
-        0.7315
+        0.789,
+        0.5731,
+        0.6787,
+        0.5471,
+        0.6768
       ],
       "scores": [
-        3.614469,
-        0.320318,
-        0.000917,
-        2.007315,
-        1.094204
+        5.072833,
+        0.713917,
+        0.426379,
+        0.526328,
+        1.373687
+      ]
+    },
+    {
+      "segment_id": "frame-raising",
+      "profile": "First-person-plural narration \u2014 a collective 'we' with no individuated interior \u2014 in rolling mid-to-long sentences that move in clear chronological order across one day; communal warmth and festive momentum throughout, ending in celebration.",
+      "pair": null,
+      "coords": [
+        0.258,
+        0.163,
+        0.3702,
+        0.6118,
+        0.497
+      ],
+      "scores": [
+        -2.51643,
+        -3.094402,
+        -1.700063,
+        0.996431,
+        0.222326
+      ]
+    },
+    {
+      "segment_id": "future-firstday",
+      "profile": "Narration entirely in the future tense \u2014 every event told as a certainty that has not yet happened; calm declarative prophecy accumulating concrete sensory detail; anticipatory warmth; time moves strictly forward through a single day.",
+      "pair": null,
+      "coords": [
+        0.4161,
+        0.3066,
+        0.7098,
+        0.3819,
+        0.5661
+      ],
+      "scores": [
+        -0.256447,
+        -1.761121,
+        0.640514,
+        -0.674311,
+        0.664795
+      ]
+    },
+    {
+      "segment_id": "giddy-bus",
+      "profile": "Giddy first-person exuberance in present tense: breathless run-on sentences crashing into one- and two-word fragments, exclamatory and sensation-flooded, interiority pouring outward onto everything seen. Affect is joy with positive volatility \u2014 spiking, tumbling, spiking higher \u2014 and the ordinary world is rendered transfigured without ever turning solemn.",
+      "pair": null,
+      "coords": [
+        0.5003,
+        0.0158,
+        0.7394,
+        0.3445,
+        0.541
+      ],
+      "scores": [
+        0.946909,
+        -4.462245,
+        0.844983,
+        -0.946226,
+        0.50425
+      ]
+    },
+    {
+      "segment_id": "glass-furnace",
+      "profile": "Metronomic rhythm: sentences of near-uniform middle length in steady procedural sequence, minimal subordination, exact concrete process vocabulary; calm absorbed attention and quiet contentment, with time measured in repeated work cycles rather than clock time.",
+      "pair": null,
+      "coords": [
+        0.0961,
+        0.3884,
+        0.3148,
+        0.5315,
+        0.3397
+      ],
+      "scores": [
+        -4.83063,
+        -1.001388,
+        -2.082236,
+        0.412505,
+        -0.784345
+      ]
+    },
+    {
+      "segment_id": "glossary-household",
+      "profile": "A glossary of invented words: headword, part of speech, definition, and usage example for each entry, in strict alphabetical order. Syntax is definitional throughout, time is nonlinear and assembled by the reader across entries, and all warmth and comedy are carried by the example sentences.",
+      "pair": null,
+      "coords": [
+        0.4086,
+        0.3688,
+        0.7956,
+        0.3103,
+        0.6758
+      ],
+      "scores": [
+        -0.364898,
+        -1.183444,
+        1.231956,
+        -1.194958,
+        1.366868
+      ]
+    },
+    {
+      "segment_id": "gossip-harbor",
+      "profile": "A single piece of news relayed through a chain of successive conversations, each retelling mutating its details and imputed motives; narration slips in and out of the speakers' voices through free indirect speech; wry, speculative affect; time hops forward hour by hour across one day.",
+      "pair": null,
+      "coords": [
+        0.5512,
+        0.6159,
+        0.6023,
+        0.7787,
+        0.7411
+      ],
+      "scores": [
+        1.674111,
+        1.111379,
+        -0.100085,
+        2.20874,
+        1.785296
       ]
     },
     {
@@ -625,18 +1195,56 @@
       "profile": "Gothic melodrama: high emotional volatility, ornate overwrought diction, dread and awe, unstable atmosphere.",
       "pair": null,
       "coords": [
-        0.7706,
-        0.4341,
-        0.6642,
-        0.0,
-        0.7638
+        0.7579,
+        0.4376,
+        0.5405,
+        0.8679,
+        0.0432
       ],
       "scores": [
-        3.199089,
-        -0.51461,
-        0.957815,
-        -3.056839,
-        1.2566
+        4.628163,
+        -0.544085,
+        -0.526134,
+        2.857154,
+        -2.682533
+      ]
+    },
+    {
+      "segment_id": "guestbook-cliff",
+      "profile": "Assembled entirely from dated entries by successive hands in one shared book, each writer idiomatically distinct and replying to, amending, or blessing the entries that came before; epigrammatic one-line jottings set against longer discursive outpourings; time spans decades carried by the dates alone.",
+      "pair": null,
+      "coords": [
+        0.3044,
+        0.5842,
+        0.7972,
+        0.4169,
+        1.0
+      ],
+      "scores": [
+        -1.853703,
+        0.81685,
+        1.243537,
+        -0.420115,
+        3.442335
+      ]
+    },
+    {
+      "segment_id": "holiday-letter",
+      "profile": "Rendered almost entirely in quoted dialogue among four or more speakers who interrupt, overlap, and finish one another's sentences; speech turns are short with high sentence-length variance and near-zero narration or interiority; comic, affectionate affect; one continuous real-time scene.",
+      "pair": null,
+      "coords": [
+        0.3347,
+        0.5573,
+        0.9863,
+        0.4352,
+        0.6792
+      ],
+      "scores": [
+        -1.420695,
+        0.566954,
+        2.546365,
+        -0.286772,
+        1.388894
       ]
     },
     {
@@ -644,18 +1252,94 @@
       "profile": "Intimate epistolary confession: first-person confessional voice, high interiority, direct address, medium controlled affect.",
       "pair": null,
       "coords": [
-        0.5673,
-        0.3073,
-        0.5695,
-        0.4728,
-        0.6468
+        0.5564,
+        0.3894,
+        0.6915,
+        0.4124,
+        0.3166
       ],
       "scores": [
-        0.727889,
-        -1.574996,
-        0.311243,
-        -0.12,
-        0.668849
+        1.748111,
+        -0.992129,
+        0.514469,
+        -0.453068,
+        -0.932384
+      ]
+    },
+    {
+      "segment_id": "levee-night",
+      "profile": "Panoramic exterior narration tracking many named actors across one location, built from long additive sentences that accumulate clauses like a ledger of effort; urgency without fear, tight chronology through the night, resolving in shared triumph.",
+      "pair": null,
+      "coords": [
+        0.2741,
+        0.243,
+        0.6058,
+        0.6346,
+        0.6584
+      ],
+      "scores": [
+        -2.287198,
+        -2.351911,
+        -0.076136,
+        1.161775,
+        1.255698
+      ]
+    },
+    {
+      "segment_id": "manual-wardrobe",
+      "profile": "Opens as numbered, affectless product instructions and drifts, step by step, into direct second-person address about the reader's own life. The procedural register decays gradually \u2014 sentences lengthen, hedges appear, imperatives turn intimate \u2014 and the drift itself, not any event, is the story.",
+      "pair": null,
+      "coords": [
+        0.5089,
+        0.4318,
+        0.7418,
+        0.4089,
+        0.3748
+      ],
+      "scores": [
+        1.068466,
+        -0.598356,
+        0.861303,
+        -0.478246,
+        -0.55958
+      ]
+    },
+    {
+      "segment_id": "margin-birdguide",
+      "profile": "Two voices share the page: passages of a formal printed text alternate with a second reader's marginal annotations that interrupt, dispute, and joke. The registers clash deliberately \u2014 elevated and impersonal against colloquial and quick \u2014 sentence-length variance is extreme, and the real argument emerges from the friction between the voices rather than from either alone.",
+      "pair": "p_disc_marg",
+      "coords": [
+        0.5397,
+        0.3985,
+        0.8921,
+        0.4029,
+        0.4551
+      ],
+      "scores": [
+        1.509613,
+        -0.90799,
+        1.897645,
+        -0.521763,
+        -0.046028
+      ]
+    },
+    {
+      "segment_id": "margin-etiquette",
+      "profile": "Two voices share the page: passages of a formal printed text alternate with a second reader's marginal annotations that interrupt, dispute, and joke. The registers clash deliberately \u2014 elevated and impersonal against colloquial and quick \u2014 sentence-length variance is extreme, and the real argument emerges from the friction between the voices rather than from either alone.",
+      "pair": "p_disc_marg",
+      "coords": [
+        0.5005,
+        0.3665,
+        0.804,
+        0.2676,
+        0.6392
+      ],
+      "scores": [
+        0.949395,
+        -1.204458,
+        1.289918,
+        -1.504914,
+        1.132709
       ]
     },
     {
@@ -663,18 +1347,18 @@
       "profile": "Extreme compression and restraint: very short plain declarative sentences, concrete exterior detail only, almost no interiority, flat affectless tone, strictly linear, documentary register.",
       "pair": "p_min",
       "coords": [
-        0.0731,
-        0.8007,
-        0.8402,
-        0.7616,
-        0.4637
+        0.0872,
+        0.9269,
+        0.7551,
+        0.3922,
+        0.1679
       ],
       "scores": [
-        -5.281041,
-        2.552348,
-        2.158837,
-        1.673241,
-        -0.252141
+        -4.958242,
+        3.999699,
+        0.953154,
+        -0.599633,
+        -1.884295
       ]
     },
     {
@@ -682,18 +1366,75 @@
       "profile": "Extreme compression and restraint: very short plain declarative sentences, concrete exterior detail only, almost no interiority, flat affectless tone, strictly linear, documentary register.",
       "pair": "p_min",
       "coords": [
-        0.0,
-        0.7279,
-        0.4801,
-        0.7483,
-        0.9912
+        0.0097,
+        0.7327,
+        0.5029,
+        0.5527,
+        0.3327
       ],
       "scores": [
-        -6.169176,
-        1.943977,
-        -0.299028,
-        1.591114,
-        2.400249
+        -6.066028,
+        2.196045,
+        -0.785522,
+        0.566763,
+        -0.829582
+      ]
+    },
+    {
+      "segment_id": "mosaic-jigsaw",
+      "profile": "An achronological mosaic: dozens of short numbered fragments presented in deliberately shuffled order, each a self-contained concrete snapshot, with connective tissue and causal explanation suppressed so the reader must reassemble the chronology. Paratactic syntax, extreme variance between one-line fragments and fuller paragraphs, and a warm celebratory affect throughout.",
+      "pair": null,
+      "coords": [
+        0.5014,
+        0.3667,
+        0.6203,
+        0.3528,
+        0.8981
+      ],
+      "scores": [
+        0.962021,
+        -1.20322,
+        0.024147,
+        -0.885761,
+        2.790309
+      ]
+    },
+    {
+      "segment_id": "nested-ferry",
+      "profile": "Three nested narrative frames, each in its own distinct voice and diction \u2014 a present-tense teller recounting an account they were once told, which itself contains a third, older tale; attribution kept visible ('she said that he said'), with the frames interrupting and correcting one another.",
+      "pair": null,
+      "coords": [
+        0.683,
+        0.7155,
+        0.523,
+        0.6019,
+        0.6246
+      ],
+      "scores": [
+        3.556897,
+        2.036786,
+        -0.646796,
+        0.924466,
+        1.039252
+      ]
+    },
+    {
+      "segment_id": "night-callers",
+      "profile": "A thin frame voice introduces a sequence of caller voices, each a monologue in its own idiom, pacing, and grammar; quoted speech dominates over description, with interiority arriving only inside the callers' own words; gentle nocturnal warmth threaded with small aches; episodic time inside one continuous broadcast.",
+      "pair": null,
+      "coords": [
+        0.4069,
+        0.6851,
+        0.851,
+        0.3097,
+        0.6708
+      ],
+      "scores": [
+        -0.388318,
+        1.75397,
+        1.613789,
+        -1.199384,
+        1.334742
       ]
     },
     {
@@ -701,18 +1442,37 @@
       "profile": "Hardboiled exterior: terse wry concrete prose, moral greyness, exterior behavior and dialogue, low interiority, documentary-noir register.",
       "pair": null,
       "coords": [
-        0.3546,
-        0.4633,
-        0.8012,
-        0.4706,
-        0.382
+        0.3671,
+        0.6458,
+        0.8022,
+        0.4081,
+        0.1737
       ],
       "scores": [
-        -1.857692,
-        -0.270213,
-        1.892825,
-        -0.133899,
-        -0.662583
+        -0.958151,
+        1.389628,
+        1.277942,
+        -0.484079,
+        -1.847433
+      ]
+    },
+    {
+      "segment_id": "one-breath-beach",
+      "profile": "Nearly the whole piece built from two or three colossal run-on sentences, clause chained to clause by conjunctions and relative pronouns for hundreds of words before any full stop; present tense, sensation-saturated, exterior motion and bodily joy braided together. Affect is unbroken accelerating exhilaration with no irony and no shadow.",
+      "pair": null,
+      "coords": [
+        0.4299,
+        0.0,
+        0.7624,
+        0.6321,
+        0.2202
+      ],
+      "scores": [
+        -0.0598,
+        -4.608691,
+        1.00306,
+        1.144074,
+        -1.549666
       ]
     },
     {
@@ -720,18 +1480,18 @@
       "profile": "Epistemic instability and recursion: cool abstract essayistic voice, reality-rules bend, paradox and infinite regress, very low emotional volatility, controlled.",
       "pair": "p_paradox",
       "coords": [
-        0.8137,
-        0.743,
-        0.211,
-        0.5058,
-        0.2843
+        0.8292,
+        0.7564,
+        0.191,
+        0.4997,
+        0.5941
       ],
       "scores": [
-        3.723299,
-        2.0702,
-        -2.136174,
-        0.084607,
-        -1.153666
+        5.647377,
+        2.416555,
+        -2.935446,
+        0.181312,
+        0.844164
       ]
     },
     {
@@ -739,18 +1499,18 @@
       "profile": "Epistemic instability and recursion: cool abstract essayistic voice, reality-rules bend, paradox and infinite regress, very low emotional volatility, controlled.",
       "pair": "p_paradox",
       "coords": [
-        0.6185,
-        0.6681,
-        0.1898,
-        0.3099,
-        0.0
+        0.6375,
+        0.7539,
+        0.1191,
+        0.4143,
+        0.4037
       ],
       "scores": [
-        1.350707,
-        1.443565,
-        -2.28145,
-        -1.132,
-        -2.583233
+        2.907801,
+        2.393594,
+        -3.430952,
+        -0.438824,
+        -0.375005
       ]
     },
     {
@@ -758,18 +1518,18 @@
       "profile": "Interior paranoia: paranoid over-reading, unstable epistemics, rising dread, claustrophobic interiority.",
       "pair": null,
       "coords": [
-        0.8522,
-        0.549,
-        0.7466,
-        0.2447,
-        0.5129
+        0.8473,
+        0.61,
+        0.6733,
+        0.6867,
+        0.1265
       ],
       "scores": [
-        4.191989,
-        0.447136,
-        1.520196,
-        -1.537055,
-        -0.004566
+        5.906237,
+        1.056456,
+        0.388798,
+        1.540302,
+        -2.149319
       ]
     },
     {
@@ -777,18 +1537,398 @@
       "profile": "Lyric pastoral awe: imagery-dense poetic prose, low event density, awe and stillness, long flowing sentences.",
       "pair": null,
       "coords": [
-        0.3842,
-        0.2519,
-        0.0,
-        0.4167,
-        0.7541
+        0.3886,
+        0.2085,
+        0.1768,
+        0.4212,
+        0.4101
       ],
       "scores": [
-        -1.497707,
-        -2.038802,
-        -3.577015,
-        -0.468625,
-        1.207872
+        -0.650243,
+        -2.671764,
+        -3.033082,
+        -0.38889,
+        -0.333654
+      ]
+    },
+    {
+      "segment_id": "pd-anderson-winesburg",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.3396,
+        0.7375,
+        0.7049,
+        0.4184,
+        0.4711
+      ],
+      "scores": [
+        -1.350087,
+        2.241293,
+        0.606861,
+        -0.408914,
+        0.056628
+      ]
+    },
+    {
+      "segment_id": "pd-austen-persuasion",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.358,
+        0.5681,
+        0.3666,
+        0.078,
+        0.5903
+      ],
+      "scores": [
+        -1.088113,
+        0.667815,
+        -1.72493,
+        -2.882822,
+        0.819896
+      ]
+    },
+    {
+      "segment_id": "pd-cather-antonia",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.2997,
+        0.5132,
+        0.8275,
+        0.3365,
+        0.3508
+      ],
+      "scores": [
+        -1.920496,
+        0.158043,
+        1.451843,
+        -1.004294,
+        -0.713155
+      ]
+    },
+    {
+      "segment_id": "pd-chekhov-lady",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.2942,
+        0.6448,
+        0.7159,
+        0.213,
+        0.3194
+      ],
+      "scores": [
+        -1.999396,
+        1.38029,
+        0.682547,
+        -1.901966,
+        -0.914752
+      ]
+    },
+    {
+      "segment_id": "pd-conrad-darkness",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.496,
+        0.4663,
+        0.4283,
+        0.3071,
+        0.4328
+      ],
+      "scores": [
+        0.885153,
+        -0.277524,
+        -1.299484,
+        -1.217898,
+        -0.188404
+      ]
+    },
+    {
+      "segment_id": "pd-dostoevsky-underground",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.7224,
+        0.6498,
+        0.8924,
+        0.5019,
+        0.393
+      ],
+      "scores": [
+        4.120435,
+        1.425948,
+        1.899456,
+        0.197778,
+        -0.443201
+      ]
+    },
+    {
+      "segment_id": "pd-gilman-wallpaper",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.5414,
+        0.6387,
+        0.7656,
+        0.3108,
+        0.2992
+      ],
+      "scores": [
+        1.534039,
+        1.32288,
+        1.025702,
+        -1.191374,
+        -1.043671
+      ]
+    },
+    {
+      "segment_id": "pd-james-beast",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.6568,
+        0.5439,
+        0.4325,
+        0.2028,
+        0.4594
+      ],
+      "scores": [
+        3.182219,
+        0.442881,
+        -1.270481,
+        -1.976234,
+        -0.018435
+      ]
+    },
+    {
+      "segment_id": "pd-joyce-dead",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.5064,
+        0.4657,
+        0.8157,
+        0.5027,
+        0.3711
+      ],
+      "scores": [
+        1.033187,
+        -0.283484,
+        1.370675,
+        0.203233,
+        -0.5835
+      ]
+    },
+    {
+      "segment_id": "pd-london-fire",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.2401,
+        0.6661,
+        0.5489,
+        0.2022,
+        0.2797
+      ],
+      "scores": [
+        -2.773185,
+        1.578159,
+        -0.468645,
+        -1.980062,
+        -1.168783
+      ]
+    },
+    {
+      "segment_id": "pd-melville-bartleby",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.4474,
+        0.5443,
+        0.6311,
+        0.4716,
+        0.3475
+      ],
+      "scores": [
+        0.190088,
+        0.446781,
+        0.098112,
+        -0.022513,
+        -0.734658
+      ]
+    },
+    {
+      "segment_id": "pd-poe-usher",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.6519,
+        0.3777,
+        0.4288,
+        0.4033,
+        0.1722
+      ],
+      "scores": [
+        3.112525,
+        -1.100594,
+        -1.296376,
+        -0.51916,
+        -1.85669
+      ]
+    },
+    {
+      "segment_id": "pd-stein-lives",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.3128,
+        0.6341,
+        0.4572,
+        0.3846,
+        0.5831
+      ],
+      "scores": [
+        -1.734028,
+        1.280854,
+        -1.100763,
+        -0.654535,
+        0.773623
+      ]
+    },
+    {
+      "segment_id": "pd-twain-huck",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.4015,
+        0.6051,
+        0.9588,
+        0.3032,
+        0.2871
+      ],
+      "scores": [
+        -0.465143,
+        1.011412,
+        2.357152,
+        -1.246506,
+        -1.121011
+      ]
+    },
+    {
+      "segment_id": "pd-woolf-dalloway",
+      "profile": null,
+      "pair": null,
+      "coords": [
+        0.6386,
+        0.328,
+        0.7016,
+        0.3423,
+        0.561
+      ],
+      "scores": [
+        2.922843,
+        -1.562067,
+        0.58451,
+        -0.961835,
+        0.631835
+      ]
+    },
+    {
+      "segment_id": "pickup-court",
+      "profile": "Very short declarative sentences at sprint tempo, present tense, the camera locked on bodies and ball with no interiority; affect is pure uncomplicated joy, rising through the game to a jubilant finish.",
+      "pair": null,
+      "coords": [
+        0.0,
+        0.2959,
+        0.6198,
+        0.7139,
+        0.4427
+      ],
+      "scores": [
+        -6.204032,
+        -1.860283,
+        0.02038,
+        1.738421,
+        -0.125214
+      ]
+    },
+    {
+      "segment_id": "pit-twelve",
+      "profile": "Extreme temporal dilation: a span of about twelve seconds stretched across the entire piece in hyper-precise exterior choreography, clipped fragments alternating with sudden slow-motion long sentences; cool procedural exactness charged with elation, no access to thought beyond sensation.",
+      "pair": null,
+      "coords": [
+        0.4356,
+        0.1902,
+        0.434,
+        0.7962,
+        0.6022
+      ],
+      "scores": [
+        0.021434,
+        -2.842309,
+        -1.260527,
+        2.33625,
+        0.896079
+      ]
+    },
+    {
+      "segment_id": "quiz-tiebreak",
+      "profile": "Strict real-time narration \u2014 narrated duration equals lived duration, with no summary, ellipsis, or flashback; present tense dominated by dialogue and small physical action, near-zero interiority; short sentences whose pace is chained to the clock.",
+      "pair": null,
+      "coords": [
+        0.063,
+        0.7452,
+        0.8141,
+        0.6439,
+        0.4905
+      ],
+      "scores": [
+        -5.303718,
+        2.312346,
+        1.359667,
+        1.229361,
+        0.181119
+      ]
+    },
+    {
+      "segment_id": "recipe-dumpling",
+      "profile": "A recipe whose terse numbered imperative steps keep being interrupted by long digressive asides. Sentence-length variance is extreme \u2014 three-word commands against page-spanning reminiscence \u2014 time slips between the timeless imperative present and remembered scenes, and the affect is warm, comic, and unhurried.",
+      "pair": null,
+      "coords": [
+        0.5638,
+        0.4202,
+        0.6008,
+        0.3913,
+        0.6761
+      ],
+      "scores": [
+        1.853754,
+        -0.706256,
+        -0.110623,
+        -0.60596,
+        1.369095
+      ]
+    },
+    {
+      "segment_id": "satire-report",
+      "profile": "Acid satire in a discursive, document-shaped register: continuous argumentative prose with rhetorical questions, ironic concession, and euphemism doing the comic work; almost no scene, minimal event, high semantic density. The voice is controlled, courteous, and self-congratulatory, and the satire emerges from the widening gap between the claims and what they plainly describe.",
+      "pair": null,
+      "coords": [
+        0.5059,
+        0.5365,
+        0.2435,
+        0.6262,
+        0.475
+      ],
+      "scores": [
+        1.025813,
+        0.373982,
+        -2.573225,
+        1.101123,
+        0.081539
       ]
     },
     {
@@ -796,18 +1936,18 @@
       "profile": "Clinical documentary futurism: precise technical affectless prose, stable ontology, exterior observation, very low figuration.",
       "pair": null,
       "coords": [
-        0.0531,
-        0.7253,
-        0.5187,
-        0.1836,
-        0.0214
+        0.0683,
+        0.8549,
+        0.3226,
+        0.4617,
+        0.2092
       ],
       "scores": [
-        -5.523591,
-        1.921646,
-        -0.036092,
-        -1.916369,
-        -2.475536
+        -5.227813,
+        3.331043,
+        -2.028325,
+        -0.094239,
+        -1.620149
       ]
     },
     {
@@ -815,18 +1955,75 @@
       "profile": "Experimental second person: address the reader as 'you', meta and self-aware, experimental register, present tense.",
       "pair": null,
       "coords": [
-        0.7952,
-        0.5887,
-        0.5338,
-        0.4863,
-        0.3807
+        0.8043,
+        0.6481,
+        0.5544,
+        0.608,
+        0.3719
       ],
       "scores": [
-        3.498369,
-        0.778795,
-        0.067524,
-        -0.036346,
-        -0.66944
+        5.290338,
+        1.410511,
+        -0.430434,
+        0.968511,
+        -0.578205
+      ]
+    },
+    {
+      "segment_id": "sermon-harvest",
+      "profile": "Oratorical address to a gathered congregation: cadenced periodic sentences built on anaphora and refrain, repetition as load-bearing structure, second-person-plural address, and a steadily rising intensity curve toward affirmation. Meaning is explicitly asserted and morally clear; the dominant affect is communal joy and gratitude, wholly without irony.",
+      "pair": null,
+      "coords": [
+        0.3493,
+        0.1672,
+        0.2751,
+        0.4381,
+        0.698
+      ],
+      "scores": [
+        -1.211675,
+        -3.05603,
+        -2.355563,
+        -0.265927,
+        1.509037
+      ]
+    },
+    {
+      "segment_id": "surge-couloir",
+      "profile": "Long surging sentences that accelerate through stacked clauses and crest into brief full stops before building again; strictly exterior kinetic focus in present tense with almost no interiority, high event density, and an affect of exhilaration and mastery \u2014 speed without menace.",
+      "pair": "p_acti_surge",
+      "coords": [
+        0.3526,
+        0.0917,
+        0.7207,
+        0.4547,
+        0.1893
+      ],
+      "scores": [
+        -1.164852,
+        -3.756815,
+        0.715669,
+        -0.14523,
+        -1.747184
+      ]
+    },
+    {
+      "segment_id": "surge-rapids",
+      "profile": "Long surging sentences that accelerate through stacked clauses and crest into brief full stops before building again; strictly exterior kinetic focus in present tense with almost no interiority, high event density, and an affect of exhilaration and mastery \u2014 speed without menace.",
+      "pair": "p_acti_surge",
+      "coords": [
+        0.3928,
+        0.0908,
+        0.6811,
+        0.684,
+        0.1078
+      ],
+      "scores": [
+        -0.590125,
+        -3.765217,
+        0.443016,
+        1.520649,
+        -2.268995
       ]
     },
     {
@@ -834,18 +2031,75 @@
       "profile": "Quiet tenderness: warm gentle prose, joy and tenderness, medium interiority, realist, small domestic grace.",
       "pair": null,
       "coords": [
-        0.213,
-        0.1494,
-        0.4499,
-        0.8258,
-        0.1383
+        0.237,
+        0.3751,
+        0.7491,
+        0.0,
+        0.4231
       ],
       "scores": [
-        -3.579796,
-        -2.895887,
-        -0.50531,
-        2.072534,
-        -1.888165
+        -2.816133,
+        -1.125148,
+        0.911372,
+        -3.44959,
+        -0.250547
+      ]
+    },
+    {
+      "segment_id": "terrace-roar",
+      "profile": "A crowd-collective narrator: chants, counted-down minutes, and surges of shared speech, with staccato fragments breaking into long rolling accumulations for very high rhythm and sentence-length variance; exuberant rising affect toward open triumph; strict present-tense real time.",
+      "pair": null,
+      "coords": [
+        0.521,
+        0.1127,
+        0.8195,
+        0.9212,
+        0.3789
+      ],
+      "scores": [
+        1.24138,
+        -3.562266,
+        1.396977,
+        3.244536,
+        -0.533771
+      ]
+    },
+    {
+      "segment_id": "testimony-bell",
+      "profile": "An oral-testimony collage: six or more distinct labeled speakers recount the same event in turn, each in a strongly individuated idiom and rhythm, their accounts contradicting one another on key facts with no narrating voice to adjudicate; direct speech dominates, framing is minimal, and time is retrospective, circling the single event.",
+      "pair": "p_poly_testimony",
+      "coords": [
+        0.5758,
+        0.8884,
+        0.6478,
+        0.6881,
+        0.648
+      ],
+      "scores": [
+        2.025514,
+        3.642512,
+        0.213159,
+        1.550938,
+        1.188998
+      ]
+    },
+    {
+      "segment_id": "testimony-train",
+      "profile": "An oral-testimony collage: six or more distinct labeled speakers recount the same event in turn, each in a strongly individuated idiom and rhythm, their accounts contradicting one another on key facts with no narrating voice to adjudicate; direct speech dominates, framing is minimal, and time is retrospective, circling the single event.",
+      "pair": "p_poly_testimony",
+      "coords": [
+        0.6383,
+        1.0,
+        0.8327,
+        0.7218,
+        0.814
+      ],
+      "scores": [
+        2.919209,
+        4.678907,
+        1.487968,
+        1.795501,
+        2.251506
       ]
     },
     {
@@ -853,18 +2107,56 @@
       "profile": "High event density procedural thriller: fast linear exterior action, short kinetic sentences, rising intensity, plot-driven, minimal interiority.",
       "pair": null,
       "coords": [
-        0.1086,
-        0.3873,
-        1.0,
-        0.0638,
-        0.6786
+        0.1041,
+        0.5595,
+        0.9013,
+        0.7903,
+        0.0
       ],
       "scores": [
-        -4.849006,
-        -0.906121,
-        3.250079,
-        -2.660742,
-        0.828269
+        -4.715812,
+        0.588022,
+        1.960438,
+        2.29324,
+        -2.959054
+      ]
+    },
+    {
+      "segment_id": "toast-firehouse",
+      "profile": "Warm ensemble comedy built from many voices: five or more speakers with audibly distinct speech styles, dialogue and reported speech carrying most of the text, narration moving lightly among perspectives at mid distance. Teasing is affectionate and victimless, rhythm is relaxed but varied, and the affect is sustained communal joy that swells rather than breaks near the end.",
+      "pair": "p_comi_toast",
+      "coords": [
+        0.2916,
+        0.4878,
+        0.7639,
+        0.4503,
+        0.8255
+      ],
+      "scores": [
+        -2.037212,
+        -0.078077,
+        1.013494,
+        -0.177375,
+        2.3254
+      ]
+    },
+    {
+      "segment_id": "toast-hall",
+      "profile": "Warm ensemble comedy built from many voices: five or more speakers with audibly distinct speech styles, dialogue and reported speech carrying most of the text, narration moving lightly among perspectives at mid distance. Teasing is affectionate and victimless, rhythm is relaxed but varied, and the affect is sustained communal joy that swells rather than breaks near the end.",
+      "pair": "p_comi_toast",
+      "coords": [
+        0.2651,
+        0.3746,
+        0.7109,
+        0.4261,
+        0.7552
+      ],
+      "scores": [
+        -2.41463,
+        -1.12915,
+        0.647994,
+        -0.353139,
+        1.875456
       ]
     },
     {
@@ -872,18 +2164,56 @@
       "profile": "Blocked agency and bureaucratic dread: the protagonist cannot act, rules shift under them, flat procedural surface with rising unease, stable-seeming world on unstable ground.",
       "pair": null,
       "coords": [
-        0.4361,
-        0.6002,
-        0.7335,
-        0.5521,
-        0.2965
+        0.4338,
+        0.7554,
+        0.7214,
+        0.4484,
+        0.2436
       ],
       "scores": [
-        -0.866778,
-        0.875306,
-        1.430899,
-        0.372519,
-        -1.09241
+        -0.004699,
+        2.407014,
+        0.720803,
+        -0.191386,
+        -1.399602
+      ]
+    },
+    {
+      "segment_id": "vain-recital",
+      "profile": "First-person narration by a narrator whose vanity visibly warps the telling \u2014 self-flattering interpretation laid over reported details that quietly contradict it; buoyant confident tone, long self-justifying sentences punctuated by short factual ones the narrator does not understand; comic register.",
+      "pair": "p_pers_vain",
+      "coords": [
+        0.5552,
+        0.4272,
+        0.6618,
+        0.2704,
+        0.224
+      ],
+      "scores": [
+        1.73027,
+        -0.64111,
+        0.310108,
+        -1.484963,
+        -1.524902
+      ]
+    },
+    {
+      "segment_id": "vain-reunion",
+      "profile": "First-person narration by a narrator whose vanity visibly warps the telling \u2014 self-flattering interpretation laid over reported details that quietly contradict it; buoyant confident tone, long self-justifying sentences punctuated by short factual ones the narrator does not understand; comic register.",
+      "pair": "p_pers_vain",
+      "coords": [
+        0.5191,
+        0.5059,
+        0.742,
+        0.2097,
+        0.159
+      ],
+      "scores": [
+        1.215592,
+        0.089612,
+        0.862484,
+        -1.925502,
+        -1.941193
       ]
     },
     {
@@ -891,18 +2221,18 @@
       "profile": "Visionary teleology: awe, meaning affirmed, poetic and directional, a movement toward revelation.",
       "pair": null,
       "coords": [
-        0.5928,
-        0.0,
-        0.2829,
-        0.569,
-        0.4953
+        0.5888,
+        0.096,
+        0.6305,
+        0.2652,
+        0.4941
       ],
       "scores": [
-        1.03827,
-        -4.145986,
-        -1.645649,
-        0.477014,
-        -0.093192
+        2.211522,
+        -3.716765,
+        0.094448,
+        -1.522177,
+        0.203645
       ]
     },
     {
@@ -910,21 +2240,21 @@
       "profile": "Visceral exterior intensity: concrete sensory event-dense prose, very high intensity, dread, alternating short and long sentences.",
       "pair": null,
       "coords": [
-        0.514,
-        0.3345,
-        0.8208,
-        0.2263,
-        0.8893
+        0.4872,
+        0.3973,
+        0.7964,
+        0.7974,
+        0.1661
       ],
       "scores": [
-        0.08016,
-        -1.347718,
-        2.026343,
-        -1.651204,
-        1.887635
+        0.758426,
+        -0.918282,
+        1.237478,
+        2.34526,
+        -1.895752
       ]
     }
   ],
-  "n_segments": 30,
+  "n_segments": 100,
   "axes_version": 3
 }
