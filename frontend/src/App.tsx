@@ -35,17 +35,38 @@ export default function App() {
   const [mode, setMode] = useState<'model' | 'human'>('model')
 
   useEffect(() => {
-    fetchAxes()
-      .then(setAxes)
-      .catch((e: unknown) => setAxesError(String(e)))
+    // `npm run dev` starts the page before the API has finished booting, so the first
+    // request can fail. Retry briefly instead of leaving a stale "not reachable" notice.
+    let cancelled = false
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const load = (attempt: number) => {
+      fetchAxes()
+        .then((a) => {
+          if (cancelled) return
+          setAxes(a)
+          setAxesError(null)
+        })
+        .catch((e: unknown) => {
+          if (cancelled) return
+          setAxesError(String(e))
+          if (attempt < 6) timer = setTimeout(() => load(attempt + 1), 1500)
+        })
+    }
+    load(0)
+    return () => {
+      cancelled = true
+      clearTimeout(timer)
+    }
   }, [])
 
   useEffect(() => {
-    // 409 until a projection has been fitted (scripts/fit_projection.py) — map stays hidden.
+    // Wait for the API to answer before asking for the map. It stays hidden (409) until
+    // a projection has been fitted (scripts/fit_projection.py).
+    if (!axes) return
     fetchCSpace()
       .then(setCspace)
       .catch(() => setCspace(null))
-  }, [])
+  }, [axes])
 
   const words = text.trim() ? text.trim().split(/\s+/).length : 0
   const outOfRange = words > 0 && (words < 1000 || words > 3000)
@@ -70,7 +91,7 @@ export default function App() {
   }
 
   return (
-    <main className="app">
+    <main className={tab === 'instrument' && mode === 'human' ? 'app app-wide' : 'app'}>
       <header>
         <h1>LSAP-1 · {tab === 'instrument' ? 'Rater Studio' : 'Engine Console'}</h1>
         <nav className="tabs">

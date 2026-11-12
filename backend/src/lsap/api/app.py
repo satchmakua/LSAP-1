@@ -131,7 +131,7 @@ def rate_manual(req: ManualRateRequest) -> RateResponse:
     if seg is None:
         raise HTTPException(
             status_code=404,
-            detail="segment not found — the human scores existing corpus segments",
+            detail="segment not found — manual scoring applies to existing corpus segments",
         )
     name = req.rater_name.strip()
     if not name:
@@ -207,10 +207,14 @@ def cspace() -> dict:
 def segment_projection(segment_id: str, k: int = 5) -> dict:
     """Project a rated segment into C-space and return its nearest corpus neighbours."""
     m = _projection()
-    # Consensus from the cohort the frame was fitted on (older models carry no version
-    # and fall back to the segment's newest) — never pooled across anchor revisions.
+    # Consensus from the cohort and rater panel the frame was fitted on (older models
+    # carry neither and fall back to the segment's newest ratings from every rater) —
+    # never pooled across anchor revisions, never shifted by a partial-coverage rater.
     values = projection.consensus_for_segment(
-        segment_id, m.axis_ids, axes_version=m.d.get("axes_version")
+        segment_id,
+        m.axis_ids,
+        axes_version=m.d.get("axes_version"),
+        raters=m.d.get("raters"),
     )
     if values is None:
         raise HTTPException(status_code=404, detail="segment has no ratings to project")

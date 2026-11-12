@@ -93,7 +93,8 @@ are the follow-ups the numbers themselves argue for._
 > rating and asserts the newer value is the one used.
 
 - [x] **M5 — Re-anchor L1 & L3.** M2 found these two absolute-ambiguous: within-1
-  agreement **0.40**, |Δ| ≈ 1.6 — yet Spearman ≈ 0.75. The raters *rank* segments
+  agreement **0.40**, |Δ| ≈ 1.6 — yet Spearman ≈ 0.75 (0.86 and 0.81 once ties are ranked
+  properly; see the correction below). The raters *rank* segments
   together but use the 1–7 scale differently, so the fault is the anchors, not the axis.
   Rewrite both in `axes.yaml` with countable referents and worked exemplars at 1/4/7
   (L1: diction rarity with example words; L3: propositions-per-sentence with a worked
@@ -115,13 +116,20 @@ are the follow-ups the numbers themselves argue for._
   cohorts never pooled, loader + consensus tests). Two anchor revisions run (v2, v3;
   ~180 paid calls): **L3 0.40 → 0.67 → 0.83 ✓** (passes the gate with room). **L1
   0.40 → 0.37 → 0.30 ✗** — both raters recalibrated downward in lockstep while the
-  +1.8 offset stayed frozen and Spearman held ~0.75: the miscalibration is
-  rater-relative vocabulary, not anchor wording. Per the stop rule L1 is flagged as a **candidate for splitting or
-  retirement** before M6's ~300-call run. Finding: **N3 destabilized without its anchors changing**
-  (0.73 → 0.60 → 0.40, offset growing, Spearman 0.38–0.49) — within-1 at n=30 carries
-  real run-to-run variance; N3 joins the watch list. All other axes within −0.10 of
-  their v1 baseline. Report: `reliability/report.md` (v1 vs v3 side by side, columns
-  labelled by `axes_version`).
+  +1.8 offset stayed frozen: the miscalibration is rater-relative vocabulary, not anchor
+  wording. Per the stop rule L1 is flagged as a **candidate for splitting or retirement**.
+  Finding: **N3 destabilized without its anchors changing** (0.73 → 0.60 → 0.40, offset
+  growing) — N3 joins the watch list. All other axes within −0.10 of their v1 baseline.
+  Report: `reliability/report.md` (v1 vs v3 side by side, columns labelled by
+  `axes_version`).
+  **Corrected 2026-11-11.** The Spearman figures first published here ("held ~0.75" for
+  L1, "0.38–0.49" for N3) came from a rank routine that ignored ties and were off by up to
+  0.17. Recomputed: L1 rank agreement **fell** with re-anchoring, **0.86 → 0.71 → 0.72**,
+  so the revisions made the raters order segments *less* alike while the offset stayed
+  put; L3 rose 0.81 → 0.78 → **0.88**; N3 drifted 0.60 → 0.54 → 0.45. The diagnosis
+  behind M5 stands and is stronger than reported; the verdict on L1 is worse. Restoring
+  L1's original anchors joins splitting and retirement as an option. See
+  `docs/reliability-notes.md`.
 
 - [x] **M6 — Grow the pilot corpus past n=30.** With 27 scalar features, n=30 makes the
   PCA provisional. Extend `scripts/corpus_specs.json` toward **n ≈ 100** — more profiles,
@@ -146,17 +154,26 @@ are the follow-ups the numbers themselves argue for._
   *Eight* at this breadth. PC1 is still the interiority factor (C5/C3/C1 recur) but its
   composition shifted (L2, C2 in; S4, N4, P5 out). Cutting the other way, and weightier:
   **split-half stability rose 0.505 → 0.679** (PC1 0.75 → 0.87, PC2 0.49 → 0.84), so n=30
-  was fitting noise; and the **public-domain segments load the same structure** (loading
-  match |r| **0.95–0.999**) — the factors are not a generator artifact, though PD prose
-  sits lower on Valence (−0.99) and Event Density (−0.77), higher on Cognitive
-  Transparency (+0.82) (indicative only at n=15). Twin consistency held: every twin is in
+  was fitting noise. Public-domain prose sits lower on Valence (−0.99) and Event Density
+  (−0.77), higher on Cognitive Transparency (+0.82). Twin consistency held: every twin is in
   its partner's **top 5 of 100** (median rank 1, mean 1.9; strict nearest-neighbour 15/26,
   diluted by a 3× denser space). Agreement improved on the wider corpus — **L1 0.30 →
   0.52**, N3 0.40 → 0.55 — supporting the small-n-noise reading of M5's regressions.
   Also fixed here: the before/after comparison now runs **like-for-like** over segments
   rated under both cohorts (it had begun mixing an anchor change with a composition
   change; on that basis only N3 regressed, matching M5). Corpus design notes and the
-  coverage judge's honest thin-spot list: `docs/m6-corpus-design-notes.md`.
+  list of what is still thin: `docs/m6-corpus-design-notes.md`.
+  **Corrected 2026-11-11 — the generator question is answered the other way.** I first
+  reported here that the public-domain segments "load the same structure (loading match
+  |r| 0.95–0.999) — the factors are not a generator artifact". That test compared a fit
+  on the 85 model-written segments with a fit on all 100, 85 of which are the same rows;
+  it could not have failed. The out-of-sample replacement: five factors fitted on
+  model-written segments capture **66%** of the variance in held-out model-written
+  segments and **52%** in the public-domain passages (lower in 199 of 200 seeded splits;
+  **0.11** of the gap survives matching on how extreme a segment is; n=15, indicative).
+  **The structure is partly a property of the generated corpus**, and the residual for
+  prose no model wrote is nearer a half than a third. More non-model prose is the
+  obvious next step for the corpus. See `docs/reliability-notes.md`.
 
 - [ ] **M7 — Add a human rater.** Reliability today is two models agreeing. Add a manual
   scoring mode to the Rater Studio (anchors + watch-fors visible per axis, confidence
@@ -170,15 +187,26 @@ are the follow-ups the numbers themselves argue for._
   columns, and a 3-rater fixture test asserts three pairwise columns. Name the axes where
   human and model diverge most — that divergence is **data, not error** (Charter P2), and
   is not to be "corrected".
-  **◐ apparatus built & verified 2026-07-19 — box stays unchecked until a human rater scores.**
-  Shipped: `POST /api/rate/manual` (human, no model call, `human:<name>`), a **Human
-  scoring mode** in the Rater Studio (anchors/exemplars/watch-fors per axis, confidence
-  required, save-gated on all 30), `human_model_divergence` in the report, and the
-  **3-rater fixture test** (three pairwise columns, human ragged at n=4 of 10) — all green
-  (backend 87, frontend 8), browser-verified against the live backend. The remaining step
-  is the human's: a **model must not hand-score as `human:*`** (Charter P2), so M7
-  completes only when the human scores ≥ 8 segments and the report's human↔model columns
-  are read. **This is the Phase 4 → Phase 5 boundary — stop and check before any v2 layer.**
+  **◐ tooling built & verified — box stays unchecked until the hand-scoring is done.**
+  Shipped 2026-07-19: `POST /api/rate/manual` (no model call, stored as `human:<name>`),
+  a **Human scoring mode** in the Rater Studio (definition, anchors, and watch-fors per
+  axis; confidence required; save gated on all 30), `human_model_divergence` in the
+  report, and the **3-rater fixture test** (three pairwise columns, the human rater
+  ragged at n=4 of 10).
+  Hardened 2026-11-11, before any human rating existed: scoring is now **blind** (opaque
+  segment codes, no model scores — an id like `baroque-memory` or an author's name would
+  prime the judgments being measured); scores no longer carry over from one segment to
+  the next; a per-segment draft survives leaving the page; the passage sits beside the
+  axes; and a first set of twelve segments is fixed in brief space. On the analysis side
+  a partial-coverage rater is now **compared against the consensus panel, never pooled
+  into it**, the per-axis headline weights rater pairs by n, and before/after comparisons
+  hold the rater set fixed — three things that would otherwise have shifted the numbers
+  the moment a rater covering only part of the corpus appeared. Backend 96 tests,
+  frontend 12.
+  What remains is the scoring itself: a **model must not score as `human:*`** (Charter
+  P2), so M7 completes when I have hand-scored ≥ 8 segments and read the report's
+  human↔model columns. **This is the Phase 4 → Phase 5 boundary — no v2 layer starts
+  before it.**
 
 ## Phase 5 — v2 layers (blueprint L4–L7 + D3)
 

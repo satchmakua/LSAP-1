@@ -371,108 +371,272 @@ header h1 {
   line-height: 1.6;
 }
 
-/* --- M7: human scoring mode --- */
+/* --- human scoring mode --- */
+
+/* Scoring wants the passage and the axes side by side, so this mode uses a wider page. */
+.app.app-wide {
+  max-width: 1500px;
+}
+
 .mode-switch {
   display: inline-flex;
   gap: 0.25rem;
   margin: 0 0 0.75rem;
 }
-.mode-switch button {
+
+.mode-switch button,
+.mr-bar button,
+.mr-save button {
+  font: inherit;
   font-size: 0.85rem;
   padding: 0.3rem 0.8rem;
-  border: 1px solid #cbd5e0;
-  background: #fff;
-  color: #4a5568;
-  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
   cursor: pointer;
 }
-.mode-switch button.active {
+
+.mode-switch button.active,
+.mr-save button:not(:disabled) {
   background: #2b6cb0;
   border-color: #2b6cb0;
   color: #fff;
 }
-.manual-rater .segment-text {
-  margin: 0.5rem 0 1rem;
-  font-size: 0.85rem;
+
+.mr-save button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
-.manual-rater .segment-body {
-  max-height: 16rem;
+
+.mr-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.mr-bar input[aria-label='rater name'],
+.mr-bar select {
+  font: inherit;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+}
+
+.mr-bar select {
+  max-width: 20rem;
+}
+
+.mr-progress {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.mr-progress.done {
+  color: #2f855a;
+  opacity: 1;
+}
+
+.mr-unblind {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+.mr-saved {
+  border: 1px solid rgba(47, 133, 90, 0.5);
+  background: rgba(47, 133, 90, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+.mr-note {
+  font-size: 0.85rem;
+  color: #b7791f;
+  margin: 0;
+}
+
+/* The passage stays in view while the axes scroll past it. */
+.mr-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.mr-text {
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.mr-text h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.mr-words {
+  font-weight: normal;
+  opacity: 0.6;
+}
+
+.mr-text-body {
   overflow-y: auto;
   white-space: pre-wrap;
-  line-height: 1.55;
-  padding: 0.6rem 0.8rem;
-  background: #f7fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  margin-top: 0.4rem;
+  line-height: 1.65;
+  font-size: 0.95rem;
 }
-.axis-score-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+
+.mr-axes {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.mr-field {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
-.axis-score {
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 0.55rem 0.7rem;
-  background: #fff;
+
+.mr-field > h3 {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
 }
-.axis-score .axis-head {
+
+.mr-axis {
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-left: 3px solid rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+}
+
+.mr-axis.done {
+  border-left-color: #2f855a;
+}
+
+.mr-axis header {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
   align-items: baseline;
+  gap: 0.4rem;
 }
-.axis-score .axis-def {
-  flex-basis: 100%;
-  font-size: 0.78rem;
-  color: #4a5568;
+
+.mr-def {
+  margin: 0.25rem 0 0.4rem;
+  font-size: 0.82rem;
+  opacity: 0.85;
 }
-.axis-score .anchors {
+
+.mr-anchors {
+  margin: 0 0 0.4rem;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
-  margin: 0.4rem 0;
-  font-size: 0.75rem;
-  color: #2d3748;
+  gap: 0.2rem;
+  font-size: 0.78rem;
 }
-.axis-score .watch-for {
-  font-size: 0.72rem;
-  color: #718096;
-  margin-bottom: 0.4rem;
+
+.mr-anchors > div {
+  display: grid;
+  grid-template-columns: 1.2rem minmax(0, 1fr);
+  gap: 0.4rem;
 }
-.axis-score .pick {
+
+.mr-anchors dt {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.mr-anchors dd {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.mr-watch {
+  margin: 0 0 0.4rem;
+  font-size: 0.74rem;
+  opacity: 0.65;
+}
+
+.mr-pick {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.3rem;
   margin-top: 0.3rem;
 }
-.axis-score .pick-label {
+
+.mr-pick-label {
+  width: 5.2rem;
   font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: #718096;
-  width: 5rem;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
 }
-.axis-score button.chip {
-  border: 1px solid #cbd5e0;
-  background: #fff;
-  color: #2d3748;
+
+.mr-pick button {
+  font: inherit;
+  font-size: 0.82rem;
+  min-width: 2rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(128, 128, 128, 0.45);
+  background: transparent;
+  color: inherit;
+  border-radius: 5px;
   cursor: pointer;
-  min-width: 1.8rem;
-  text-transform: none;
-  letter-spacing: normal;
 }
-.axis-score button.chip.sel {
+
+.mr-pick button.sel {
   background: #2b6cb0;
   border-color: #2b6cb0;
   color: #fff;
 }
-.axis-score button.conf-chip.sel {
+
+.mr-pick button.conf.sel {
   background: #b7791f;
   border-color: #b7791f;
+}
+
+.mr-conf-hint {
+  font-size: 0.7rem;
+  opacity: 0.5;
+  margin-left: 0.3rem;
+}
+
+.mr-save {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  background: Canvas;
+  border-top: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+/* Narrow screens: stack, and let the passage scroll in a shorter box above the axes. */
+@media (max-width: 900px) {
+  .mr-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mr-text {
+    position: static;
+    max-height: 45vh;
+  }
 }

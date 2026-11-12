@@ -169,10 +169,18 @@ class AxisScore(BaseModel):
 class Rating(BaseModel):
     segment_id: str
     rater_id: str                  # "claude-opus-4-8" | "claude-haiku-4-5" | "human:sh"
+    axes_version: int = 1          # the anchor revision this was scored under
     scores: list[AxisScore]        # exactly 30, in fixed field order L→N→C→P→A→S
     flagged: bool                  # True if confidence<=2 on >40% of axes -> review
     created_at: str                # ISO 8601, injected by caller (no wall-clock in pure code)
 ```
+
+**Anchor revisions are versioned.** `axes.yaml` carries a `version`, and every `Rating` is
+stamped with the `axes_version` it was scored under. Rewording an anchor changes what a
+score *means*, so analysis never pools ratings across versions: each version is a cohort.
+Ratings are append-only and selection is newest-wins per rater and segment within a
+cohort, so a re-rate supersedes an earlier one without rewriting history. (The registry is
+at version 3: M5 re-anchored L1 and L3 with countable referents.)
 
 The 30 axes (blueprint §6), five per field:
 - **L** Lexical Complexity · Syntactic Depth · Semantic Density · Imagery Mode · Repetition Pattern
@@ -252,13 +260,24 @@ cashing in.** Quadrupling the corpus and widening its brief space did *not* repr
 pilot's tidy result: **PC1 fell 44.8% → 33.8%**, five factors now explain **70.9%** (was
 79.4%), the **C6 residual grew 20.6% → 29.1%**, and **8 components** are needed for 80%
 (was 6). The "Literary Big Five" is weaker than the pilot implied — at this corpus breadth
-it is closer to a Big Eight. Two things cut the other way, and matter more than the
+it is closer to a Big Eight. One thing cuts the other way, and matters more than the
 variance share: the factors became far more **reproducible** (split-half loading
 agreement 0.505 → 0.679; PC1 0.75 → 0.87, PC2 0.49 → 0.84), i.e. n=30 was fitting noise
-it could not have known it was fitting; and the non-model-written segments load the
-**same structure** (loading match |r| 0.95–0.999), so the factors are not an artifact of
-the generator. The design keeps five locked factors plus the acknowledged residual; the
-residual is simply now carrying an honest 29%.
+it could not have known it was fitting. But the structure is **partly a property of the
+generated corpus**: out of sample, five factors fitted on the model-written segments
+capture 66% of the variance in held-out model-written segments and only 52% in the fifteen
+public-domain passages (0.11 of that gap survives matching on how extreme a segment is;
+n=15, so indicative). An earlier version of this section claimed the reverse from an
+in-sample comparison of loadings that could not have failed; the correction and the method
+are in [docs/reliability-notes.md](docs/reliability-notes.md). The design keeps five
+locked factors plus the acknowledged residual — which now carries an honest 29% overall,
+and nearer half for prose no model wrote.
+
+**One rater panel per fit.** The consensus that feeds the PCA averages only raters
+covering at least 90% of the segments, and the fitted model records that panel. A rater
+with partial coverage — a person who has scored eight segments — is compared against the
+panel, never pooled into it; otherwise a segment's position would depend on who happened
+to rate it.
 
 ### 4.3 The firewall invariant (Charter Principle 4) — a structural, tested rule
 
@@ -340,13 +359,43 @@ def rate(segment: str, rater: str, axes: list[AxisDef]) -> Rating: ...
 # manual + axes serialized into the system prompt; segment in the user turn.
 ```
 
+**A person scores through the same contract.** `POST /api/rate/manual` stores a
+`human:<name>` rating of an existing corpus segment with no model call, assembled by the
+same `build_rating` the model path uses (all 30 axes present, values clamped to range).
+Human scoring is **blind**: the model raters see only the text, so the Rater Studio lists
+segments under opaque codes rather than ids and never shows a model score — an id such as
+`baroque-memory`, or an author's name, would prime the very judgments being measured. A
+model must never write a `human:*` rating; that would fabricate the comparison the human
+rater exists to provide.
+
 ### 6.2 Reliability (`coordinates/reliability.py`)
 
-Over the rated corpus: inter-rater agreement per axis (weighted κ / Krippendorff's α on
-ordinal axes; exact-match rate on forced-choice), the 30×30 axis correlation matrix, and
-the PCA fit. Output is a report (numbers + a notebook) that answers: which axes are
-reliable, which are redundant (merge), which are ambiguous (redesign), and what the latent
-structure is.
+Over the rated corpus: inter-rater agreement per axis (within-1 rate, Spearman on
+average ranks, and quadratic-weighted κ on ordinal axes; exact-match rate and κ on
+forced-choice), the axis correlation matrix, and the PCA fit. Output is a report that
+answers: which axes are reliable, which are redundant (merge), which are ambiguous
+(redesign), and what the latent structure is. The rules that keep it honest:
+
+- **Per pair, pairwise-complete.** Agreement is computed for every pair of raters over
+  the segments both scored, so a rater with partial coverage still counts. The per-axis
+  headline weights pairs by their n.
+- **One cohort, one panel.** A report covers one `axes_version`, and the consensus behind
+  the correlation matrix and PCA comes from the rater panel (§4.2).
+- **Like-for-like comparisons.** Before/after an anchor revision is compared over the
+  segments and raters both cohorts share, so corpus growth cannot pass for an anchor
+  effect.
+- **Stability, not just fit.** Split-half loading stability (PCA on two random halves,
+  seeded) is reported beside explained variance.
+- **Origin, out of sample.** Segments carry an `origin` in their frontmatter
+  (model-written by default; `public-domain` for the control passages). Whether factors
+  fitted on one origin describe the other is tested on held-out data.
+- **Twin rank** (reported when the projection is fitted). Each twin-pair member's rank
+  among all other segments by distance, which stays comparable as the corpus grows where
+  a nearest-neighbour hit rate does not.
+- **Human↔model divergence is reported, never corrected** (Charter P2).
+
+Method detail, current results, and corrections:
+[docs/reliability-notes.md](docs/reliability-notes.md).
 
 ### 6.3 The engine (`engine/`)
 
@@ -397,7 +446,10 @@ Three surfaces, one feel-good loop each. Local web app, single window, tabbed.
 - **Rater Studio** — paste/select a segment → "Rate" → the 30 axes render as a grouped
   bar/heat strip colored by **confidence**, forced-choice axes as chips, low-confidence
   axes flagged. Side-by-side column when a second rater exists, with agreement highlighted.
-  *The loop:* watch a passage become legible numbers.
+  *The loop:* watch a passage become legible numbers. A **Human scoring** mode puts the
+  passage beside the 30 axes — each with its definition, anchors, and watch-fors — and
+  takes a value and a confidence per axis. It is blind (opaque segment codes, no model
+  scores), keeps a per-segment draft, and offers a fixed first set chosen in brief space.
 - **C-Space Map** — a 2-D projection (choose which two C-axes, or PCA-2D) scatter of the
   corpus; the current segment is a highlighted dot with its nearest neighbors labeled;
   optional trajectory line for a multi-segment work. *The loop:* "where does this sit, and

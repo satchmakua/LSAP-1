@@ -1,9 +1,75 @@
 # M6 corpus-design notes (brief space)
 
-The 55 new briefs (corpus_specs.json entries 31-85) were designed in BRIEF space -
-five designers each covering a contrast region the existing 30 under-covered
-(comic/positive-valence, polyphony/dialogue, discursive/formal, exterior action,
-perspective/time), then curated by a coverage judge. Charter P1: no C-space
-positions were consulted. Coverage judge notes, verbatim:
+How the 55 briefs added in M6 (`backend/scripts/corpus_specs.json`, entries 31–85) were
+chosen, what they cover, and what they still leave thin.
 
-The final 55 keep nine verbatim twin pairs (farce, toast, chorus, testimony, aphorism, marginalia, surge, crew, vain) and attack every named gap: polyphony via at least a dozen structurally distinct mechanisms (labeled testimony, transcript, noticeboard, guestbook, marginalia, nested frames, dueling co-narrators, collective we, crowd-narrator, radio phone-in, overlapping work crews); positive valence across registers from farce and mock-epic to communal triumph, craft absorption, prophetic warmth, and quiet interior joy; dialogue dominance (farce, crews, banter, disputation, transcript, quiz, siblings); discursive/formal experiment (aphorisms, encyclopedia, glossary, recipe, decaying manual, field notes, satirical shareholder letter, sermon); and rhythm/sentence-length variance from metronomic uniformity (glass-furnace) through whipsaw and dilation extremes (pit-twelve, caper, recipe) to near-unpunctuated run-on (one-breath-beach). Classic poles get fresh members too: compression (fieldnotes, aphorisms, pickup-court) vs expansion (epic-lawn, sermon, surge pair, eve-keys), linear real-time (quiz-tiebreak, crews) vs fragmented/nonlinear (mosaic-jigsaw, glossary, chronicle compression, nested frames), and exterior (surge, pit, crow) vs interior (eve-keys, giddy-bus, vain pair, alibi). I dropped the p_pers_we pair outright — its profile nearly duplicated p_poly_chorus and its pool situation collided with chorus-pool — replacing it with eve-keys (joyful deep interiority, previously absent: all existing high-interiority briefs are grief/dread) and mosaic-jigsaw (warm fragmentation, contrasting the existing dread-toned frag pair); triumph-relay was dropped as redundant with the pickup-court/terrace-roar/call-derby sports-triumph cluster and replaced by the one-breath-beach syntactic extreme. Situation-level near-duplicates were rewritten in place with profiles preserved: second ferry to night train (testimony-train), second village emergency meeting to an apartment co-op (coop-bicycles), a third wedding-toast scene to a family holiday letter (holiday-letter), a second harvest scene to a barn raising (frame-raising), the wedding-day prophecy to a first school day (future-firstday), cookbook marginalia to a guesthouse visitors' book (guestbook-cliff, colliding with recipe-dumpling), and the sunken fishing boat to a buried piano (duet-piano, thinning a heavy maritime cluster). Remaining thin spots, honestly: no new members at the negative-valence, ontological-instability, or epistemic-dread extremes (deliberate, since the existing 30 over-supply them), so anger/rage is still near-absent corpus-wide and polyphony is now almost entirely comic or warm — a grave or tragic multi-voice text does not exist anywhere in the corpus; high imagery-abstraction arrives only through the aphorism pair and satire-report; and small-community/rural-comic settings (village, allotment, harbor, chapel, pub) recur across many briefs, a setting-register cluster the rater may partially confound with structural warmth. Deep-subordination-plus-dark-affect and fragmented-plus-dread remain represented only by the original corpus, which is acceptable but means those cells gain no replication from this batch.
+**The rule.** New briefs were designed in *brief space* — by structural profile, against
+the profiles already in the corpus — and never by where a segment would land in the fitted
+coordinate space. Picking gaps out of `coordinates/model.json` and refitting on the result
+would be circular and would treat the frame as true (Charter P1). C-space coverage is
+reported afterwards as an outcome; it was not an input.
+
+## What the original 30 under-covered
+
+The pilot corpus leaned on dread, grief, and unease, on single-voice narration, and on a
+literary-fiction register. Polyphony never left its floor and the positive half of Valence
+was barely populated. The new briefs target five regions:
+
+| Region | What it adds |
+|---|---|
+| Comic and positive-valence | farce, mock-epic, satire, banter, communal warmth, plain joy |
+| Polyphony and dialogue | many simultaneous voices, by a dozen structurally distinct routes |
+| Discursive and formal | aphorism, encyclopedia, glossary, recipe, manual, field notes, sermon |
+| Exterior action | sport, craft, labour, and rescue at varied sentence rhythms, without dread |
+| Perspective and time | unreliable narrators, first-person plural, future tense, nested frames |
+
+## What the final 55 cover
+
+- **Polyphony** through labelled testimony, transcript, noticeboard, guestbook,
+  marginalia, nested frames, duelling co-narrators, a collective "we", a crowd narrator,
+  a radio phone-in, and overlapping work crews.
+- **Positive valence** across registers: farce and mock-epic, communal triumph, craft
+  absorption, prophetic warmth, quiet interior joy.
+- **Dialogue dominance**: farce, crews, banter, disputation, transcript, quiz, siblings.
+- **Discursive and formal experiment**: aphorisms, encyclopedia, glossary, recipe,
+  a decaying manual, field notes, a satirical shareholder letter, a sermon.
+- **Rhythm and sentence-length variance**, from metronomic uniformity (`glass-furnace`)
+  through whipsaw and dilation extremes (`pit-twelve`, `caper-carousel`,
+  `recipe-dumpling`) to near-unpunctuated run-on (`one-breath-beach`).
+- **Fresh members at the classic poles** too: compression vs expansion, linear real-time
+  vs fragmented, exterior vs interior.
+
+Nine new twin pairs (same profile verbatim, different scene) bring the corpus to thirteen:
+farce, toast, chorus, testimony, aphorism, marginalia, surge, crew, vain.
+
+## What I cut or changed, and why
+
+- Dropped a first-person-plural twin pair whose profile nearly duplicated the chorus pair
+  and whose scene collided with `chorus-pool`. Replaced it with `eve-keys` (joyful deep
+  interiority — every earlier high-interiority brief was grief or dread) and
+  `mosaic-jigsaw` (warm fragmentation, against the dread-toned fragment pair).
+- Dropped a relay-race triumph as redundant with three other sports-triumph briefs;
+  replaced it with the `one-breath-beach` syntactic extreme.
+- Rewrote seven scenes that sat too close to another brief while keeping their profiles:
+  a second ferry became a night train, a second village meeting an apartment co-op, a
+  third wedding toast a family holiday letter, a second harvest a barn raising, a
+  wedding-day prophecy a first school day, cookbook marginalia a guesthouse visitors'
+  book, and a sunken fishing boat a buried piano (which also thinned a heavy maritime
+  cluster).
+
+## What is still thin
+
+- **Anger and rage are near-absent corpus-wide.** No new briefs went to the
+  negative-valence, ontological-instability, or epistemic-dread extremes, deliberately,
+  because the original 30 over-supply them — but that leaves anger unrepresented.
+- **Polyphony is now almost entirely comic or warm.** There is no grave or tragic
+  multi-voice text anywhere in the corpus.
+- **High imagery-abstraction** arrives only through the aphorism pair and
+  `satire-report`.
+- **Small-community and rural-comic settings recur** (village, allotment, harbour,
+  chapel, pub) — a setting cluster a rater may partly confound with structural warmth.
+- **Deep subordination with dark affect, and fragmentation with dread,** are still
+  represented only by the original corpus, so those cells gained no replication.
+
+These gaps bound what the n=100 fit can be said to describe, and they are the first
+places to look when the corpus grows again.

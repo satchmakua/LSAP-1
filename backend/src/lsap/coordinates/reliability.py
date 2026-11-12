@@ -25,16 +25,27 @@ from sklearn.metrics import cohen_kappa_score
 from sklearn.preprocessing import StandardScaler
 
 from lsap import storage
+from lsap.coordinates.projection import PANEL_MIN_COVERAGE, consensus_panel
 from lsap.instrument.schema import AxisDef, load_axes, load_axes_version
 
 # ---- pure metrics (unit-tested offline) --------------------------------------------
 
 
+def _average_ranks(x: np.ndarray) -> np.ndarray:
+    """1-based ranks with tied values sharing their average rank — the standard Spearman
+    convention. Ordinal 1–7 scores are almost all ties, so the tie rule is not a detail:
+    breaking ties by position (argsort of argsort) moved rho by up to 0.17 on real data."""
+    x = np.asarray(x, dtype=float)
+    order = np.argsort(x, kind="mergesort")
+    ranks = np.empty(len(x), dtype=float)
+    ranks[order] = np.arange(1, len(x) + 1)
+    _, inverse, counts = np.unique(x, return_inverse=True, return_counts=True)
+    return np.bincount(inverse, weights=ranks)[inverse] / counts[inverse]
+
+
 def _spearman(a: np.ndarray, b: np.ndarray) -> float:
-    """Spearman rho = Pearson on ranks. Returns 0.0 when either side is constant."""
-    ar = np.argsort(np.argsort(a)).astype(float)
-    br = np.argsort(np.argsort(b)).astype(float)
-    return _pearson(ar, br)
+    """Spearman rho = Pearson on average ranks. Returns 0.0 when either side is constant."""
+    return _pearson(_average_ranks(a), _average_ranks(b))
 
 
 def _pearson(a: np.ndarray, b: np.ndarray) -> float:
@@ -162,34 +173,87 @@ def split_half_stability(
     }
 
 
-def origin_structure_comparison(
-    m: np.ndarray, origins: list[str], axis_ids: list[str], *, n_components: int = 5
+def origin_generalization(
+    m: np.ndarray,
+    origins: list[str],
+    axis_ids: list[str],
+    *,
+    n_components: int = 5,
+    n_splits: int = 200,
+    seed: int = 0,
 ) -> dict | None:
-    """Does the non-model-written subset share the model-written corpus's structure (M6)?
+    """Do factors fitted on the majority origin describe the minority as well as they
+    describe held-out majority segments (M6)?
 
-    Compares PCA loadings fitted on the majority origin alone vs on everything, and
-    reports per-axis consensus offsets (minority mean − majority mean). With a small
-    minority n this is indicative, not conclusive — the caveat ships in the report."""
+    An out-of-sample test, because the in-sample one cannot fail: loadings fitted on the
+    majority alone always resemble loadings fitted on majority + a small minority, since
+    most of the rows are shared. Here each seeded split holds out as many majority
+    segments as there are minority ones, fits scaler + PCA on the rest, and measures the
+    share of variance the factors capture in (a) the held-out majority and (b) the
+    minority, under the identical fit. A gap means the minority carries variance the
+    factors do not describe — the structure is partly a property of the majority origin.
+
+    Extremity confounds the raw gap (segments near the centroid are proportionally
+    noisier and captured less), so a second gap restricts the held-out majority to the
+    minority's own extremity range. Small minority n: indicative, not conclusive.
+    """
     counts = {o: origins.count(o) for o in set(origins)}
     if len(counts) < 2:
         return None
     major = max(counts, key=lambda o: counts[o])
-    minor_n = sum(v for o, v in counts.items() if o != major)
-    if minor_n < 5 or counts[major] < 10:
-        return None
     x = np.asarray(m, dtype=float)
     is_major = np.array([o == major for o in origins])
-    k = int(min(n_components, int(is_major.sum()) - 1, x.shape[1]))
-    pca_major = PCA(n_components=k).fit(StandardScaler().fit_transform(x[is_major]))
-    pca_all = PCA(n_components=k).fit(StandardScaler().fit_transform(x))
-    matched = _match_components(pca_major.components_, pca_all.components_)
-    offsets = x[~is_major].mean(axis=0) - x[is_major].mean(axis=0)
+    maj, mnr = x[is_major], x[~is_major]
+    n_min = len(mnr)
+    k = int(min(n_components, len(maj) - n_min - 1, x.shape[1]))
+    if n_min < 5 or len(maj) - n_min < 10 or k < 1:
+        return None
+
+    rng = np.random.default_rng(seed)
+    hold_cap, min_cap = [], []  # pooled capture per split
+    hold_norm, hold_seg, min_norm, min_seg = [], [], [], []  # per-segment, for matching
+    for _ in range(n_splits):
+        idx = rng.permutation(len(maj))
+        hold, train = idx[:n_min], idx[n_min:]
+        scaler = StandardScaler().fit(maj[train])
+        comps = PCA(n_components=k).fit(scaler.transform(maj[train])).components_
+        for rows, caps, norms, segs in (
+            (maj[hold], hold_cap, hold_norm, hold_seg),
+            (mnr, min_cap, min_norm, min_seg),
+        ):
+            z = scaler.transform(rows)
+            total = (z**2).sum(axis=1)
+            kept = ((z @ comps.T) ** 2).sum(axis=1)
+            caps.append(float(kept.sum() / total.sum()))
+            norms.extend(total)
+            segs.extend(kept / np.where(total == 0, 1.0, total))
+    hold_cap_a, min_cap_a = np.array(hold_cap), np.array(min_cap)
+    hold_norm_a, hold_seg_a = np.array(hold_norm), np.array(hold_seg)
+    min_norm_a, min_seg_a = np.array(min_norm), np.array(min_seg)
+    in_range = (hold_norm_a >= min_norm_a.min()) & (hold_norm_a <= min_norm_a.max())
+    matched_gap = (
+        float(hold_seg_a[in_range].mean() - min_seg_a.mean()) if in_range.any() else None
+    )
+
+    offsets = mnr.mean(axis=0) - maj.mean(axis=0)
     order = np.argsort(-np.abs(offsets))[:5]
+
+    def _summary(a: np.ndarray) -> dict:
+        lo, hi = np.percentile(a, [5, 95])
+        return {"mean": round(float(a.mean()), 3), "p05": round(float(lo), 3),
+                "p95": round(float(hi), 3)}
+
     return {
         "majority_origin": major,
-        "n_majority": int(is_major.sum()),
-        "n_minority": minor_n,
-        "loading_match_abs_r": [round(float(v), 3) for v in matched],
+        "n_majority": int(len(maj)),
+        "n_minority": int(n_min),
+        "n_components": k,
+        "n_splits": n_splits,
+        "captured_holdout_majority": _summary(hold_cap_a),
+        "captured_minority": _summary(min_cap_a),
+        "gap": round(float((hold_cap_a - min_cap_a).mean()), 3),
+        "gap_matched_on_extremity": None if matched_gap is None else round(matched_gap, 3),
+        "minority_lower_in_share_of_splits": round(float((min_cap_a < hold_cap_a).mean()), 3),
         "top_axis_offsets": [[axis_ids[i], round(float(offsets[i]), 2)] for i in order],
     }
 
@@ -284,12 +348,16 @@ def build_report(
     source: str = "pilot",
     axes_version: int | None = None,
     only_segments: set[str] | None = None,
+    only_raters: set[str] | None = None,
 ) -> dict:
     if axes_version is None:
         axes_version = load_axes_version()
     seg_ids, values, confidence, meta = load_rater_matrices(
         axes, source=source, axes_version=axes_version, only_segments=only_segments
     )
+    if only_raters is not None:  # compare cohorts over the raters they share
+        values = {r: m for r, m in values.items() if r in only_raters}
+        confidence = {r: m for r, m in confidence.items() if r in only_raters}
     raters = sorted(values)
     axis_ids = [a.id for a in axes]
     kind = {a.id: a.kind for a in axes}
@@ -327,7 +395,7 @@ def build_report(
         m["n"] = int(both.sum())
         return m
 
-    # per-axis agreement, one entry per rater pair + a headline mean across pairs
+    # per-axis agreement, one entry per rater pair + an n-weighted headline across pairs
     agree: dict[str, dict] = {}
     for aid in axis_ids:
         per_pair: dict[str, dict] = {}
@@ -343,24 +411,32 @@ def build_report(
             "mean_confidence": round(float(conf_ok.mean()), 2) if conf_ok.size else float("nan"),
             "pairs": per_pair,
         }
-        # Headline metrics = mean across pairs, so the verdict and the printed report stay
-        # one-dimensional while the per-pair detail is preserved underneath.
+        # Headline metrics = mean across pairs weighted by each pair's n, so the verdict
+        # and the printed report stay one-dimensional while the per-pair detail is kept
+        # underneath. Weighting matters once coverage is ragged: a pair that shares 8
+        # segments must not count as much as one that shares 100.
         metric_keys = {k for m in per_pair.values() for k in m if k != "n"}
         for key in metric_keys:
-            vals_ = [
-                m[key] for m in per_pair.values()
+            pts = [
+                (m[key], m["n"]) for m in per_pair.values()
                 if key in m and np.isfinite(m[key])
             ]
-            if vals_:
-                entry[key] = round(float(np.mean(vals_)), 4)
+            if pts:
+                vals_, weights = zip(*pts, strict=True)
+                entry[key] = round(float(np.average(vals_, weights=weights)), 4)
         agree[aid] = entry
     report["axis_agreement"] = agree
 
-    # consensus over scalar axes (mean across ALL raters) → correlation + PCA
+    # consensus over scalar axes (mean across the PANEL) → correlation + PCA
     scal_cols = [col[a] for a in scalar_ids]
-    stack = np.stack([values[r][:, scal_cols] for r in raters])  # (raters, segments, axes)
-    # Keep only segments where every scalar axis has at least one rater; ragged coverage
-    # would otherwise produce all-NaN means.
+    coverage = {
+        r: float((~np.isnan(values[r][:, scal_cols]).all(axis=1)).mean()) for r in raters
+    }
+    panel = consensus_panel(coverage)
+    report["consensus_raters"] = panel
+    stack = np.stack([values[r][:, scal_cols] for r in panel])  # (raters, segments, axes)
+    # Keep only segments where every scalar axis has at least one panel rater; ragged
+    # coverage would otherwise produce all-NaN means.
     complete = (~np.isnan(stack).all(axis=0)).all(axis=1)
     n_complete = int(complete.sum())
     report["n_segments_in_pca"] = n_complete
@@ -377,7 +453,7 @@ def build_report(
             split_half_stability(consensus) if n_complete >= 10 else None
         )
         origins = [(meta[s].get("origin") or "model") for s in kept]
-        report["origin_comparison"] = origin_structure_comparison(
+        report["origin_generalization"] = origin_generalization(
             consensus, origins, scalar_ids
         )
     else:
@@ -385,7 +461,7 @@ def build_report(
         report["pca"] = None
         report["twin_consistency"] = None
         report["split_half"] = None
-        report["origin_comparison"] = None
+        report["origin_generalization"] = None
 
     # verdicts
     reliable, ambiguous = [], []
@@ -447,8 +523,10 @@ def format_report(report: dict) -> str:
         f"   axes_version: {report.get('axes_version', 1)}",
         f"rater pairs: {', '.join(report.get('rater_pairs', [])) or '—'}"
         f"   segments in PCA: {report.get('n_segments_in_pca', '—')}",
+        f"consensus panel (raters covering >= {PANEL_MIN_COVERAGE:.0%} of segments): "
+        f"{', '.join(report.get('consensus_raters', [])) or '—'}",
         "",
-        "## Per-axis agreement, averaged across rater pairs"
+        "## Per-axis agreement, n-weighted across rater pairs"
         " (scalar: within-1 rate; forced-choice: exact-match)",
     ]
     nan = float("nan")
@@ -516,16 +594,27 @@ def format_report(report: dict) -> str:
             f"  |r| per component: {sh['mean_abs_r_per_component']}   "
             f"mean: {sh['mean_abs_r']}",
         ]
-    oc = report.get("origin_comparison")
-    if oc is not None:
+    og = report.get("origin_generalization")
+    if og is not None:
+        hm, mn = og["captured_holdout_majority"], og["captured_minority"]
+        matched = og["gap_matched_on_extremity"]
         lines += [
             "",
-            f"## Origin check — {oc['majority_origin']} (n={oc['n_majority']}) vs "
-            f"other origins (n={oc['n_minority']}; indicative only at this n)",
-            f"  loading match |r| ({oc['majority_origin']}-only fit vs all-fit): "
-            f"{oc['loading_match_abs_r']}",
+            f"## Origin check — do factors fitted on {og['majority_origin']}-written "
+            "segments describe the others?",
+            f"   ({og['majority_origin']} n={og['n_majority']} vs other origins "
+            f"n={og['n_minority']}; out-of-sample, {og['n_splits']} seeded splits; "
+            "indicative only at this n)",
+            f"  variance captured by {og['n_components']} factors — "
+            f"held-out {og['majority_origin']}: {hm['mean']:.3f} "
+            f"({hm['p05']:.3f}–{hm['p95']:.3f})   "
+            f"other origins: {mn['mean']:.3f} ({mn['p05']:.3f}–{mn['p95']:.3f})",
+            f"  gap: {og['gap']:+.3f}   matched on extremity: "
+            + ("—" if matched is None else f"{matched:+.3f}")
+            + f"   other origins lower in {og['minority_lower_in_share_of_splits']:.0%}"
+            " of splits",
             "  largest per-axis consensus offsets (minority − majority): "
-            + ", ".join(f"{a}({v:+.2f})" for a, v in oc["top_axis_offsets"]),
+            + ", ".join(f"{a}({v:+.2f})" for a, v in og["top_axis_offsets"]),
         ]
     t = report["twin_consistency"]
     if t is not None:
@@ -632,6 +721,16 @@ def main() -> None:
         if len(common) >= 2:
             before = build_report(axes, axes_version=prior[0], only_segments=common)
             after_same = build_report(axes, axes_version=current, only_segments=common)
+            # ...and over the raters both cohorts share: a rater added since (a human)
+            # would otherwise change the headline for reasons unrelated to the anchors.
+            shared = set(before.get("raters", [])) & set(after_same.get("raters", []))
+            if shared != set(before.get("raters", [])) | set(after_same.get("raters", [])):
+                before = build_report(
+                    axes, axes_version=prior[0], only_segments=common, only_raters=shared
+                )
+                after_same = build_report(
+                    axes, axes_version=current, only_segments=common, only_raters=shared
+                )
             if not before.get("error") and not after_same.get("error"):
                 report["before_after"] = compare_reports(before, after_same)
                 text += "\n" + format_comparison(report["before_after"])

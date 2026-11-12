@@ -33,27 +33,25 @@ def main() -> None:
         f"   C6 residual {model.residual * 100:.1f}%"
     )
 
-    groups: dict[str, list[dict]] = {}
-    for p in model.points:
-        if p.get("pair"):
-            groups.setdefault(p["pair"], []).append(p)
+    print(f"  consensus panel: {', '.join(model.d.get('raters') or ['(all raters)'])}")
 
-    print("\ntwin-pair nearest-neighbour check:")
-    hits = total = 0
-    for _group, members in sorted(groups.items()):
-        if len(members) != 2:
-            continue
-        for p in members:
-            total += 1
-            twin = next(m["segment_id"] for m in members if m["segment_id"] != p["segment_id"])
-            nn = model.neighbors(p["scores"], k=1, exclude=p["segment_id"])[0]
-            ok = nn.segment_id == twin
-            hits += int(ok)
-            print(
-                f"  {'OK  ' if ok else 'MISS'} {p['segment_id']:20} nearest={nn.segment_id:20}"
-                f" (twin={twin}) d={nn.distance}"
-            )
-    print(f"\ntwin nearest-neighbour hits: {hits}/{total}")
+    ranks = model.twin_ranks()
+    print("\ntwin-pair check (rank of each segment's twin among all other segments):")
+    for r in ranks:
+        print(
+            f"  rank {r['rank']:>2}  {r['segment_id']:20} twin={r['twin']:20}"
+            f" nearest={r['nearest']} d={r['nearest_distance']}"
+        )
+    if ranks:
+        vals = sorted(r["rank"] for r in ranks)
+        n = len(vals)
+        median = (vals[(n - 1) // 2] + vals[n // 2]) / 2
+        print(
+            f"\ntwin nearest-neighbour hits: {sum(v == 1 for v in vals)}/{n}"
+            f"   twin rank: median {median:g}, mean {sum(vals) / n:.1f}, worst {vals[-1]}"
+            f"   in top 3: {sum(v <= 3 for v in vals)}/{n}, top 5: {sum(v <= 5 for v in vals)}/{n}"
+            f"   (of {len(model.points) - 1} candidates)"
+        )
 
 
 if __name__ == "__main__":

@@ -52,15 +52,38 @@ def default_model_path() -> Path:
 # ---- consensus helpers --------------------------------------------------------------
 
 
+#: A rater joins the consensus panel only if it covers at least this share of the
+#: segments. A rater who has scored 8 of 100 is compared against the panel, never pooled
+#: into it — otherwise a segment's consensus would depend on who happened to rate it.
+PANEL_MIN_COVERAGE = 0.9
+
+
+def consensus_panel(coverage: dict[str, float]) -> list[str]:
+    """The raters whose ratings are averaged into the consensus: those covering at least
+    `PANEL_MIN_COVERAGE` of the segments. Falls back to every rater when none qualifies
+    (e.g. midway through a re-rate), which is the pre-panel behaviour."""
+    panel = sorted(r for r, share in coverage.items() if share >= PANEL_MIN_COVERAGE)
+    return panel or sorted(coverage)
+
+
 def consensus_for_segment(
-    segment_id: str, axis_ids: list[str], *, axes_version: int | None = None
+    segment_id: str,
+    axis_ids: list[str],
+    *,
+    axes_version: int | None = None,
+    raters: list[str] | None = None,
 ) -> dict[str, float] | None:
     """Mean value per axis across raters — **newest** rating per rater, within one
     `axes_version` cohort (None = the segment's newest; cohorts are never pooled).
-    None if unrated under that version."""
+    `raters` restricts the mean to a consensus panel: when any panel member rated the
+    segment, raters outside the panel are ignored; a segment no panel member has rated
+    falls back to whoever did rate it. None if unrated under that version."""
     latest = storage.latest_ratings(segment_id, axes_version=axes_version)
     if not latest:
         return None
+    if raters:
+        on_panel = {rid: r for rid, r in latest.items() if rid in raters}
+        latest = on_panel or latest
     seen = {rid: {s.axis_id: s.value for s in r.scores} for rid, r in latest.items()}
     out: dict[str, float] = {}
     for a in axis_ids:
@@ -208,6 +231,32 @@ class ProjectionModel:
             )
         return sorted(out, key=lambda n: n.distance)[:k]
 
+    def twin_ranks(self) -> list[dict]:
+        """For each member of a twin pair (same structural profile, different scene), the
+        rank of its twin among all other fitted segments by distance — 1 means the twin is
+        the nearest neighbour. Unlike a nearest-neighbour hit rate, a rank stays comparable
+        as the corpus grows: a denser space adds competitors for rank 1 without the
+        instrument having changed."""
+        groups: dict[str, list[dict]] = {}
+        for p in self.points:
+            if p.get("pair"):
+                groups.setdefault(p["pair"], []).append(p)
+        out: list[dict] = []
+        for members in groups.values():
+            if len(members) != 2:
+                continue
+            for me, twin in ((members[0], members[1]), (members[1], members[0])):
+                order = self.neighbors(
+                    me["scores"], k=len(self.points), exclude=me["segment_id"]
+                )
+                rank = [n.segment_id for n in order].index(twin["segment_id"]) + 1
+                out.append(
+                    {"segment_id": me["segment_id"], "twin": twin["segment_id"],
+                     "rank": rank, "nearest": order[0].segment_id,
+                     "nearest_distance": order[0].distance}
+                )
+        return sorted(out, key=lambda r: r["segment_id"])
+
     # --- persistence ---
     def save(self, path: Path | None = None) -> Path:
         p = path or default_model_path()
@@ -237,7 +286,9 @@ def fit_from_storage(
     """Fit over every rated segment whose frontmatter `source` matches (the pilot corpus).
     All consensus values come from ONE `axes_version` cohort (default: the registry's
     current version) — a frame fitted across anchor revisions would pool incomparable
-    scores. The version is recorded in the model for provenance."""
+    scores — and from ONE rater panel (`consensus_panel`), so a rater with partial
+    coverage never shifts the segments it happened to score. Both are recorded in the
+    model for provenance."""
     axes = axes or load_axes()
     if axes_version is None:
         axes_version = load_axes_version()
@@ -246,10 +297,20 @@ def fit_from_storage(
     axis_names = {a.id: a.name for a in sc}
 
     segs = [s for s in storage.list_segments() if s.get("source") == source]
+    rated_by = [
+        set(storage.latest_ratings(s["id"], axes_version=axes_version)) for s in segs
+    ]
+    rated_by = [r for r in rated_by if r]
+    all_raters = sorted(set().union(*rated_by)) if rated_by else []
+    panel = consensus_panel(
+        {r: sum(r in rb for rb in rated_by) / len(rated_by) for r in all_raters}
+    )
     rows: list[list[float]] = []
     kept: list[dict] = []
     for s in sorted(segs, key=lambda d: d["id"]):
-        vals = consensus_for_segment(s["id"], axis_ids, axes_version=axes_version)
+        vals = consensus_for_segment(
+            s["id"], axis_ids, axes_version=axes_version, raters=panel
+        )
         if vals is None:
             continue
         seg = storage.load_segment(s["id"]) or {}
@@ -262,12 +323,16 @@ def fit_from_storage(
         )
     model = ProjectionModel.fit(np.array(rows), axis_ids, axis_names, kept)
     model.d["axes_version"] = axes_version
+    model.d["raters"] = panel
     return model
 
 
 def project_segment(model: ProjectionModel, segment_id: str) -> CVector | None:
     vals = consensus_for_segment(
-        segment_id, model.axis_ids, axes_version=model.d.get("axes_version")
+        segment_id,
+        model.axis_ids,
+        axes_version=model.d.get("axes_version"),
+        raters=model.d.get("raters"),
     )
     if vals is None:
         return None

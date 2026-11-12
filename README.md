@@ -14,11 +14,11 @@ analysis↔generation firewall).
 **Status: v1 slice (M0–M4) complete; Phase 4 hardening — M5 and M6 done, M7's human-rater mode built and awaiting hand-scoring.** Rate a segment on 30 anchored axes → watch it land in a fitted C-space beside its nearest kin → dial the operators and generate measurably different prose, with the analysis/generation firewall intact.
 
 - **Corpus:** **100 segments** — 85 written by Claude to structural briefs (never by author imitation) plus **15 public-domain** passages as a non-model control, each verified verbatim against its source.
-- **Instrument:** 30 anchored axes (registry **version 3**), Claude-rated under a frozen manual; ratings carry an `axes_version` and anchor cohorts are never pooled. M5 re-anchored the two ambiguous axes: L3 fixed (within-1 **0.40 → 0.87**); L1 resisted two revisions but recovered to 0.52 on the wider corpus and remains a split candidate.
-- **Coordinates:** 5 locked factors over 100 segments, **70.9% explained, C6 residual 29.1%**. M6's honest headline: **the pilot's factor structure was substantially an n=30 artifact** (PC1 44.8% → 33.8%; 80% now needs 8 components, not 6) — but the factors are far **more reproducible** than the pilot could know (split-half loading stability **0.505 → 0.679**) and are **not a generator artifact** (public-domain prose loads the same structure, |r| 0.95–0.999). Every twin pair lands in its partner's top 5 of 100.
+- **Instrument:** 30 anchored axes (registry **version 3**), Claude-rated under a frozen manual; ratings carry an `axes_version` and anchor cohorts are never pooled. **26 of 30 axes** clear the reliability bar. M5 re-anchored the two ambiguous axes: L3 fixed (within-1 **0.40 → 0.87**); L1 resisted two revisions (0.52 on the wider corpus) and its future is an open question. A **human scoring mode** lets a person rate against the same manual, blind — the human↔model comparison is the next result due.
+- **Coordinates:** 5 locked factors over 100 segments, **70.9% explained, C6 residual 29.1%**. Two honest headlines from M6: **the pilot's factor structure was substantially an n=30 artifact** (PC1 44.8% → 33.8%; 80% now needs 8 components, not 6), though the factors are far **more reproducible** than the pilot could know (split-half loading stability **0.505 → 0.679**); and **the structure is partly a property of the generated corpus** — out of sample, factors fitted on model-written prose capture 66% of the variance in held-out model-written segments but only 52% in the public-domain passages. Every twin pair lands in its partner's top 5 of 100.
 - **Engine:** operators → rules → a stateful WS/PL/MF/EF/LR loop. Moving compression 0.05 → 0.95 took mean sentence length **6.3 → 140.5 words** and moved **4/4** predicted instrument axes up (Syntactic Depth 1→7).
 
-See `reliability/report.md`, `coordinates/model.json`.
+See [docs/reliability-notes.md](docs/reliability-notes.md) for what these numbers mean, how they are computed, and two corrections to earlier results; the live figures are in `reliability/report.md` and `coordinates/model.json`.
 
 ## Run it
 
@@ -36,8 +36,10 @@ Open **http://localhost:5173** — two tabs:
 
 - **Instrument** — two modes. *Model rating*: paste a ~1–3k-word passage, pick a model
   rater, score it on all 30 axes, and see it placed in the **C-Space Map** beside its
-  nearest neighbours. *Human scoring*: pick a corpus segment and hand-score it against the
-  visible anchors, stored as `human:<name>` for human↔model comparison.
+  nearest neighbours. *Human scoring*: read a corpus segment beside the 30 axes and
+  hand-score it against the visible anchors, stored as `human:<name>` for human↔model
+  comparison. Scoring is blind — segments appear under neutral codes and no model score is
+  shown — and a half-finished segment is kept as a draft.
 - **Engine** — dial the five operators (or pick a preset), give a situation, and generate;
   each paragraph shows its scene phase, language register, emotional energy and memory
   field. "Re-rate this output" sends the prose back through the instrument — one-way.

@@ -2,37 +2,38 @@
 
 segments: 100   raters: claude-haiku-4-5, claude-opus-4-8   axes_version: 3
 rater pairs: claude-haiku-4-5 vs claude-opus-4-8   segments in PCA: 100
+consensus panel (raters covering >= 90% of segments): claude-haiku-4-5, claude-opus-4-8
 
-## Per-axis agreement, averaged across rater pairs (scalar: within-1 rate; forced-choice: exact-match)
-  L1  Lexical Complexity         within1=0.52 spearman=+0.56 wkappa=+0.31 |d|=1.47 conf=4.11
-  L2  Syntactic Depth            within1=0.89 spearman=+0.75 wkappa=+0.77 |d|=0.67 conf=4.14
-  L3  Semantic Density           within1=0.87 spearman=+0.66 wkappa=+0.55 |d|=0.89 conf=3.77
-  L4  Imagery Mode               within1=0.82 spearman=+0.40 wkappa=+0.49 |d|=0.92 conf=3.89
-  L5  Repetition Pattern         within1=0.94 spearman=+0.61 wkappa=+0.57 |d|=0.70 conf=4.26
-  N1  Event Density              within1=0.75 spearman=+0.80 wkappa=+0.68 |d|=0.90 conf=3.97
-  N2  Structural Linearity       within1=0.88 spearman=+0.55 wkappa=+0.72 |d|=0.71 conf=4.19
-  N3  Causal Clarity             within1=0.55 spearman=+0.38 wkappa=+0.22 |d|=1.38 conf=3.92
-  N4  Temporal Behavior          within1=0.83 spearman=+0.64 wkappa=+0.70 |d|=0.79 conf=3.85
-  N5  Plot Centrality            within1=0.66 spearman=+0.36 wkappa=+0.40 |d|=1.20 conf=4.03
-  C1  Narrative Distance         within1=0.81 spearman=+0.71 wkappa=+0.69 |d|=0.82 conf=4.01
-  C2  Subject Stability          within1=0.86 spearman=+0.39 wkappa=+0.58 |d|=0.71 conf=4.21
-  C3  Cognitive Transparency     within1=0.82 spearman=+0.82 wkappa=+0.76 |d|=0.88 conf=4.04
-  C4  Polyphony                  within1=0.94 spearman=+0.67 wkappa=+0.83 |d|=0.66 conf=4.16
-  C5  Interior/Exterior Ratio    within1=0.73 spearman=+0.73 wkappa=+0.66 |d|=1.15 conf=3.96
-  P1  Ontological Stability      within1=0.96 spearman=+0.77 wkappa=+0.90 |d|=0.30 conf=4.58
-  P2  Epistemic Certainty        within1=0.93 spearman=+0.74 wkappa=+0.85 |d|=0.50 conf=3.87
-  P3  Moral-Structure Clarity    within1=0.85 spearman=+0.50 wkappa=+0.48 |d|=0.72 conf=3.54
-  P4  Meaning Structure          within1=0.75 spearman=+0.66 wkappa=+0.58 |d|=1.03 conf=3.69
-  P5  Agency Model               within1=0.75 spearman=+0.57 wkappa=+0.56 |d|=1.01 conf=3.62
-  A1  Valence                    within1=0.97 spearman=+0.90 wkappa=+0.90 |d|=0.54 conf=4.01
-  A2  Emotional Volatility       within1=0.88 spearman=+0.62 wkappa=+0.59 |d|=0.65 conf=3.69
+## Per-axis agreement, n-weighted across rater pairs (scalar: within-1 rate; forced-choice: exact-match)
+  L1  Lexical Complexity         within1=0.52 spearman=+0.59 wkappa=+0.31 |d|=1.47 conf=4.11
+  L2  Syntactic Depth            within1=0.89 spearman=+0.81 wkappa=+0.77 |d|=0.67 conf=4.14
+  L3  Semantic Density           within1=0.87 spearman=+0.73 wkappa=+0.55 |d|=0.89 conf=3.77
+  L4  Imagery Mode               within1=0.82 spearman=+0.56 wkappa=+0.49 |d|=0.92 conf=3.89
+  L5  Repetition Pattern         within1=0.94 spearman=+0.68 wkappa=+0.57 |d|=0.70 conf=4.26
+  N1  Event Density              within1=0.75 spearman=+0.82 wkappa=+0.68 |d|=0.90 conf=3.97
+  N2  Structural Linearity       within1=0.88 spearman=+0.65 wkappa=+0.72 |d|=0.71 conf=4.19
+  N3  Causal Clarity             within1=0.55 spearman=+0.42 wkappa=+0.22 |d|=1.38 conf=3.92
+  N4  Temporal Behavior          within1=0.83 spearman=+0.68 wkappa=+0.70 |d|=0.79 conf=3.85
+  N5  Plot Centrality            within1=0.66 spearman=+0.44 wkappa=+0.40 |d|=1.20 conf=4.03
+  C1  Narrative Distance         within1=0.81 spearman=+0.74 wkappa=+0.69 |d|=0.82 conf=4.01
+  C2  Subject Stability          within1=0.86 spearman=+0.41 wkappa=+0.58 |d|=0.71 conf=4.21
+  C3  Cognitive Transparency     within1=0.82 spearman=+0.85 wkappa=+0.76 |d|=0.88 conf=4.04
+  C4  Polyphony                  within1=0.94 spearman=+0.74 wkappa=+0.83 |d|=0.66 conf=4.16
+  C5  Interior/Exterior Ratio    within1=0.73 spearman=+0.78 wkappa=+0.66 |d|=1.15 conf=3.96
+  P1  Ontological Stability      within1=0.96 spearman=+0.68 wkappa=+0.90 |d|=0.30 conf=4.58
+  P2  Epistemic Certainty        within1=0.93 spearman=+0.79 wkappa=+0.85 |d|=0.50 conf=3.87
+  P3  Moral-Structure Clarity    within1=0.85 spearman=+0.51 wkappa=+0.48 |d|=0.72 conf=3.54
+  P4  Meaning Structure          within1=0.75 spearman=+0.67 wkappa=+0.58 |d|=1.03 conf=3.69
+  P5  Agency Model               within1=0.75 spearman=+0.60 wkappa=+0.56 |d|=1.01 conf=3.62
+  A1  Valence                    within1=0.97 spearman=+0.92 wkappa=+0.90 |d|=0.54 conf=4.01
+  A2  Emotional Volatility       within1=0.88 spearman=+0.67 wkappa=+0.59 |d|=0.65 conf=3.69
   A3  Dominant Affect            exact=0.53 kappa=+0.46 conf=3.9
-  A4  Intensity Curve            within1=0.89 spearman=+0.69 wkappa=+0.72 |d|=0.61 conf=3.83
+  A4  Intensity Curve            within1=0.89 spearman=+0.74 wkappa=+0.72 |d|=0.61 conf=3.83
   A5  Resolution Type            exact=0.84 kappa=+0.74 conf=3.81
-  S1  Rhythm Regularity          within1=0.91 spearman=+0.66 wkappa=+0.63 |d|=0.63 conf=3.71
-  S2  Sentence-Length Variance   within1=0.87 spearman=+0.46 wkappa=+0.40 |d|=0.80 conf=4.12
-  S3  Voice Dominance            within1=0.87 spearman=+0.50 wkappa=+0.48 |d|=0.77 conf=4.32
-  S4  Figurative Density         within1=0.84 spearman=+0.79 wkappa=+0.74 |d|=0.79 conf=4.03
+  S1  Rhythm Regularity          within1=0.91 spearman=+0.71 wkappa=+0.63 |d|=0.63 conf=3.71
+  S2  Sentence-Length Variance   within1=0.87 spearman=+0.47 wkappa=+0.40 |d|=0.80 conf=4.12
+  S3  Voice Dominance            within1=0.87 spearman=+0.58 wkappa=+0.48 |d|=0.77 conf=4.32
+  S4  Figurative Density         within1=0.84 spearman=+0.83 wkappa=+0.74 |d|=0.79 conf=4.03
   S5  Aesthetic Register         exact=0.79 kappa=+0.60 conf=4.02
 
 ## Reliable axes (26): L2, L3, L4, L5, N1, N2, N4, C1, C2, C3, C4, C5, P1, P2, P3, P4, P5, A1, A2, A4, A5, S1, S2, S3, S4, S5
@@ -60,8 +61,10 @@ rater pairs: claude-haiku-4-5 vs claude-opus-4-8   segments in PCA: 100
 ## Split-half stability (PCA loadings, 20 seeded splits of 50+50)
   |r| per component: [0.867, 0.842, 0.612, 0.586, 0.486]   mean: 0.679
 
-## Origin check — model (n=85) vs other origins (n=15; indicative only at this n)
-  loading match |r| (model-only fit vs all-fit): [0.998, 0.999, 0.991, 0.949, 0.975]
+## Origin check — do factors fitted on model-written segments describe the others?
+   (model n=85 vs other origins n=15; out-of-sample, 200 seeded splits; indicative only at this n)
+  variance captured by 5 factors — held-out model: 0.661 (0.591–0.723)   other origins: 0.521 (0.489–0.562)
+  gap: +0.140   matched on extremity: +0.106   other origins lower in 100% of splits
   largest per-axis consensus offsets (minority − majority): A1(-0.99), C3(+0.82), L5(-0.79), N1(-0.77), C5(+0.63)
 
 ## Twin-pair consistency (mean |d| over scalar axes)

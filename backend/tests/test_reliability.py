@@ -2,7 +2,9 @@ import numpy as np
 
 from lsap import storage
 from lsap.coordinates.reliability import (
+    _average_ranks,
     _pearson,
+    _spearman,
     build_report,
     compare_reports,
     correlation_matrix,
@@ -11,7 +13,7 @@ from lsap.coordinates.reliability import (
     format_report,
     human_model_divergence,
     load_rater_matrices,
-    origin_structure_comparison,
+    origin_generalization,
     redundant_pairs,
     run_pca,
     scalar_axis_agreement,
@@ -103,23 +105,68 @@ def test_split_half_stability_is_deterministic_and_guards_small_n():
     assert "error" in split_half_stability(m[:6])
 
 
-def test_origin_comparison_matches_when_minority_shares_the_structure():
-    m = _two_factor_matrix(50)
-    origins = ["model"] * 40 + ["public-domain"] * 10
-    out = origin_structure_comparison(m, origins, [f"A{i}" for i in range(8)], n_components=2)
+def test_average_ranks_share_ties():
+    assert _average_ranks(np.array([10, 20, 10, 30])).tolist() == [1.5, 3.0, 1.5, 4.0]
+    assert _average_ranks(np.array([5, 5, 5])).tolist() == [2.0, 2.0, 2.0]
+
+
+def test_spearman_is_not_fooled_by_the_order_of_tied_values():
+    """Ordinal 1–7 scores are mostly ties. Ranking by position (argsort of argsort) gave
+    these two raters rho = +0.6; with ties sharing a rank they are exactly uncorrelated."""
+    a = np.array([1, 1, 2, 2])
+    b = np.array([1, 2, 1, 2])
+    assert _spearman(a, b) == 0.0
+    # and it is invariant to the order the segments happen to be listed in
+    perm = np.array([3, 0, 2, 1])
+    assert _spearman(a[perm], b[perm]) == 0.0
+
+
+AXIS8 = [f"A{i}" for i in range(8)]
+
+
+def test_origin_generalization_no_gap_when_minority_shares_the_structure():
+    m = _two_factor_matrix(100)
+    origins = ["model"] * 85 + ["public-domain"] * 15
+    out = origin_generalization(m, origins, AXIS8, n_components=2, n_splits=60)
     assert out is not None
     assert out["majority_origin"] == "model"
-    assert out["n_minority"] == 10
-    # Both halves are draws from the same generator, so the loadings must match well.
-    assert min(out["loading_match_abs_r"]) > 0.8
+    assert (out["n_majority"], out["n_minority"]) == (85, 15)
+    # Both groups are draws from the same generator: the factors describe them equally.
+    assert abs(out["gap"]) < 0.05
+    assert out["captured_minority"]["mean"] > 0.9
     assert len(out["top_axis_offsets"]) == 5
 
 
-def test_origin_comparison_none_without_a_real_minority():
-    m = _two_factor_matrix(30)
-    assert origin_structure_comparison(m, ["model"] * 30, [f"A{i}" for i in range(8)]) is None
-    origins = ["model"] * 27 + ["public-domain"] * 3  # below the n>=5 floor
-    assert origin_structure_comparison(m, origins, [f"A{i}" for i in range(8)]) is None
+def test_origin_generalization_detects_variance_the_factors_do_not_describe():
+    """The check must be able to fail. Here the minority varies along a direction the
+    majority never uses, so factors fitted on the majority capture far less of it."""
+    rng = np.random.default_rng(11)
+    shared = np.array([2.0, 1.5, -1.8, 1.2, 2.0, -1.6, 1.4, 1.1])  # the one real factor
+    unused = np.array([1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0])  # majority never moves here
+
+    def draw(n: int, off_factor: float) -> np.ndarray:
+        on = rng.normal(size=(n, 1)) * shared
+        off = rng.normal(size=(n, 1)) * off_factor * unused
+        return on + off + rng.normal(scale=0.15, size=(n, 8))
+
+    rows = np.vstack([draw(85, off_factor=0.0), draw(15, off_factor=2.0)])
+    origins = ["model"] * 85 + ["public-domain"] * 15
+    out = origin_generalization(rows, origins, AXIS8, n_components=1, n_splits=60)
+    assert out is not None
+    assert out["captured_holdout_majority"]["mean"] > 0.9  # the factor fits its own kind
+    assert out["gap"] > 0.15
+    assert out["minority_lower_in_share_of_splits"] > 0.9
+
+
+def test_origin_generalization_is_deterministic_and_needs_a_real_minority():
+    m = _two_factor_matrix(60)
+    origins = ["model"] * 50 + ["public-domain"] * 10
+    a = origin_generalization(m, origins, AXIS8, n_components=2, n_splits=20, seed=3)
+    b = origin_generalization(m, origins, AXIS8, n_components=2, n_splits=20, seed=3)
+    assert a == b  # seeded — no wall-clock randomness
+    assert origin_generalization(m, ["model"] * 60, AXIS8) is None
+    few = ["model"] * 57 + ["public-domain"] * 3  # below the n>=5 floor
+    assert origin_generalization(m, few, AXIS8) is None
 
 
 # ---- storage-backed selection (the M5 defect fix) -----------------------------------
@@ -198,12 +245,18 @@ def test_load_rater_matrices_restricts_to_only_segments(tmp_path, monkeypatch):
 
 
 def _save_full(seg: str, rater_id: str, *, base: int, axes_version: int = 1) -> None:
-    """A full 30-axis rating (real axis ids) so build_report runs end to end."""
+    """A full 30-axis rating (real axis ids) so build_report runs end to end. Values
+    alternate by segment and axis so no column is constant (a zero-variance column has no
+    correlation), while every rater keeps the same fixed offset from `base`."""
     axes = load_axes()
+    n = int(seg.lstrip("s"))
     storage.save_rating(
         Rating(
             segment_id=seg, rater_id=rater_id, axes_version=axes_version,
-            scores=[AxisScore(axis_id=a.id, value=base, confidence=4) for a in axes],
+            scores=[
+                AxisScore(axis_id=a.id, value=base + (n + k) % 2, confidence=4)
+                for k, a in enumerate(axes)
+            ],
             flagged=False, created_at="2026-07-19T00:00:00Z",
         )
     )
@@ -211,7 +264,7 @@ def _save_full(seg: str, rater_id: str, *, base: int, axes_version: int = 1) -> 
 
 def test_build_report_three_raters_with_ragged_human_coverage(tmp_path, monkeypatch):
     """M7: a third (human) rater covering only part of the corpus yields three pairwise
-    columns, pairwise-complete — the human is never silently dropped or densely padded."""
+    columns, pairwise-complete — that rater is never silently dropped or densely padded."""
     monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
     axes = load_axes()
     for i in range(10):
@@ -219,7 +272,7 @@ def test_build_report_three_raters_with_ragged_human_coverage(tmp_path, monkeypa
         _pilot(s)
         _save_full(s, "claude-opus-4-8", base=4)
         _save_full(s, "claude-haiku-4-5", base=5)
-    for i in range(4):  # the human hand-scores only 4 of the 10 (ragged coverage)
+    for i in range(4):  # the human rater scores only 4 of the 10 (ragged coverage)
         _save_full(f"s{i}", "human:sh", base=6)
 
     report = build_report(axes, axes_version=1)
@@ -234,6 +287,16 @@ def test_build_report_three_raters_with_ragged_human_coverage(tmp_path, monkeypa
     model_pair = next(v for k, v in pairs.items() if "human" not in k)
     assert model_pair["n"] == 10  # the model↔model pair still spans the whole corpus
 
+    # The headline is weighted by each pair's n. Within-1 here is 1.0 for opus↔haiku
+    # (n=10) and haiku↔human (n=4), 0.0 for opus↔human (n=4): 14/18, not the flat 2/3
+    # that would let a pair sharing 4 segments count as much as one sharing 10.
+    assert report["axis_agreement"]["L1"]["within1_rate"] == round(14 / 18, 4)
+
+    # A rater covering 4 of 10 segments is compared against the consensus, never pooled
+    # into it — otherwise those 4 segments' consensus would differ in kind from the rest.
+    assert report["consensus_raters"] == ["claude-haiku-4-5", "claude-opus-4-8"]
+    assert report["n_segments_in_pca"] == 10
+
     hmd = report["human_model_divergence"]
     assert hmd is not None and len(hmd) == 2  # human vs each of the two models
     # every listed axis carries the pairwise-complete n and an agreement score
@@ -242,6 +305,29 @@ def test_build_report_three_raters_with_ragged_human_coverage(tmp_path, monkeypa
 
     text = format_report(report)
     assert "Human" in text and "human:sh" in text
+
+
+def test_build_report_only_raters_drops_the_others(tmp_path, monkeypatch):
+    """Comparing two anchor cohorts must hold the rater set fixed as well as the segments."""
+    monkeypatch.setenv("LSAP_DATA_DIR", str(tmp_path))
+    axes = load_axes()
+    for i in range(4):
+        s = f"s{i}"
+        _pilot(s)
+        _save_full(s, "claude-opus-4-8", base=4)
+        _save_full(s, "claude-haiku-4-5", base=5)
+        _save_full(s, "human:sh", base=6)
+
+    both = build_report(
+        axes, axes_version=1, only_raters={"claude-opus-4-8", "claude-haiku-4-5"}
+    )
+    assert both["raters"] == ["claude-haiku-4-5", "claude-opus-4-8"]
+    assert len(both["rater_pairs"]) == 1
+    assert both["human_model_divergence"] is None
+    # with full coverage a third rater does join the panel
+    assert build_report(axes, axes_version=1)["consensus_raters"] == [
+        "claude-haiku-4-5", "claude-opus-4-8", "human:sh",
+    ]
 
 
 def test_human_model_divergence_none_without_a_human():

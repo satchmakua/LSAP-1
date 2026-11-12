@@ -2256,5 +2256,9 @@
     }
   ],
   "n_segments": 100,
-  "axes_version": 3
+  "axes_version": 3,
+  "raters": [
+    "claude-haiku-4-5",
+    "claude-opus-4-8"
+  ]
 }
